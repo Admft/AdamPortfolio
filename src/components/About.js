@@ -140,17 +140,7 @@ const About = () => {
 
 
           {/* Outside of Coding */}
-          <div className="backdrop-blur-lg bg-purple-950/10 rounded-xl p-6 border border-purple-500/20 hover:border-purple-500/40 transition-all duration-300 shadow-lg shadow-purple-500/5">
-            <h3 className="text-2xl font-semibold mb-4 flex items-center gap-2">
-              <Car className="text-purple-400" />
-              <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-                Outside of Coding
-              </span>
-            </h3>
-            <p className="text-gray-300 leading-relaxed">
-              Outside of tech, I'm into car modifications, fascinated by architecture, and constantly finding new interests to dive into. I believe in balancing creativity with logic, whether it's in a tech project or a personal pursuit.
-            </p>
-          </div>
+          
         </div>
       </div>
 
