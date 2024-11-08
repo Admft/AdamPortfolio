@@ -24,7 +24,7 @@ const Projects = () => {
     {
       title: "DynaFit",
       description: "An AI-driven fitness app offering personalized workout plans and progress tracking. Built with React Native, Java, and AWS to deliver a seamless user experience.",
-      link: "https://example.com",
+      link: "",
       image: `${process.env.PUBLIC_URL}/Dynafit.jpg`,
       icon: <Dumbbell className="w-6 h-6" />,
       tags: ["React Native", "Java", "AWS"]
