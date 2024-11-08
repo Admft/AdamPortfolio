@@ -1,9 +1,27 @@
 import React from 'react';
-import { Stars, Award, Code, Car, Globe, Cpu, Brain } from 'lucide-react';
+import { Stars, Award, Code, Car, Globe, Cpu, Brain, FileText } from 'lucide-react';
+
+const ShootingStar = () => (
+  <div 
+    className="shooting-star absolute h-0.5 w-16 bg-gradient-to-r from-purple-400 via-white to-transparent rounded-full"
+    style={{
+      top: `${Math.random() * 100}%`,
+      left: `${Math.random() * 100}%`,
+      transform: `rotate(${45 + Math.random() * 10}deg)`,
+      animation: `shootingStarAnimation ${2 + Math.random() * 3}s linear infinite`,
+      animationDelay: `${Math.random() * 5}s`
+    }}
+  />
+);
 
 const About = () => {
   return (
     <section id="about" className="min-h-screen pt-24 p-8 bg-black text-white relative overflow-hidden">
+      {/* Shooting Stars */}
+      {Array.from({ length: 300 }).map((_, i) => (
+        <ShootingStar key={`shooting-star-${i}`} />
+      ))}
+      
       {/* Animated Background */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-black via-purple-950/20 to-black" />
@@ -31,9 +49,31 @@ const About = () => {
             </span>
             <span className="absolute -inset-1 bg-gradient-to-r from-purple-600/20 to-blue-600/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           </h2>
-          <p className="text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed mb-8">
             Software developer, AI enthusiast, car lover, and always exploring new ideas. Whether I'm building tech solutions or thinking about architectural design, I'm passionate about creating and constantly pushing the boundaries.
           </p>
+
+          {/* Resume Button */}
+          <a
+            href="/Adam Moffat Resume 6.2 (cs).pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group relative inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full overflow-hidden"
+          >
+            {/* Button Glow Effect */}
+            <div className="absolute inset-0 bg-gradient-to-r from-purple-600/50 to-blue-600/50 opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-300" />
+            
+            {/* Button Content */}
+            <div className="relative flex items-center gap-2">
+              <FileText className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
+              <span className="font-semibold group-hover:translate-x-0.5 transition-transform duration-300">
+                View Resume
+              </span>
+            </div>
+            
+            {/* Animated Border */}
+            <div className="absolute inset-0 border border-purple-400/30 rounded-full group-hover:border-purple-400/60 transition-colors duration-300" />
+          </a>
         </div>
 
         {/* Content Sections */}
@@ -132,6 +172,26 @@ const About = () => {
           </div>
         </div>
       </div>
+
+      {/* Add styles for shooting stars animation */}
+      <style jsx>{`
+        @keyframes shootingStarAnimation {
+          0% {
+            transform: translateX(-100%) translateY(-100%) rotate(45deg);
+            opacity: 1;
+          }
+          20% {
+            opacity: 1;
+          }
+          60% {
+            opacity: 0;
+          }
+          100% {
+            transform: translateX(200%) translateY(200%) rotate(45deg);
+            opacity: 0;
+          }
+        }
+      `}</style>
     </section>
   );
 };
