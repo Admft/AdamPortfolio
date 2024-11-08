@@ -61,7 +61,7 @@ const Navbar = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex space-x-12">
-            {['About', 'Projects', 'Contact'].map((item) => (
+            {['About', 'Projects', 'Trivia','Contact'].map((item) => (
               <a
                 key={item}
                 href={`#${item.toLowerCase()}`}
@@ -85,7 +85,7 @@ const Navbar = () => {
             }`}
           >
             <div className="py-4 px-6 space-y-4">
-              {['About', 'Projects', 'Contact'].map((item) => (
+              {['About', 'Projects', 'Trivia', 'Contact'].map((item) => (
                 <a
                   key={item}
                   href={`#${item.toLowerCase()}`}
