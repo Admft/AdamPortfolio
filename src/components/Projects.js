@@ -17,7 +17,7 @@ const Projects = () => {
       title: "KTP SportsApp",
       description: "A predictive sports analytics app providing real-time game and player insights using AI-powered data analysis. Built with React, Redux, Java, and nba_api.",
       link: "",
-      image: `${process.env.PUBLIC_URL}/Sportsapp.png`,
+      image: `${process.env.PUBLIC_URL}/SportsApp.jpg`,
       icon: <Brain className="w-6 h-6" />,
       tags: ["React", "Redux", "Java", "NBA API"]
     },
@@ -25,7 +25,7 @@ const Projects = () => {
       title: "DynaFit",
       description: "An AI-driven fitness app offering personalized workout plans and progress tracking. Built with React Native, Java, and AWS to deliver a seamless user experience.",
       link: "https://example.com",
-      image: `${process.env.PUBLIC_URL}/dynafit.png`,
+      image: `${process.env.PUBLIC_URL}/Dynafit.jpg`,
       icon: <Dumbbell className="w-6 h-6" />,
       tags: ["React Native", "Java", "AWS"]
     }
