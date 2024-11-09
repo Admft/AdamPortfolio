@@ -50,69 +50,72 @@ const About = () => {
             <span className="absolute -inset-1 bg-gradient-to-r from-purple-600/20 to-blue-600/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
           </h2>
           <p className="text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed mb-8">
-            Software developer, AI enthusiast, car lover, and always exploring new ideas. Whether I'm building tech solutions or thinking about architectural design, I'm passionate about creating and constantly pushing the boundaries.
-          </p>
+          ’I’m a versatile Software Developer, Tech Sales enthusiast, and Project Manager with experience in AI engineering, web development, and product management. Currently a Project Management Intern at The Genie Company, I lead agile teams to build AI-driven solutions. As a Team Researcher in network intrusion detection, I develop machine learning models to enhance cybersecurity. Previously, I was a Software Engineer Intern at Caring Guide, developing their website, and a Product Manager at R&C Marketing, managing a client database that generated $130K+ in revenue in two months.
+
+</p>
 
           {/* Resume Button */}
           <a
-            href="/Adam Moffat Resume 6.2 (cs).pdf"
+            href="/Adam_Moffat_Resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
             className="group relative inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full overflow-hidden"
           >
-            {/* Button Glow Effect */}
             <div className="absolute inset-0 bg-gradient-to-r from-purple-600/50 to-blue-600/50 opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-300" />
-            
-            {/* Button Content */}
             <div className="relative flex items-center gap-2">
               <FileText className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
               <span className="font-semibold group-hover:translate-x-0.5 transition-transform duration-300">
                 View Resume
               </span>
             </div>
-            
-            {/* Animated Border */}
             <div className="absolute inset-0 border border-purple-400/30 rounded-full group-hover:border-purple-400/60 transition-colors duration-300" />
           </a>
         </div>
 
         {/* Content Sections */}
         <div className="max-w-4xl mx-auto space-y-12">
-          {/* Quick Facts */}
+          {/* Current Positions */}
           <div className="backdrop-blur-lg bg-purple-950/10 rounded-xl p-6 border border-purple-500/20 hover:border-purple-500/40 transition-all duration-300 shadow-lg shadow-purple-500/5">
             <h3 className="text-2xl font-semibold mb-4 flex items-center gap-2">
-              <Globe className="text-purple-400" />
+              <Cpu className="text-purple-400" />
               <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-                Quick Facts
+                Current Positions
               </span>
             </h3>
             <ul className="space-y-3 text-gray-300">
               <li className="flex items-center gap-2">
                 <span className="h-1.5 w-1.5 rounded-full bg-purple-400" />
-                Visited 17 countries 🌍 – always ready for the next adventure
+                Incoming Project Management Intern at The Genie Company
               </li>
               <li className="flex items-center gap-2">
                 <span className="h-1.5 w-1.5 rounded-full bg-purple-400" />
-                Big fan of innovative AI, sleek car mods, and fascinating architecture
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-purple-400" />
-                Always tinkering and learning – whether it's new tech or creative projects
+                Researcher for ML Network Intrusion Detection in Richardson, TX
               </li>
             </ul>
           </div>
 
-          {/* The Techy Side */}
+          {/* Previous Positions */}
           <div className="backdrop-blur-lg bg-purple-950/10 rounded-xl p-6 border border-purple-500/20 hover:border-purple-500/40 transition-all duration-300 shadow-lg shadow-purple-500/5">
             <h3 className="text-2xl font-semibold mb-4 flex items-center gap-2">
-              <Cpu className="text-purple-400" />
+              <Brain className="text-purple-400" />
               <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-                The Techy Side of Me
+                Previous Positions
               </span>
             </h3>
-            <p className="text-gray-300 leading-relaxed">
-              Skilled in Python, JavaScript, and problem-solving, I focus on building impactful applications that are intuitive and effective. I'm driven by my curiosity in AI, and I love exploring how it can solve real-world problems.
-            </p>
+            <ul className="space-y-3 text-gray-300">
+              <li className="flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-purple-400" />
+                Software Developer Intern at CaringGuide, April - December 2023
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-purple-400" />
+                Product Manager at R&C Marketing, May - Sep 2024
+
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-purple-400" />
+                Project Manager at Kappa Theta Phi, Aug - Dec 2023              </li>
+            </ul>
           </div>
 
           {/* Achievements */}
@@ -138,13 +141,36 @@ const About = () => {
             </ul>
           </div>
 
-
-          {/* Outside of Coding */}
-          
+          {/* Interests & Hobbies */}
+          <div className="backdrop-blur-lg bg-purple-950/10 rounded-xl p-6 border border-purple-500/20 hover:border-purple-500/40 transition-all duration-300 shadow-lg shadow-purple-500/5">
+            <h3 className="text-2xl font-semibold mb-4 flex items-center gap-2">
+              <Globe className="text-purple-400" />
+              <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+                Beyond The Code
+              </span>
+            </h3>
+            <ul className="space-y-3 text-gray-300">
+              <li className="flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-purple-400" />
+                Car enthusiast passionate about automotive modifications and design
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-purple-400" />
+                Avid traveler - explored 17 countries and counting 🌍
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-purple-400" />
+                Architecture and innovative design aficionado
+              </li>
+              <li className="flex items-center gap-2">
+                <span className="h-1.5 w-1.5 rounded-full bg-purple-400" />
+                Always experimenting with new technologies and creative projects
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
 
-      {/* Add styles for shooting stars animation */}
       <style jsx>{`
         @keyframes shootingStarAnimation {
           0% {
