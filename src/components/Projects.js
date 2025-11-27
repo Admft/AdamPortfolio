@@ -1,131 +1,99 @@
-import React, { useState } from 'react';
-import { ExternalLink, Github, Star, Rocket, Brain, Dumbbell } from 'lucide-react';
+import React from 'react';
+import { motion } from 'framer-motion';
+import { ExternalLink, Rocket, Brain, Dumbbell } from 'lucide-react';
+
+const projects = [
+  {
+    title: "FinTeach",
+    description: "Financial planning tool empowering Texas teachers with real-time insights. Built with React, Flask, OpenAI, and Plaid.",
+    link: "https://devpost.com/software/hackunt2024",
+    image: "/finteach2.jpg", // Ensure these images exist in public folder
+    icon: <Rocket className="w-6 h-6" />,
+    tags: ["React", "Flask", "OpenAI", "Plaid"],
+    color: "from-green-400 to-emerald-600"
+  },
+  {
+    title: "KTP SportsApp",
+    description: "Predictive sports analytics providing real-time game/player insights using AI. React, Redux, Java, and nba_api.",
+    link: "",
+    image: "/SportsApp.jpg",
+    icon: <Brain className="w-6 h-6" />,
+    tags: ["React", "Redux", "Java", "NBA API"],
+    color: "from-blue-400 to-indigo-600"
+  },
+  {
+    title: "DynaFit",
+    description: "AI-driven fitness app for personalized workout plans and tracking. React Native, Java, and AWS.",
+    link: "",
+    image: "/Dynafit.jpg",
+    icon: <Dumbbell className="w-6 h-6" />,
+    tags: ["React Native", "Java", "AWS"],
+    color: "from-orange-400 to-red-600"
+  }
+];
 
 const Projects = () => {
-  const [hoveredIndex, setHoveredIndex] = useState(null);
-
-  const projectList = [
-    {
-      title: "FinTeach",
-      description: "A financial planning tool designed to empower Texas teachers with real-time financial insights and budgeting tools. Built with React, Flask, OpenAI, and Plaid.",
-      link: "https://devpost.com/software/hackunt2024",
-      image: `${process.env.PUBLIC_URL}/finteach2.jpg`,
-      icon: <Rocket className="w-6 h-6" />,
-      tags: ["React", "Flask", "OpenAI", "Plaid"]
-    },
-    {
-      title: "KTP SportsApp",
-      description: "A predictive sports analytics app providing real-time game and player insights using AI-powered data analysis. Built with React, Redux, Java, and nba_api.",
-      link: "",
-      image: `${process.env.PUBLIC_URL}/SportsApp.jpg`,
-      icon: <Brain className="w-6 h-6" />,
-      tags: ["React", "Redux", "Java", "NBA API"]
-    },
-    {
-      title: "DynaFit",
-      description: "An AI-driven fitness app offering personalized workout plans and progress tracking. Built with React Native, Java, and AWS to deliver a seamless user experience.",
-      link: "",
-      image: `${process.env.PUBLIC_URL}/Dynafit.jpg`,
-      icon: <Dumbbell className="w-6 h-6" />,
-      tags: ["React Native", "Java", "AWS"]
-    }
-  ];
-
   return (
-    <section id="projects" className="min-h-screen pt-24 p-8 bg-black text-white relative overflow-hidden">
-      {/* Animated Background */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-black via-purple-950/20 to-black" />
-        {Array.from({ length: 50 }).map((_, i) => (
-          <Star
-            key={i}
-            className="absolute animate-pulse text-white/10"
-            style={{
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 3}s`,
-              transform: `scale(${0.3 + Math.random()})`,
-            }}
-            size={16}
-          />
-        ))}
-      </div>
-
-      {/* Content */}
-      <div className="relative z-10">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-5xl font-bold mb-6 relative inline-block group">
-            <span className="bg-gradient-to-r from-purple-400 via-fuchsia-300 to-blue-400 bg-clip-text text-transparent">
-              Projects
-            </span>
-            <span className="absolute -inset-1 bg-gradient-to-r from-purple-600/20 to-blue-600/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          </h2>
+    <section id="projects" className="py-24 px-6 relative">
+      <div className="max-w-7xl mx-auto">
+        <div className="mb-16">
+          <h2 className="text-4xl font-bold mb-4">Selected Works</h2>
+          <div className="h-1 w-20 bg-purple-500 rounded-full" />
         </div>
 
-        {/* Projects Grid */}
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto">
-          {projectList.map((project, index) => (
-            <div
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {projects.map((project, index) => (
+            <motion.div
               key={index}
-              className="group relative"
-              onMouseEnter={() => setHoveredIndex(index)}
-              onMouseLeave={() => setHoveredIndex(null)}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
+              whileHover={{ y: -10 }}
+              className="group relative bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:border-purple-500/50 transition-all duration-300 shadow-lg"
             >
-              {/* Card */}
-              <div className="relative h-full backdrop-blur-lg bg-purple-950/10 rounded-xl border border-purple-500/20 group-hover:border-purple-500/40 transition-all duration-300 shadow-lg shadow-purple-500/5 overflow-hidden">
-                {/* Image Container */}
-                <div className="relative h-48 overflow-hidden">
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10" />
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
-                  />
-                  {/* Icon Overlay */}
-                  <div className="absolute top-4 right-4 text-purple-400 z-20 bg-black/50 p-2 rounded-full">
-                    {project.icon}
-                  </div>
+              {/* Image Area */}
+              <div className="h-48 overflow-hidden relative">
+                <div className={`absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10`} />
+                <img 
+                  src={project.image} 
+                  alt={project.title} 
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                />
+                <div className="absolute top-4 right-4 z-20 bg-black/50 p-2 rounded-full backdrop-blur-sm border border-white/10">
+                  {project.icon}
                 </div>
-
-                {/* Content */}
-                <div className="p-6">
-                  <h3 className="text-2xl font-semibold mb-2 bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-                    {project.title}
-                  </h3>
-                  <p className="text-gray-300 mb-4">
-                    {project.description}
-                  </p>
-
-                  {/* Tags */}
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {project.tags.map((tag, tagIndex) => (
-                      <span
-                        key={tagIndex}
-                        className="px-3 py-1 text-sm bg-purple-500/20 rounded-full text-purple-300 border border-purple-500/30"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* Link */}
-                  {project.link && (
-                    <a
-                      href={project.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-purple-400 hover:text-purple-300 transition-colors duration-300"
-                    >
-                      View Project <ExternalLink className="w-4 h-4" />
-                    </a>
-                  )}
-                </div>
-
-                {/* Hover Glow Effect */}
-                <div className={`absolute inset-0 bg-gradient-to-r from-purple-600/10 via-fuchsia-600/10 to-blue-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none ${hoveredIndex === index ? 'blur-xl' : ''}`} />
               </div>
-            </div>
+
+              {/* Content Area */}
+              <div className="p-6">
+                <h3 className="text-2xl font-bold mb-2 group-hover:text-purple-400 transition-colors">
+                  {project.title}
+                </h3>
+                <p className="text-gray-400 text-sm mb-4 line-clamp-3">
+                  {project.description}
+                </p>
+
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {project.tags.map(tag => (
+                    <span key={tag} className="text-xs font-mono px-2 py-1 rounded bg-white/5 text-gray-300 border border-white/10">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                {project.link && (
+                  <a 
+                    href={project.link}
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-sm font-bold text-white hover:text-purple-400 transition-colors"
+                  >
+                    View Project <ExternalLink className="w-4 h-4" />
+                  </a>
+                )}
+              </div>
+            </motion.div>
           ))}
         </div>
       </div>

@@ -1,105 +1,95 @@
 import React, { useState, useEffect } from 'react';
-import { Stars, Menu } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Menu, X, Code2 } from 'lucide-react';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const navLinks = [
+    { name: 'About', href: '#about' },
+    { name: 'Projects', href: '#projects' },
+    { name: 'Trivia', href: '#trivia' },
+    { name: 'Contact', href: '#contact' },
+  ];
+
   return (
-    <nav className={`fixed top-0 w-full py-4 z-50 transition-all duration-500 ${
-      scrolled ? 'bg-black/80 backdrop-blur-md shadow-[0_0_15px_rgba(123,31,162,0.5)]' : 'bg-black/40'
-    }`}>
-      {/* Animated stars background */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-black via-purple-950/30 to-black" />
-        {Array.from({ length: 25 }).map((_, i) => (
-          <Stars
-            key={i}
-            className="absolute animate-pulse text-white/10"
-            style={{
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 3}s`,
-              transform: `scale(${0.3 + Math.random()})`,
-            }}
-            size={16}
-          />
-        ))}
-      </div>
-
-      <div className="container mx-auto px-6">
-        <div className="relative flex items-center justify-between">
-          {/* Logo and Name */}
-          <div className="flex items-center space-x-3">
-            <Stars className="h-8 w-8 text-purple-500 animate-spin-slow" />
-            <div className="group">
-              <h1 className="text-3xl font-bold relative">
-                <span className="bg-gradient-to-r from-purple-400 via-fuchsia-300 to-blue-400 bg-clip-text text-transparent hover:from-fuchsia-300 hover:via-purple-400 hover:to-blue-500 transition-all duration-300">
-                  Adam Moffat
-                </span>
-                {/* Glow effect */}
-                <span className="absolute -inset-1 bg-gradient-to-r from-purple-600/20 to-blue-600/20 blur-lg group-hover:blur-xl transition-all duration-300 opacity-75 group-hover:opacity-100" />
-              </h1>
+    <>
+      <motion.nav
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        className={`fixed top-4 left-0 right-0 z-50 mx-auto w-[90%] max-w-5xl rounded-2xl transition-all duration-300 ${
+          scrolled
+            ? 'bg-white/5 backdrop-blur-xl border border-white/10 shadow-2xl'
+            : 'bg-transparent'
+        }`}
+      >
+        <div className="flex items-center justify-between px-6 py-4">
+          {/* Logo */}
+          <a href="#" className="flex items-center gap-2 group">
+            <div className="bg-purple-600/20 p-2 rounded-lg group-hover:bg-purple-600/40 transition-colors">
+              <Code2 className="w-6 h-6 text-purple-400" />
             </div>
-          </div>
+            <span className="text-xl font-bold tracking-tight text-white">
+              Adam<span className="text-purple-400">.dev</span>
+            </span>
+          </a>
 
-          {/* Mobile menu button */}
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="lg:hidden text-white/90 hover:text-purple-400 transition-colors"
-          >
-            <Menu size={24} />
-          </button>
-
-          {/* Desktop Navigation */}
-          <div className="hidden lg:flex space-x-12">
-            {['About', 'Projects', 'Trivia','Contact'].map((item) => (
+          {/* Desktop Links */}
+          <div className="hidden md:flex items-center gap-8">
+            {navLinks.map((link) => (
               <a
-                key={item}
-                href={`#${item.toLowerCase()}`}
-                className="relative group"
+                key={link.name}
+                href={link.href}
+                className="text-sm font-medium text-gray-400 hover:text-white transition-colors relative group"
               >
-                <span className="relative z-10 text-lg text-white/80 group-hover:text-white transition-colors duration-300">
-                  {item}
-                </span>
-                {/* Animated underline with glow */}
-                <span className="absolute inset-x-0 -bottom-1 h-0.5 bg-gradient-to-r from-purple-500 to-blue-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left shadow-lg shadow-purple-500/50" />
-                {/* Hover glow effect */}
-                <span className="absolute inset-0 -z-10 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 bg-gradient-to-r from-purple-600/10 to-blue-600/10 blur-lg" />
+                {link.name}
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-purple-500 transition-all group-hover:w-full" />
               </a>
             ))}
           </div>
 
-          {/* Mobile Navigation */}
-          <div
-            className={`lg:hidden absolute top-full left-0 right-0 bg-black/95 backdrop-blur-md transition-all duration-300 ${
-              isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
-            }`}
+          {/* Mobile Menu Toggle */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="md:hidden text-white p-2 hover:bg-white/10 rounded-lg transition"
           >
-            <div className="py-4 px-6 space-y-4">
-              {['About', 'Projects', 'Trivia', 'Contact'].map((item) => (
+            {isOpen ? <X /> : <Menu />}
+          </button>
+        </div>
+      </motion.nav>
+
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="fixed inset-0 z-40 bg-black/95 backdrop-blur-lg pt-24 px-6 md:hidden"
+          >
+            <div className="flex flex-col gap-6 text-center">
+              {navLinks.map((link) => (
                 <a
-                  key={item}
-                  href={`#${item.toLowerCase()}`}
-                  className="block text-lg text-white/80 hover:text-white hover:bg-purple-900/20 px-4 py-2 rounded-lg transition-all duration-300"
+                  key={link.name}
+                  href={link.href}
                   onClick={() => setIsOpen(false)}
+                  className="text-2xl font-bold text-white hover:text-purple-400 transition-colors"
                 >
-                  {item}
+                  {link.name}
                 </a>
               ))}
             </div>
-          </div>
-        </div>
-      </div>
-    </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 

@@ -1,194 +1,137 @@
 import React from 'react';
-import { Stars, Award, Code, Car, Globe, Cpu, Brain, FileText } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Cpu, Terminal, Car, Zap, GraduationCap, ArrowUpRight } from 'lucide-react';
 
-const ShootingStar = () => (
-  <div 
-    className="shooting-star absolute h-0.5 w-16 bg-gradient-to-r from-purple-400 via-white to-transparent rounded-full"
-    style={{
-      top: `${Math.random() * 100}%`,
-      left: `${Math.random() * 100}%`,
-      transform: `rotate(${45 + Math.random() * 10}deg)`,
-      animation: `shootingStarAnimation ${2 + Math.random() * 3}s linear infinite`,
-      animationDelay: `${Math.random() * 5}s`
-    }}
-  />
+const Card = ({ children, className, delay = 0 }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: true }}
+    transition={{ duration: 0.5, delay }}
+    className={`bg-white/5 border border-white/10 rounded-3xl p-6 backdrop-blur-sm hover:border-purple-500/30 transition-colors ${className}`}
+  >
+    {children}
+  </motion.div>
 );
 
 const About = () => {
   return (
-    <section id="about" className="min-h-screen pt-24 p-8 bg-black text-white relative overflow-hidden">
-      {/* Shooting Stars */}
-      {Array.from({ length: 300 }).map((_, i) => (
-        <ShootingStar key={`shooting-star-${i}`} />
-      ))}
-      
-      {/* Animated Background */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-black via-purple-950/20 to-black" />
-        {Array.from({ length: 50 }).map((_, i) => (
-          <Stars
-            key={i}
-            className="absolute animate-pulse text-white/10"
-            style={{
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 3}s`,
-              transform: `scale(${0.3 + Math.random()})`,
-            }}
-            size={16}
-          />
-        ))}
-      </div>
+    <section id="about" className="min-h-screen pt-32 pb-20 px-6 relative overflow-hidden">
+      {/* Background Gradients */}
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-[120px] -z-10" />
+      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-[120px] -z-10" />
 
-      <div className="relative z-10">
-        {/* Header Section */}
-        <div className="text-center mb-16">
-          <h2 className="text-5xl font-bold mb-6 relative inline-block group">
-            <span className="bg-gradient-to-r from-purple-400 via-fuchsia-300 to-blue-400 bg-clip-text text-transparent">
-              Hi, I'm Adam! 👋
+      <div className="max-w-6xl mx-auto">
+        <div className="mb-12">
+          <motion.h1 
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            className="text-5xl md:text-7xl font-bold mb-6 tracking-tight"
+          >
+            Engineering <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-500">
+              Intelligence.
             </span>
-            <span className="absolute -inset-1 bg-gradient-to-r from-purple-600/20 to-blue-600/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          </h2>
-          <p className="text-lg text-gray-300 max-w-2xl mx-auto leading-relaxed mb-8">
-          ’I’m a versatile Software Developer, Tech Sales enthusiast, and Project Manager with experience in AI engineering, web development, and product management. Currently a Project Management Intern at The Genie Company, I lead agile teams to build AI-driven solutions. As a Team Researcher in network intrusion detection, I develop machine learning models to enhance cybersecurity. Previously, I was a Software Engineer Intern at Caring Guide, developing their website, and a Product Manager at R&C Marketing, managing a client database that generated $130K+ in revenue in two months.
+          </motion.h1>
+          <motion.p 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="text-xl text-gray-400 max-w-2xl"
+          >
+            Applications Engineer at ASSET InterTech. Incoming Cornell Grad Student. 
+            Building high-performance software and systems.
+          </motion.p>
+        </div>
 
-</p>
+        {/* BENTO GRID LAYOUT */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          
+          {/* Main Work Card */}
+          <Card className="md:col-span-2 md:row-span-1 bg-gradient-to-br from-purple-900/20 to-black">
+            <div className="flex justify-between items-start mb-4">
+              <div className="p-3 bg-purple-500/20 rounded-2xl">
+                <Cpu className="w-8 h-8 text-purple-400" />
+              </div>
+              <span className="px-3 py-1 bg-green-500/10 text-green-400 text-xs rounded-full border border-green-500/20">Current Role</span>
+            </div>
+            <h3 className="text-2xl font-bold mb-2">Applications Engineer</h3>
+            <p className="text-gray-400 mb-4">ASSET InterTech</p>
+            <p className="text-gray-300 text-sm leading-relaxed">
+              Specializing in JTAG/Boundary-scan technology and the ScanWorks platform. 
+              Bridging the gap between hardware and software, delivering technical training to clients (like Tinker AFB), 
+              and developing automation tools for system validation.
+            </p>
+          </Card>
 
-          {/* Resume Button */}
-          <a
+          {/* Education Card */}
+          <Card className="md:col-span-1" delay={0.1}>
+            <div className="p-3 bg-blue-500/20 rounded-2xl w-fit mb-4">
+              <GraduationCap className="w-8 h-8 text-blue-400" />
+            </div>
+            <h3 className="text-xl font-bold mb-1">Education</h3>
+            <div className="space-y-4 mt-4">
+              <div>
+                <p className="text-white font-medium">Cornell University</p>
+                <p className="text-xs text-gray-400">M.Eng Engineering Management (2026)</p>
+              </div>
+              <div>
+                <p className="text-white font-medium">UT Dallas</p>
+                <p className="text-xs text-gray-400">B.S. Computer Science</p>
+              </div>
+            </div>
+          </Card>
+
+          {/* Tech Stack / Skills */}
+          <Card className="md:col-span-1" delay={0.2}>
+            <div className="p-3 bg-orange-500/20 rounded-2xl w-fit mb-4">
+              <Terminal className="w-8 h-8 text-orange-400" />
+            </div>
+            <h3 className="text-xl font-bold mb-4">The Stack</h3>
+            <div className="flex flex-wrap gap-2">
+              {['React', 'Python', 'C++', 'ScanWorks', 'JTAG', 'AWS', 'Node.js'].map((tech) => (
+                <span key={tech} className="px-3 py-1 bg-white/5 rounded-lg text-xs hover:bg-white/10 transition">
+                  {tech}
+                </span>
+              ))}
+            </div>
+          </Card>
+
+          {/* Personal / Interests (Cars & Lifting) */}
+          <Card className="md:col-span-2 flex flex-col justify-center relative overflow-hidden group" delay={0.3}>
+            <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-transparent z-10" />
+            {/* You can add a car image background here if you want */}
+            <div className="relative z-20 flex items-center justify-between">
+              <div>
+                <div className="flex items-center gap-3 mb-2">
+                  <Car className="text-red-500" />
+                  <h3 className="text-xl font-bold">Beyond the Code</h3>
+                </div>
+                <p className="text-gray-400 text-sm max-w-md">
+                  When I'm not engineering, I'm modifying my Mercedes-AMG C63s, 
+                  analyzing Porsche specs, or hitting the bench press.
+                  Obsessed with aesthetics, performance, and precision engineering.
+                </p>
+              </div>
+              <Zap className="w-24 h-24 text-white/5 absolute -right-4 -bottom-4 group-hover:scale-110 transition-transform duration-500" />
+            </div>
+          </Card>
+
+        </div>
+        
+        {/* Resume Button */}
+        <div className="mt-12 text-center">
+          <motion.a 
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
             href="/Adam_Moffat_Resume.pdf"
             target="_blank"
-            rel="noopener noreferrer"
-            className="group relative inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-500 to-blue-500 rounded-full overflow-hidden"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-white text-black rounded-full font-bold hover:bg-gray-200 transition-colors"
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-600/50 to-blue-600/50 opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-300" />
-            <div className="relative flex items-center gap-2">
-              <FileText className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
-              <span className="font-semibold group-hover:translate-x-0.5 transition-transform duration-300">
-                View Resume
-              </span>
-            </div>
-            <div className="absolute inset-0 border border-purple-400/30 rounded-full group-hover:border-purple-400/60 transition-colors duration-300" />
-          </a>
-        </div>
-
-        {/* Content Sections */}
-        <div className="max-w-4xl mx-auto space-y-12">
-          {/* Current Positions */}
-          <div className="backdrop-blur-lg bg-purple-950/10 rounded-xl p-6 border border-purple-500/20 hover:border-purple-500/40 transition-all duration-300 shadow-lg shadow-purple-500/5">
-            <h3 className="text-2xl font-semibold mb-4 flex items-center gap-2">
-              <Cpu className="text-purple-400" />
-              <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-                Current Positions
-              </span>
-            </h3>
-            <ul className="space-y-3 text-gray-300">
-              <li className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-purple-400" />
-                Incoming Project Management Intern at The Genie Company
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-purple-400" />
-                Researcher for ML Network Intrusion Detection in Richardson, TX
-              </li>
-            </ul>
-          </div>
-
-          {/* Previous Positions */}
-          <div className="backdrop-blur-lg bg-purple-950/10 rounded-xl p-6 border border-purple-500/20 hover:border-purple-500/40 transition-all duration-300 shadow-lg shadow-purple-500/5">
-            <h3 className="text-2xl font-semibold mb-4 flex items-center gap-2">
-              <Brain className="text-purple-400" />
-              <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-                Previous Positions
-              </span>
-            </h3>
-            <ul className="space-y-3 text-gray-300">
-              <li className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-purple-400" />
-                Software Developer Intern at CaringGuide, April - December 2023
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-purple-400" />
-                Product Manager at R&C Marketing, May - Sep 2024
-
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-purple-400" />
-                Project Manager at Kappa Theta Phi, Aug - Dec 2023              </li>
-            </ul>
-          </div>
-
-          {/* Achievements */}
-          <div className="backdrop-blur-lg bg-purple-950/10 rounded-xl p-6 border border-purple-500/20 hover:border-purple-500/40 transition-all duration-300 shadow-lg shadow-purple-500/5">
-            <h3 className="text-2xl font-semibold mb-4 flex items-center gap-2">
-              <Award className="text-purple-400" />
-              <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-                Achievements I'm Proud Of
-              </span>
-            </h3>
-            <ul className="space-y-3 text-gray-300">
-              {[
-                '🏆 1st Place in two categories at HackUNT 2024 for creating FinTeach',
-                '📈 Managed $130K in revenue for R&C Marketing',
-                '🎓 Awarded full-ride Academic Excellence Scholarship at UT Dallas',
-                '🏅 Multi-year blue ribbon nationalist in speech competitions'
-              ].map((achievement, i) => (
-                <li key={i} className="flex items-center gap-2">
-                  <span className="h-1.5 w-1.5 rounded-full bg-purple-400" />
-                  {achievement}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Interests & Hobbies */}
-          <div className="backdrop-blur-lg bg-purple-950/10 rounded-xl p-6 border border-purple-500/20 hover:border-purple-500/40 transition-all duration-300 shadow-lg shadow-purple-500/5">
-            <h3 className="text-2xl font-semibold mb-4 flex items-center gap-2">
-              <Globe className="text-purple-400" />
-              <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-                Beyond The Code
-              </span>
-            </h3>
-            <ul className="space-y-3 text-gray-300">
-              <li className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-purple-400" />
-                Car enthusiast passionate about automotive modifications and design
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-purple-400" />
-                Avid traveler - explored 17 countries and counting 🌍
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-purple-400" />
-                Architecture and innovative design aficionado
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-purple-400" />
-                Always experimenting with new technologies and creative projects
-              </li>
-            </ul>
-          </div>
+            View Full Resume <ArrowUpRight className="w-5 h-5" />
+          </motion.a>
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes shootingStarAnimation {
-          0% {
-            transform: translateX(-100%) translateY(-100%) rotate(45deg);
-            opacity: 1;
-          }
-          20% {
-            opacity: 1;
-          }
-          60% {
-            opacity: 0;
-          }
-          100% {
-            transform: translateX(200%) translateY(200%) rotate(45deg);
-            opacity: 0;
-          }
-        }
-      `}</style>
     </section>
   );
 };
