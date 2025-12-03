@@ -7,8 +7,17 @@ const Card = ({ children, className, delay = 0 }) => (
     initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
-    transition={{ duration: 0.5, delay }}
-    className={`bg-white/5 border border-white/10 rounded-3xl p-6 backdrop-blur-sm hover:border-purple-500/30 transition-colors ${className}`}
+    transition={{ type: "spring", stiffness: 300, damping: 20, delay }}
+    
+    // --- ADD THIS FOR INTERACTIVITY ---
+    drag
+    dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }} // Snaps back to center
+    dragElastic={0.2} // How "stretchy" the pull is
+    whileHover={{ scale: 1.02, cursor: "grab" }}
+    whileDrag={{ scale: 1.1, cursor: "grabbing", zIndex: 50 }}
+    // ----------------------------------
+
+    className={`bg-white/5 border border-white/10 rounded-3xl p-6 backdrop-blur-sm hover:border-purple-500/30 transition-colors shadow-lg ${className}`}
   >
     {children}
   </motion.div>
@@ -22,26 +31,49 @@ const About = () => {
       <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-[120px] -z-10" />
 
       <div className="max-w-6xl mx-auto">
-        <div className="mb-12">
-          <motion.h1 
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            className="text-5xl md:text-7xl font-bold mb-6 tracking-tight"
+        
+        {/* HERO SECTION WITH PFP */}
+        <div className="mb-16 flex flex-col md:flex-row items-center md:items-start gap-10">
+          
+          {/* Profile Picture */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.5 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            transition={{ type: "spring", duration: 0.8 }}
+            className="relative shrink-0 group"
           >
-            Engineering <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-500">
-              Intelligence.
-            </span>
-          </motion.h1>
-          <motion.p 
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="text-xl text-gray-400 max-w-2xl"
-          >
-            Applications Engineer at ASSET InterTech. Incoming Cornell Grad Student. 
-            Building high-performance software and systems.
-          </motion.p>
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-600 to-blue-600 blur-2xl opacity-40 group-hover:opacity-60 transition-opacity duration-500 -z-10 rounded-full" />
+            <div className="w-40 h-40 md:w-48 md:h-48 rounded-[2rem] overflow-hidden border-2 border-white/10 shadow-2xl rotate-3 group-hover:rotate-0 transition-transform duration-500">
+              <img 
+                src={`${process.env.PUBLIC_URL}/PFP.jpg`} 
+                alt="Adam Moffat" 
+                className="w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-700" 
+              />
+            </div>
+          </motion.div>
+
+          {/* Text Content */}
+          <div className="text-center md:text-left pt-4">
+            <motion.h1 
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              className="text-5xl md:text-7xl font-bold mb-6 tracking-tight"
+            >
+              Engineering <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-500">
+                Intelligence.
+              </span>
+            </motion.h1>
+            <motion.p 
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ delay: 0.2 }}
+              className="text-xl text-gray-400 max-w-2xl"
+            >
+              Applications Engineer at ASSET InterTech. Incoming Cornell Grad Student. 
+              Building high-performance software and systems.
+            </motion.p>
+          </div>
         </div>
 
         {/* BENTO GRID LAYOUT */}
@@ -100,7 +132,6 @@ const About = () => {
           {/* Personal / Interests (Cars & Lifting) */}
           <Card className="md:col-span-2 flex flex-col justify-center relative overflow-hidden group" delay={0.3}>
             <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-transparent z-10" />
-            {/* You can add a car image background here if you want */}
             <div className="relative z-20 flex items-center justify-between">
               <div>
                 <div className="flex items-center gap-3 mb-2">
