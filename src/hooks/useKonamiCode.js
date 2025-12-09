@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 const KONAMI_CODE = [
   'ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 
@@ -9,6 +9,11 @@ const KONAMI_CODE = [
 export const useKonamiCode = () => {
   const [isAMGMode, setIsAMGMode] = useState(false);
   const [input, setInput] = useState([]);
+  const isAMGModeRef = useRef(false);
+
+  useEffect(() => {
+    isAMGModeRef.current = isAMGMode;
+  }, [isAMGMode]);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -21,16 +26,18 @@ export const useKonamiCode = () => {
 
       // Check match
       if (JSON.stringify(newInput) === JSON.stringify(KONAMI_CODE)) {
-        setIsAMGMode(prev => {
-          const newMode = !prev;
-          // Show different message based on whether activating or deactivating
-          if (newMode) {
-            alert("🏎️ AMG MODE ACTIVATED: STAGE 2 TUNE LOADED");
-          } else {
-            alert("🔙 Returning to normal mode");
-          }
-          return newMode;
-        });
+        // Check current state before toggling to show appropriate message
+        const currentMode = isAMGModeRef.current;
+        const newMode = !currentMode;
+        
+        // Show alert based on current state (before toggle)
+        if (newMode) {
+          alert("🏎️ AMG MODE ACTIVATED: STAGE 2 TUNE LOADED");
+        } else {
+          alert("🔙 Returning to normal mode");
+        }
+        
+        setIsAMGMode(newMode);
         setInput([]);
       }
     };
