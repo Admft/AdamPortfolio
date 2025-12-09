@@ -21,8 +21,16 @@ export const useKonamiCode = () => {
 
       // Check match
       if (JSON.stringify(newInput) === JSON.stringify(KONAMI_CODE)) {
-        setIsAMGMode(prev => !prev);
-        alert("🏎️ AMG MODE ACTIVATED: STAGE 2 TUNE LOADED"); // Or play an engine sound
+        setIsAMGMode(prev => {
+          const newMode = !prev;
+          // Show different message based on whether activating or deactivating
+          if (newMode) {
+            alert("🏎️ AMG MODE ACTIVATED: STAGE 2 TUNE LOADED");
+          } else {
+            alert("🔙 Returning to normal mode");
+          }
+          return newMode;
+        });
         setInput([]);
       }
     };
