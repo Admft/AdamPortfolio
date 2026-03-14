@@ -4,6 +4,7 @@ import { Environment, Float, PresentationControls } from '@react-three/drei';
 import { ReactLenis } from '@studio-freight/react-lenis';
 import * as THREE from 'three'; // Import Three.js for the math functions
 
+
 import Navbar from './components/Navbar';
 import About from './components/About';
 import Projects from './components/Projects';
@@ -86,7 +87,7 @@ function App() {
         <div className="relative z-10">
           <Navbar isAMGMode={isAMGMode} />
           <main>
-            <About />
+            <About isAMGMode={isAMGMode} />
             <Projects />
             <Trivia />
             <Contact />

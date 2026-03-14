@@ -2,7 +2,8 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Cpu, Terminal, Car, Zap, GraduationCap, ArrowUpRight } from 'lucide-react';
 
-const Card = ({ children, className, delay = 0 }) => (
+// Added isAMGMode prop to Card to handle border hover colors
+const Card = ({ children, className, delay = 0, isAMGMode }) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
@@ -13,17 +14,21 @@ const Card = ({ children, className, delay = 0 }) => (
     dragElastic={0.2}
     whileHover={{ scale: 1.02, cursor: "grab" }}
     whileDrag={{ scale: 1.1, cursor: "grabbing", zIndex: 50 }}
-    className={`bg-white/5 border border-white/10 rounded-3xl p-6 backdrop-blur-sm hover:border-purple-500/30 transition-colors shadow-lg ${className}`}
+    className={`bg-white/5 border border-white/10 rounded-3xl p-6 backdrop-blur-sm transition-colors shadow-lg ${
+      isAMGMode ? 'hover:border-red-500/50' : 'hover:border-purple-500/30'
+    } ${className}`}
   >
     {children}
   </motion.div>
 );
 
-const About = () => {
+// Accept the prop here
+const About = ({ isAMGMode }) => {
   return (
     <section id="about" className="min-h-screen pt-32 pb-20 px-6 relative overflow-hidden">
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-600/20 rounded-full blur-[120px] -z-10" />
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-600/10 rounded-full blur-[120px] -z-10" />
+      {/* Background blurs swap to Red/Silver */}
+      <div className={`absolute top-0 left-1/4 w-96 h-96 rounded-full blur-[120px] -z-10 transition-colors duration-700 ${isAMGMode ? 'bg-red-600/20' : 'bg-purple-600/20'}`} />
+      <div className={`absolute bottom-0 right-1/4 w-96 h-96 rounded-full blur-[120px] -z-10 transition-colors duration-700 ${isAMGMode ? 'bg-zinc-500/20' : 'bg-blue-600/10'}`} />
 
       <div className="max-w-6xl mx-auto">
         <div className="mb-16 flex flex-col md:flex-row items-center md:items-start gap-10">
@@ -33,7 +38,7 @@ const About = () => {
             transition={{ type: "spring", duration: 0.8 }}
             className="relative shrink-0 group"
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-600 to-blue-600 blur-2xl opacity-40 group-hover:opacity-60 transition-opacity duration-500 -z-10 rounded-full" />
+            <div className={`absolute inset-0 blur-2xl opacity-40 group-hover:opacity-60 transition-all duration-500 -z-10 rounded-full ${isAMGMode ? 'bg-gradient-to-br from-red-600 to-black' : 'bg-gradient-to-br from-purple-600 to-blue-600'}`} />
             <div className="w-40 h-40 md:w-48 md:h-48 rounded-[2rem] overflow-hidden border-2 border-white/10 shadow-2xl rotate-3 group-hover:rotate-0 transition-transform duration-500">
               <img 
                 src={`${process.env.PUBLIC_URL}/Adamheadshot.webp`} 
@@ -50,7 +55,8 @@ const About = () => {
               className="text-5xl md:text-7xl font-bold mb-6 tracking-tight"
             >
               Solutions <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-500">
+              {/* Text gradient swaps to Red/Silver */}
+              <span className={`text-transparent bg-clip-text transition-colors duration-700 ${isAMGMode ? 'bg-gradient-to-r from-red-500 to-zinc-400' : 'bg-gradient-to-r from-purple-400 to-blue-500'}`}>
                 Engineering.
               </span>
             </motion.h1>
@@ -67,12 +73,15 @@ const About = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Card className="md:col-span-2 md:row-span-1 bg-gradient-to-br from-purple-900/20 to-black">
+          <Card isAMGMode={isAMGMode} className={`md:col-span-2 md:row-span-1 transition-colors duration-700 ${isAMGMode ? 'bg-gradient-to-br from-red-900/20 to-black' : 'bg-gradient-to-br from-purple-900/20 to-black'}`}>
             <div className="flex justify-between items-start mb-4">
-              <div className="p-3 bg-purple-500/20 rounded-2xl">
-                <Cpu className="w-8 h-8 text-purple-400" />
+              {/* Icon container colors swap */}
+              <div className={`p-3 rounded-2xl transition-colors duration-700 ${isAMGMode ? 'bg-red-500/20' : 'bg-purple-500/20'}`}>
+                <Cpu className={`w-8 h-8 transition-colors duration-700 ${isAMGMode ? 'text-red-500' : 'text-purple-400'}`} />
               </div>
-              <span className="px-3 py-1 bg-green-500/10 text-green-400 text-xs rounded-full border border-green-500/20">Pre-Sales Pilot Focus</span>
+              <span className={`px-3 py-1 text-xs rounded-full border transition-colors duration-700 ${isAMGMode ? 'bg-red-500/10 text-red-400 border-red-500/20' : 'bg-green-500/10 text-green-400 border-green-500/20'}`}>
+                Pre-Sales Pilot Focus
+              </span>
             </div>
             <h3 className="text-2xl font-bold mb-2">Associate Field Application Engineer</h3>
             <p className="text-gray-400 mb-4">VusionGroup</p>
@@ -82,9 +91,9 @@ const About = () => {
             </p>
           </Card>
 
-          <Card className="md:col-span-1" delay={0.1}>
-            <div className="p-3 bg-blue-500/20 rounded-2xl w-fit mb-4">
-              <GraduationCap className="w-8 h-8 text-blue-400" />
+          <Card isAMGMode={isAMGMode} className="md:col-span-1" delay={0.1}>
+            <div className={`p-3 rounded-2xl w-fit mb-4 transition-colors duration-700 ${isAMGMode ? 'bg-zinc-500/20' : 'bg-blue-500/20'}`}>
+              <GraduationCap className={`w-8 h-8 transition-colors duration-700 ${isAMGMode ? 'text-zinc-300' : 'text-blue-400'}`} />
             </div>
             <h3 className="text-xl font-bold mb-1">Education</h3>
             <div className="space-y-4 mt-4">
@@ -99,21 +108,21 @@ const About = () => {
             </div>
           </Card>
 
-          <Card className="md:col-span-1" delay={0.2}>
-            <div className="p-3 bg-orange-500/20 rounded-2xl w-fit mb-4">
-              <Terminal className="w-8 h-8 text-orange-400" />
+          <Card isAMGMode={isAMGMode} className="md:col-span-1" delay={0.2}>
+            <div className={`p-3 rounded-2xl w-fit mb-4 transition-colors duration-700 ${isAMGMode ? 'bg-red-500/20' : 'bg-orange-500/20'}`}>
+              <Terminal className={`w-8 h-8 transition-colors duration-700 ${isAMGMode ? 'text-red-500' : 'text-orange-400'}`} />
             </div>
             <h3 className="text-xl font-bold mb-4">The Stack</h3>
             <div className="flex flex-wrap gap-2">
               {['POC/POV Delivery', 'Consultative Selling', 'Azure', 'Python', 'KQL', 'JTAG', 'REST APIs'].map((tech) => (
-                <span key={tech} className="px-3 py-1 bg-white/5 rounded-lg text-xs hover:bg-white/10 transition">
+                <span key={tech} className={`px-3 py-1 rounded-lg text-xs transition-colors duration-700 ${isAMGMode ? 'bg-red-950/30 text-red-200 border border-red-900/30' : 'bg-white/5 hover:bg-white/10'}`}>
                   {tech}
                 </span>
               ))}
             </div>
           </Card>
 
-          <Card className="md:col-span-2 flex flex-col justify-center relative overflow-hidden group" delay={0.3}>
+          <Card isAMGMode={isAMGMode} className="md:col-span-2 flex flex-col justify-center relative overflow-hidden group" delay={0.3}>
             <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-transparent z-10" />
             <div className="relative z-20 flex items-center justify-between">
               <div>

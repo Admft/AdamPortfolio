@@ -57,8 +57,15 @@ const Contact = () => {
           />
         </div>
 
-        <div className="mt-20 pt-10 border-t border-white/10 text-gray-600 text-sm">
-          © {new Date().getFullYear()} Adam Moffat. Built with React & Framer Motion.
+        {/* Added the subtle hint right below the copyright */}
+        <div className="mt-20 pt-10 border-t border-white/10 flex flex-col items-center gap-3">
+          <span className="text-gray-600 text-sm">© {new Date().getFullYear()} Adam Moffat. Built with React & Framer Motion.</span>
+          <span 
+            className="text-gray-900 hover:text-red-500/50 transition-colors duration-500 text-[10px] tracking-[0.2em] font-mono cursor-default select-none"
+            title="System Override Sequence"
+          >
+            SYS_OVR: ↑ ↑ ↓ ↓ ← → ← → B A
+          </span>
         </div>
       </div>
     </section>
