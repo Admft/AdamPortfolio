@@ -32,7 +32,7 @@ const Navbar = () => {
       >
         <div className="flex items-center justify-between px-6 py-4">
           {/* Logo */}
-          <a href="#" className="flex items-center gap-2 group">
+          <a href="/" className="flex items-center gap-2 group">
             <div className="bg-purple-600/20 p-2 rounded-lg group-hover:bg-purple-600/40 transition-colors">
               <Code2 className="w-6 h-6 text-purple-400" />
             </div>

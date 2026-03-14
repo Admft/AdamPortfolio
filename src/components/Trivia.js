@@ -1,10 +1,9 @@
-
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Terminal, Cpu, DollarSign, Kanban, 
-  Briefcase, Award, TrendingUp, AlertTriangle, 
-  ChevronRight, RefreshCw, Clock, CheckCircle2, XCircle, ShieldAlert
+  Briefcase, Award, 
+  ChevronRight, RefreshCw, Clock, CheckCircle2, ShieldAlert
 } from 'lucide-react';
 
 // --- THE EXPERT DATABASE (10+ Questions per Role) ---
@@ -103,6 +102,7 @@ const Trivia = () => {
       handleAnswer(null); // Time out
     }
     return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gameState, timer, feedback]);
 
   const handleAnswer = (answer) => {
@@ -223,9 +223,6 @@ const Trivia = () => {
 
                 <div className="space-y-3">
                   {questions[currentQIndex].options.map((option, idx) => {
-                     const isSelected = feedback && option === questions[currentQIndex].a;
-                     const isWrong = feedback === 'incorrect';
-                     
                      return (
                       <button
                         key={idx}
