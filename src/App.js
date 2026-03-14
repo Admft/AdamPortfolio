@@ -1,38 +1,49 @@
-import React, { useRef } from 'react';
+import React, { Suspense, useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { Environment, Float } from '@react-three/drei';
+import { Environment, Float, PresentationControls } from '@react-three/drei';
 import { ReactLenis } from '@studio-freight/react-lenis';
+import * as THREE from 'three'; // Import Three.js for the math functions
 
 import Navbar from './components/Navbar';
 import About from './components/About';
 import Projects from './components/Projects';
 import Trivia from './components/Trivia';
 import Contact from './components/Contact';
+import SystemStatus from './components/SystemStatus';
 import { useKonamiCode } from './hooks/useKonamiCode';
 
-// 1. The 3D Object: A floating, glowing geometric core
-const TechCore = () => {
-  const meshRef = useRef();
+// Import your C63 model!
+import { Model as C63 } from './components/C63';
 
-  // useFrame runs 60 times a second to animate the object
-  useFrame((state, delta) => {
-    meshRef.current.rotation.x += delta * 0.15;
-    meshRef.current.rotation.y += delta * 0.2;
+// THE UPGRADE: A wrapper component that ties rotation to the scrollbar
+const ScrollRotatingCar = () => {
+  const carRef = useRef();
+
+  // useFrame runs 60 times a second
+  useFrame(() => {
+    if (!carRef.current) return;
+
+    // 1. Calculate how far down the page we are (from 0 to 1)
+    const scrollY = window.scrollY;
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollProgress = maxScroll > 0 ? scrollY / maxScroll : 0;
+
+    // 2. Target rotation: We want a full 360-degree spin (Math.PI * 2) by the bottom
+    const targetRotation = scrollProgress * Math.PI * 2;
+
+    // 3. Smoothly interpolate (lerp) the current rotation to the target rotation
+    carRef.current.rotation.y = THREE.MathUtils.lerp(
+      carRef.current.rotation.y,
+      targetRotation,
+      0.05 // The "weight" of the car. Lower = heavier/smoother, Higher = snappier
+    );
   });
 
   return (
-    <Float speed={2} rotationIntensity={0.5} floatIntensity={2}>
-      <mesh ref={meshRef} position={[2, 0, -2]}>
-        {/* Icosahedron gives a great technical, node-based look */}
-        <icosahedronGeometry args={[2.5, 1]} />
-        <meshStandardMaterial 
-          color="#a855f7" // Purple to match your Tailwind theme
-          wireframe={true} 
-          emissive="#a855f7"
-          emissiveIntensity={0.4}
-        />
-      </mesh>
-    </Float>
+    <group ref={carRef}>
+      {/* If the C63 is too big/small, adjust the scale here */}
+      <C63 scale={100} position={[2, -1, -2]} />
+    </group>
   );
 };
 
@@ -40,24 +51,38 @@ function App() {
   const isAMGMode = useKonamiCode();
 
   return (
-    // 2. Wrap the app in Lenis for premium, Awwwards-level scrolling
     <ReactLenis root>
       <div className={`relative min-h-screen text-white selection:bg-purple-500/30 transition-colors duration-700 ${isAMGMode ? 'amg-mode' : 'bg-[#050505]'}`}>
         
-        {/* 3. The 3D Canvas Layer (Fixed behind everything) */}
+        {/* THE 3D SHOWCASE LAYER */}
         <div className="fixed inset-0 z-0 pointer-events-none">
-          <Canvas camera={{ position: [0, 0, 6], fov: 45 }}>
-            <ambientLight intensity={0.2} />
-            <directionalLight position={[10, 10, 5]} intensity={2} />
-            <Environment preset="city" /> {/* Instant realistic reflections */}
-            <TechCore />
+          <Canvas camera={{ position: [0, 0, 8], fov: 45 }}>
+            <ambientLight intensity={0.5} />
+            <spotLight position={[10, 15, 10]} angle={0.3} penumbra={1} intensity={2} castShadow />
+            <Environment preset="city" /> 
+
+            <Suspense fallback={null}>
+              <PresentationControls 
+                global 
+                config={{ mass: 2, tension: 500 }} 
+                snap={{ mass: 4, tension: 1500 }} 
+                rotation={[0, -Math.PI / 4, 0]} 
+                polar={[-Math.PI / 3, Math.PI / 3]} 
+                azimuth={[-Math.PI / 1.4, Math.PI / 2]}
+              >
+                <Float speed={1.5} rotationIntensity={0.2} floatIntensity={0.5}>
+                  {/* Swap out the static model for our new scrolling wrapper */}
+                  <ScrollRotatingCar />
+                </Float>
+              </PresentationControls>
+            </Suspense>
+
           </Canvas>
         </div>
 
-        {/* Global Noise Overlay (Moved to absolute so it doesn't block scroll) */}
         <div className="fixed inset-0 z-0 pointer-events-none bg-noise opacity-30" />
         
-        {/* 4. Your existing UI (Layered safely on top) */}
+        {/* UI LAYER */}
         <div className="relative z-10">
           <Navbar isAMGMode={isAMGMode} />
           <main>
@@ -66,6 +91,7 @@ function App() {
             <Trivia />
             <Contact />
           </main>
+          <SystemStatus />
         </div>
         
       </div>
