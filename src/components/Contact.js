@@ -37,8 +37,8 @@ const Contact = () => {
           <ContactItem 
             icon={Mail} 
             label="Email" 
-            value="adamrmoffat@gmail.com" 
-            href="mailto:adamrmoffat@gmail.com"
+            value="arm393@cornell.edu" 
+            href="mailto:arm393@cornell.edu"
             delay={0}
           />
           <ContactItem 
