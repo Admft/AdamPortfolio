@@ -3,8 +3,17 @@
 @import 'tailwindcss/utilities';
 
 :root {
-  --background: #030303;
-  --foreground: #ffffff;
+  --background: #050505;
+  --foreground: #f5f5f5;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  /* Smooth scrolling is handled by Lenis in `App.js` */
+  scroll-behavior: auto;
 }
 
 body {
@@ -17,100 +26,101 @@ body {
   overflow-x: hidden;
 }
 
-/* Premium Noise Texture Background */
 .bg-noise {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   pointer-events: none;
   z-index: 0;
-  opacity: 0.05;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
-/* Scrollbar Styling */
 ::-webkit-scrollbar {
   width: 8px;
 }
+
 ::-webkit-scrollbar-track {
-  background: #0a0a0a;
-}
-::-webkit-scrollbar-thumb {
-  background: #333;
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: #090909;
 }
 
-/* Smooth gradient text utility */
-.text-gradient {
-  background: linear-gradient(to right, #c084fc, #6366f1);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+::-webkit-scrollbar-thumb {
+  background: #2a2a2a;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #404040;
+}
+
+.base-mode {
+  background:
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.04), transparent 35%),
+    linear-gradient(to bottom, #050505, #090909 50%, #050505);
 }
 
 .amg-mode {
-  /* 1. THE CARBON FIBER WEAVE (Pure CSS) */
-  background-color: #111;
-  background-image: 
-    linear-gradient(45deg, #1a1a1a 25%, transparent 25%, transparent 75%, #1a1a1a 75%, #1a1a1a),
-    linear-gradient(45deg, #1a1a1a 25%, transparent 25%, transparent 75%, #1a1a1a 75%, #1a1a1a);
-  background-position: 0 0, 10px 10px;
-  background-size: 20px 20px;
+  background-color: #070707;
+  background-image:
+    linear-gradient(45deg, rgba(255, 255, 255, 0.025) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.025) 75%, rgba(255, 255, 255, 0.025)),
+    linear-gradient(45deg, rgba(255, 255, 255, 0.025) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.025) 75%, rgba(255, 255, 255, 0.025)),
+    radial-gradient(circle at top right, rgba(220, 38, 38, 0.10), transparent 28%),
+    linear-gradient(to bottom, #040404, #090909 45%, #050505);
+  background-position: 0 0, 10px 10px, top right, center;
+  background-size: 20px 20px, 20px 20px, auto, auto;
 }
 
-/* 2. OVERRIDE TEXT GRADIENTS (From Purple/Blue -> Red/Silver) */
-.amg-mode .bg-gradient-to-r,
-.amg-mode .bg-gradient-to-br,
-.amg-mode .text-transparent {
-  /* This forces the gradients to be AMG colors */
-  --tw-gradient-from: #ef4444 !important; /* Red-500 */
-  --tw-gradient-to: #9ca3af !important;   /* Gray-400 (Silver) */
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to) !important;
-}
-
-/* 3. AGGRESSIVE TYPOGRAPHY (The "Fast" Feel) */
-.amg-mode h1, 
-.amg-mode h2, 
+.amg-mode h1,
+.amg-mode h2,
 .amg-mode h3 {
-  font-style: italic; /* Speed skew */
   text-transform: uppercase;
-  letter-spacing: -0.05em; /* Tight tracking for speed */
-  text-shadow: 2px 2px 0px rgba(255, 0, 0, 0.2); /* Red shadow offset */
+  letter-spacing: -0.03em;
 }
 
-/* 4. ACCENT COLORS (Borders & Icons) */
+.amg-mode .bg-white\/5 {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+.amg-mode .bg-white\/10 {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.amg-mode .border-white\/10 {
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+.amg-mode .text-gray-300 {
+  color: #d4d4d8 !important;
+}
+
+.amg-mode .text-gray-400 {
+  color: #b4b4bc !important;
+}
+
+.amg-mode .text-gray-500,
+.amg-mode .text-gray-600 {
+  color: #8f8f98 !important;
+}
+
 .amg-mode .text-purple-400,
 .amg-mode .text-blue-400,
-.amg-mode .text-green-400 {
-  color: #ef4444 !important; /* Force everything Red */
-  text-shadow: 0 0 10px rgba(239, 68, 68, 0.5); /* Red Glow */
+.amg-mode .text-green-400,
+.amg-mode .text-orange-400 {
+  color: #ef4444 !important;
 }
 
-.amg-mode .border-purple-500\/20,
-.amg-mode .border-white\/10 {
-  border-color: rgba(239, 68, 68, 0.3) !important;
+.amg-mode .bg-purple-500\/20,
+.amg-mode .bg-blue-500\/20,
+.amg-mode .bg-green-500\/10,
+.amg-mode .bg-orange-500\/20 {
+  background-color: rgba(239, 68, 68, 0.12) !important;
 }
 
-/* 5. BUTTONS (Race Mode) */
 .amg-mode button,
 .amg-mode a.inline-flex {
-  background: #ef4444 !important; /* Red background */
-  color: white !important;
-  border-radius: 2px !important; /* Sharper edges, less rounded */
-  transform: skewX(-10deg); /* Physical button skew */
+  transition: all 0.25s ease;
 }
 
-.amg-mode button > *, 
-.amg-mode a.inline-flex > * {
-  transform: skewX(10deg); /* Un-skew the text inside so it's readable */
-}
-
-/* 6. PROFILE PICTURE (Redline RPM Aura) */
-.amg-mode img[alt="Adam Moffat"] {
-  border-color: #ef4444;
-  filter: contrast(1.2) sepia(0.2); /* Gritty look */
+.amg-mode button:hover,
+.amg-mode a.inline-flex:hover {
+  box-shadow: 0 0 0 1px rgba(239, 68, 68, 0.28), 0 0 18px rgba(239, 68, 68, 0.08);
 }

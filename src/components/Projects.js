@@ -55,14 +55,12 @@ const Projects = () => {
               {/* Image Area */}
               <div className="h-48 overflow-hidden relative">
                 <div className={`absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10`} />
-                <img 
-                  src={project.image} 
-                  alt={project.title} 
+                <img
+                  src={project.image}
+                  alt={project.title}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                 />
-                <div className="absolute top-4 right-4 z-20 bg-black/50 p-2 rounded-full backdrop-blur-sm border border-white/10">
-                  {project.icon}
-                </div>
+
               </div>
 
               {/* Content Area */}
@@ -83,9 +81,9 @@ const Projects = () => {
                 </div>
 
                 {project.link && (
-                  <a 
+                  <a
                     href={project.link}
-                    target="_blank" 
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 text-sm font-bold text-white hover:text-purple-400 transition-colors"
                   >

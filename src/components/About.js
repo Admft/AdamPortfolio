@@ -1,155 +1,229 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Cpu, Terminal, Car, Zap, GraduationCap, ArrowUpRight } from 'lucide-react';
 
-// Added isAMGMode prop to Card to handle border hover colors
-const Card = ({ children, className, delay = 0, isAMGMode }) => (
+const Card = ({ children, className = '', delay = 0, isAMGMode }) => (
   <motion.div
     initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true }}
-    transition={{ type: "spring", stiffness: 300, damping: 20, delay }}
-    drag
-    dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
-    dragElastic={0.2}
-    whileHover={{ scale: 1.02, cursor: "grab" }}
-    whileDrag={{ scale: 1.1, cursor: "grabbing", zIndex: 50 }}
-    className={`bg-white/5 border border-white/10 rounded-3xl p-6 backdrop-blur-sm transition-colors shadow-lg ${
-      isAMGMode ? 'hover:border-red-500/50' : 'hover:border-purple-500/30'
-    } ${className}`}
+    transition={{ type: 'spring', stiffness: 300, damping: 20, delay }}
+    whileHover={{ scale: 1.015 }}
+    className={[
+      'rounded-[28px] p-6 md:p-8 backdrop-blur-md shadow-2xl transition-all duration-300',
+      isAMGMode
+        ? 'bg-black/65 border border-white/10 hover:border-red-500/40'
+        : 'bg-white/5 border border-white/10 hover:border-purple-500/30',
+      className,
+    ].join(' ')}
   >
     {children}
   </motion.div>
 );
 
-// Accept the prop here
+const SectionEyebrow = ({ children, isAMGMode }) => (
+  <div className="flex items-center gap-3 mb-5">
+    <span
+      className={`h-[2px] w-10 rounded-full ${isAMGMode ? 'bg-red-500' : 'bg-purple-400'
+        }`}
+    />
+    <span className="text-[11px] tracking-[0.28em] uppercase text-zinc-400">
+      {children}
+    </span>
+  </div>
+);
+
 const About = ({ isAMGMode }) => {
+  const stack = [
+    'POC/POV Delivery',
+    'Consultative Selling',
+    'Azure',
+    'Python',
+    'KQL',
+    'JTAG',
+    'REST APIs',
+  ];
+
   return (
-    <section id="about" className="min-h-screen pt-32 pb-20 px-6 relative overflow-hidden">
-      {/* Background blurs swap to Red/Silver */}
-      <div className={`absolute top-0 left-1/4 w-96 h-96 rounded-full blur-[120px] -z-10 transition-colors duration-700 ${isAMGMode ? 'bg-red-600/20' : 'bg-purple-600/20'}`} />
-      <div className={`absolute bottom-0 right-1/4 w-96 h-96 rounded-full blur-[120px] -z-10 transition-colors duration-700 ${isAMGMode ? 'bg-zinc-500/20' : 'bg-blue-600/10'}`} />
+    <section
+      id="about"
+      className="min-h-screen pt-32 pb-20 px-6 relative overflow-hidden"
+    >
+      <div
+        className={`absolute top-12 left-[18%] w-72 h-72 rounded-full blur-[130px] -z-10 ${isAMGMode ? 'bg-red-700/10' : 'bg-purple-600/20'
+          }`}
+      />
+      <div
+        className={`absolute bottom-10 right-[15%] w-80 h-80 rounded-full blur-[140px] -z-10 ${isAMGMode ? 'bg-white/5' : 'bg-blue-600/10'
+          }`}
+      />
 
       <div className="max-w-6xl mx-auto">
         <div className="mb-16 flex flex-col md:flex-row items-center md:items-start gap-10">
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.5 }}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.92 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ type: "spring", duration: 0.8 }}
+            viewport={{ once: true }}
+            transition={{ type: 'spring', duration: 0.8 }}
             className="relative shrink-0 group"
           >
-            <div className={`absolute inset-0 blur-2xl opacity-40 group-hover:opacity-60 transition-all duration-500 -z-10 rounded-full ${isAMGMode ? 'bg-gradient-to-br from-red-600 to-black' : 'bg-gradient-to-br from-purple-600 to-blue-600'}`} />
-            <div className="w-40 h-40 md:w-48 md:h-48 rounded-[2rem] overflow-hidden border-2 border-white/10 shadow-2xl rotate-3 group-hover:rotate-0 transition-transform duration-500">
-              <img 
-                src={`${process.env.PUBLIC_URL}/Adamheadshot.webp`} 
-                alt="Adam Moffat" 
-                className="w-full h-full object-cover scale-110 group-hover:scale-100 transition-transform duration-700" 
+            <div
+              className={`absolute inset-0 blur-2xl opacity-30 group-hover:opacity-40 transition-all duration-500 -z-10 rounded-full ${isAMGMode
+                ? 'bg-gradient-to-br from-red-600/40 to-transparent'
+                : 'bg-gradient-to-br from-purple-600 to-blue-600'
+                }`}
+            />
+            <div className="w-40 h-40 md:w-48 md:h-48 rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl rotate-2 group-hover:rotate-0 transition-transform duration-500">
+              <img
+                src={`${process.env.PUBLIC_URL}/Adamheadshot.webp`}
+                alt="Adam Moffat"
+                className="w-full h-full object-cover scale-105 group-hover:scale-100 transition-transform duration-700"
               />
             </div>
           </motion.div>
 
           <div className="text-center md:text-left pt-4">
-            <motion.h1 
+            <motion.h1
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              className="text-5xl md:text-7xl font-bold mb-6 tracking-tight"
+              viewport={{ once: true }}
+              className="text-5xl md:text-7xl font-bold mb-6 tracking-tight text-white"
             >
               Solutions <br />
-              {/* Text gradient swaps to Red/Silver */}
-              <span className={`text-transparent bg-clip-text transition-colors duration-700 ${isAMGMode ? 'bg-gradient-to-r from-red-500 to-zinc-400' : 'bg-gradient-to-r from-purple-400 to-blue-500'}`}>
+              <span
+                className={
+                  isAMGMode
+                    ? 'text-zinc-200'
+                    : 'text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-500'
+                }
+              >
                 Engineering.
               </span>
             </motion.h1>
-            <motion.p 
+
+            <motion.p
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
-              transition={{ delay: 0.2 }}
-              className="text-xl text-gray-400 max-w-2xl"
+              viewport={{ once: true }}
+              transition={{ delay: 0.15 }}
+              className="text-lg md:text-xl text-zinc-300 max-w-2xl leading-relaxed"
             >
-              Associate Field Application Engineer at VusionGroup. 
-              Cornell M.Eng Candidate. Bridging the gap between complex technical architecture and enterprise ROI.
+              Associate Field Application Engineer at VusionGroup.
+              Cornell M.Eng candidate. Bridging the gap between complex
+              technical architecture and enterprise ROI.
             </motion.p>
           </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <Card isAMGMode={isAMGMode} className={`md:col-span-2 md:row-span-1 transition-colors duration-700 ${isAMGMode ? 'bg-gradient-to-br from-red-900/20 to-black' : 'bg-gradient-to-br from-purple-900/20 to-black'}`}>
-            <div className="flex justify-between items-start mb-4">
-              {/* Icon container colors swap */}
-              <div className={`p-3 rounded-2xl transition-colors duration-700 ${isAMGMode ? 'bg-red-500/20' : 'bg-purple-500/20'}`}>
-                <Cpu className={`w-8 h-8 transition-colors duration-700 ${isAMGMode ? 'text-red-500' : 'text-purple-400'}`} />
-              </div>
-              <span className={`px-3 py-1 text-xs rounded-full border transition-colors duration-700 ${isAMGMode ? 'bg-red-500/10 text-red-400 border-red-500/20' : 'bg-green-500/10 text-green-400 border-green-500/20'}`}>
+          <Card
+            isAMGMode={isAMGMode}
+            className="md:col-span-2"
+          >
+            <div className="flex justify-between items-start gap-4 mb-6">
+              <SectionEyebrow isAMGMode={isAMGMode}>
+                Current Role
+              </SectionEyebrow>
+
+              <span
+                className={`px-3 py-1 text-[10px] md:text-xs rounded-full border uppercase tracking-[0.18em] whitespace-nowrap ${isAMGMode
+                  ? 'bg-red-500/10 text-red-300 border-red-500/20'
+                  : 'bg-green-500/10 text-green-300 border-green-500/20'
+                  }`}
+              >
                 Pre-Sales Pilot Focus
               </span>
             </div>
-            <h3 className="text-2xl font-bold mb-2">Associate Field Application Engineer</h3>
-            <p className="text-gray-400 mb-4">VusionGroup</p>
-            <p className="text-gray-300 text-sm leading-relaxed">
-              Securing enterprise pilot deployments through complex network segregation and technical discovery. 
-              Orchestrating Python automation pipelines and Azure Kusto (KQL) dashboards to prove solution ROI to executive leadership and accelerate technical sales cycles.
+
+            <h3 className="text-2xl md:text-4xl font-bold text-white mb-2">
+              Associate Field Application Engineer
+            </h3>
+            <p className="text-zinc-400 mb-5 uppercase tracking-[0.18em] text-sm">
+              VusionGroup
+            </p>
+            <p className="text-zinc-200 text-sm md:text-base leading-8 max-w-3xl">
+              Securing enterprise pilot deployments through complex network
+              segregation and technical discovery. Orchestrating Python
+              automation pipelines and Azure Kusto dashboards to prove solution
+              ROI to executive leadership and accelerate technical sales cycles.
             </p>
           </Card>
 
-          <Card isAMGMode={isAMGMode} className="md:col-span-1" delay={0.1}>
-            <div className={`p-3 rounded-2xl w-fit mb-4 transition-colors duration-700 ${isAMGMode ? 'bg-zinc-500/20' : 'bg-blue-500/20'}`}>
-              <GraduationCap className={`w-8 h-8 transition-colors duration-700 ${isAMGMode ? 'text-zinc-300' : 'text-blue-400'}`} />
-            </div>
-            <h3 className="text-xl font-bold mb-1">Education</h3>
-            <div className="space-y-4 mt-4">
+          <Card isAMGMode={isAMGMode} delay={0.08}>
+            <SectionEyebrow isAMGMode={isAMGMode}>Education</SectionEyebrow>
+
+            <div className="space-y-6">
               <div>
-                <p className="text-white font-medium">Cornell University</p>
-                <p className="text-xs text-gray-400">M.Eng Engineering Management (Focus: Technical Sales)</p>
+                <p className="text-white font-semibold text-xl">
+                  Cornell University
+                </p>
+                <p className="text-sm text-zinc-400 mt-1 leading-6">
+                  M.Eng Engineering Management
+                  <br />
+                  Focus: Technical Sales
+                </p>
               </div>
+
+              <div className="h-px bg-white/10" />
+
               <div>
-                <p className="text-white font-medium">UT Dallas</p>
-                <p className="text-xs text-gray-400">B.S. Computer Science</p>
+                <p className="text-white font-semibold text-xl">UT Dallas</p>
+                <p className="text-sm text-zinc-400 mt-1 leading-6">
+                  B.S. Computer Science
+                </p>
               </div>
             </div>
           </Card>
 
-          <Card isAMGMode={isAMGMode} className="md:col-span-1" delay={0.2}>
-            <div className={`p-3 rounded-2xl w-fit mb-4 transition-colors duration-700 ${isAMGMode ? 'bg-red-500/20' : 'bg-orange-500/20'}`}>
-              <Terminal className={`w-8 h-8 transition-colors duration-700 ${isAMGMode ? 'text-red-500' : 'text-orange-400'}`} />
-            </div>
-            <h3 className="text-xl font-bold mb-4">The Stack</h3>
+          <Card isAMGMode={isAMGMode} delay={0.16}>
+            <SectionEyebrow isAMGMode={isAMGMode}>The Stack</SectionEyebrow>
+
             <div className="flex flex-wrap gap-2">
-              {['POC/POV Delivery', 'Consultative Selling', 'Azure', 'Python', 'KQL', 'JTAG', 'REST APIs'].map((tech) => (
-                <span key={tech} className={`px-3 py-1 rounded-lg text-xs transition-colors duration-700 ${isAMGMode ? 'bg-red-950/30 text-red-200 border border-red-900/30' : 'bg-white/5 hover:bg-white/10'}`}>
+              {stack.map((tech) => (
+                <span
+                  key={tech}
+                  className={`px-3 py-2 rounded-xl text-xs md:text-sm border ${isAMGMode
+                    ? 'bg-zinc-950 text-zinc-200 border-white/10'
+                    : 'bg-white/5 text-white border-white/10'
+                    }`}
+                >
                   {tech}
                 </span>
               ))}
             </div>
           </Card>
 
-          <Card isAMGMode={isAMGMode} className="md:col-span-2 flex flex-col justify-center relative overflow-hidden group" delay={0.3}>
-            <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-transparent z-10" />
-            <div className="relative z-20 flex items-center justify-between">
-              <div>
-                <div className="flex items-center gap-3 mb-2">
-                  <Car className="text-red-500" />
-                  <h3 className="text-xl font-bold">Beyond the Pitch</h3>
-                </div>
-                <p className="text-gray-400 text-sm max-w-md">
-                By day, I'm scoping solutions and pursuing my Master's degree. 
-                Off the clock, I'm an avid traveler, an avid golfer, and constantly tweaking my C63s AMG. 
-                Whether in academics, travel, or automotive tuning, I'm obsessed with aesthetics, performance, and precision execution.
-                </p>
-              </div>
-              <Zap className="w-24 h-24 text-white/5 absolute -right-4 -bottom-4 group-hover:scale-110 transition-transform duration-500" />
-            </div>
+          <Card
+            isAMGMode={isAMGMode}
+            className="md:col-span-2 relative overflow-hidden"
+            delay={0.24}
+          >
+            <div className="absolute inset-y-0 right-0 w-1/3 bg-gradient-to-l from-red-500/10 to-transparent pointer-events-none" />
+            <SectionEyebrow isAMGMode={isAMGMode}>Beyond the Pitch</SectionEyebrow>
+
+            <p className="text-zinc-200 text-sm md:text-lg leading-8 max-w-3xl relative z-10">
+              By day, I am scoping solutions and pursuing my Master&apos;s
+              degree. Off the clock, I am an avid traveler, an avid golfer, and
+              constantly tweaking my C63s AMG. Whether in academics, travel, or
+              automotive tuning, I care about aesthetics, performance, and
+              precision execution.
+            </p>
           </Card>
         </div>
-        
+
         <div className="mt-12 text-center">
-          <motion.a 
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+          <motion.a
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.98 }}
             href="/Resume.pdf"
             target="_blank"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-white text-black rounded-full font-bold hover:bg-gray-200 transition-colors"
+            rel="noreferrer"
+            className={`inline-flex items-center gap-3 px-8 py-4 rounded-full font-semibold uppercase tracking-[0.16em] border transition-all ${isAMGMode
+              ? 'bg-red-500 text-white border-red-400 hover:bg-red-400'
+              : 'bg-white text-black border-white hover:bg-zinc-200'
+              }`}
           >
-            View Full Resume <ArrowUpRight className="w-5 h-5" />
+            <span className="h-2 w-2 rounded-full bg-current opacity-80" />
+            View Full Resume
           </motion.a>
         </div>
       </div>
