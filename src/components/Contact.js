@@ -22,7 +22,7 @@ const Contact = () => {
   return (
     <section id="contact" className="py-20 px-6 relative overflow-hidden">
       <div className="max-w-4xl mx-auto text-center">
-        <motion.h2 
+        <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           className="text-5xl font-bold mb-6"
@@ -34,24 +34,24 @@ const Contact = () => {
         </p>
 
         <div className="grid md:grid-cols-3 gap-6">
-          <ContactItem 
-            icon={Mail} 
-            label="Email" 
-            value="arm393@cornell.edu" 
+          <ContactItem
+            icon={Mail}
+            label="Email"
+            value="arm393@cornell.edu"
             href="mailto:arm393@cornell.edu"
             delay={0}
           />
-          <ContactItem 
-            icon={Linkedin} 
-            label="LinkedIn" 
-            value="/in/adamrmoffat" 
+          <ContactItem
+            icon={Linkedin}
+            label="LinkedIn"
+            value="/in/adamrmoffat"
             href="https://www.linkedin.com/in/adamrmoffat/"
             delay={0.1}
           />
-          <ContactItem 
-            icon={Github} 
-            label="GitHub" 
-            value="@admft" 
+          <ContactItem
+            icon={Github}
+            label="GitHub"
+            value="@admft"
             href="https://github.com/admft"
             delay={0.2}
           />
@@ -59,15 +59,15 @@ const Contact = () => {
 
         {/* Added the subtle hint right below the copyright */}
         <div className="mt-20 pt-10 border-t border-white/10 flex flex-col items-center gap-3">
-          <span className="text-gray-600 text-sm">© {new Date().getFullYear()} Adam Moffat. Built with React & Framer Motion.</span>
-          <span 
-            className="text-gray-900 hover:text-red-500/50 transition-colors duration-500 text-[10px] tracking-[0.2em] font-mono cursor-default select-none"
-            title="System Override Sequence"
-          >
-            SYS_OVR: ↑ ↑ ↓ ↓ ← → ← → B A
+          <span className="text-gray-500 text-sm">
+            © {new Date().getFullYear()} Adam Moffat. Built with React & Framer Motion.
+          </span>
+          <span className="text-[11px] uppercase tracking-[0.28em] text-zinc-500">
+            AMG Performance Interface
           </span>
         </div>
       </div>
+
     </section>
   );
 };
