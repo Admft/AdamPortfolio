@@ -16,7 +16,12 @@ import { getRecentQuestionIds, pushRecentQuestionIds } from '../utils/triviaUtil
 
 const ROUND_SIZE = 5;
 const QUESTION_TIME = 18;
-const DIFFICULTY_OPTIONS = ['any', 'easy', 'medium', 'hard'];
+const DIFFICULTY_OPTIONS = [
+  { value: 'any', label: 'Mixed' },
+  { value: 'easy', label: 'Easy' },
+  { value: 'medium', label: 'Medium' },
+  { value: 'hard', label: 'Hard' },
+];
 
 const TRACKS = {
   general: {
@@ -67,6 +72,7 @@ const createQuizState = () => ({
 const Trivia = ({ isAMGMode }) => {
   const [view, setView] = useState('select');
   const [activeTrackId, setActiveTrackId] = useState(null);
+  const [pendingTrackId, setPendingTrackId] = useState(null);
   const [quiz, setQuiz] = useState(createQuizState);
   const [scoreByTrack, setScoreByTrack] = useState({ general: null, swe: null });
   const [difficultyByTrack, setDifficultyByTrack] = useState({
@@ -78,7 +84,7 @@ const Trivia = ({ isAMGMode }) => {
   const currentQuestion = quiz.questions[quiz.currentIndex] || null;
   const totalQuestions = quiz.questions.length || ROUND_SIZE;
 
-  const loadRound = useCallback(async (trackId, { fromButton = false } = {}) => {
+  const loadRound = useCallback(async (trackId, { fromButton = false, difficultyOverride } = {}) => {
     setQuiz((prev) => ({
       ...prev,
       status: fromButton && prev.questions.length ? 'refreshing' : 'loading',
@@ -90,7 +96,7 @@ const Trivia = ({ isAMGMode }) => {
 
     try {
       const recentIds = getRecentQuestionIds(trackId);
-      const difficulty = difficultyByTrack[trackId] || 'any';
+      const difficulty = difficultyOverride || difficultyByTrack[trackId] || 'any';
       const questions = trackId === 'general'
         ? await fetchGeneralTriviaRound({ recentIds, count: ROUND_SIZE, difficulty })
         : await fetchSweTriviaRound({ recentIds, count: ROUND_SIZE, difficulty });
@@ -120,15 +126,30 @@ const Trivia = ({ isAMGMode }) => {
   }, [difficultyByTrack]);
 
   const startTrack = (trackId) => {
+    setPendingTrackId(trackId);
+    setView('difficulty');
+  };
+
+  const chooseDifficulty = (difficulty) => {
+    const trackId = pendingTrackId;
+    if (!trackId) return;
+
+    setDifficultyByTrack((prev) => ({
+      ...prev,
+      [trackId]: difficulty,
+    }));
+
     setActiveTrackId(trackId);
+    setPendingTrackId(null);
     setView('quiz');
     setQuiz(createQuizState());
-    loadRound(trackId);
+    loadRound(trackId, { difficultyOverride: difficulty });
   };
 
   const goToSelection = () => {
     setView('select');
     setActiveTrackId(null);
+    setPendingTrackId(null);
     setQuiz(createQuizState());
   };
 
@@ -264,30 +285,11 @@ const Trivia = ({ isAMGMode }) => {
                     <p className="text-zinc-400 text-sm leading-relaxed mb-6">{track.description}</p>
 
                     <div className="mb-5">
-                      <label
-                        htmlFor={`${track.id}-difficulty`}
-                        className="block text-xs text-zinc-400 uppercase tracking-[0.14em] mb-2"
-                      >
-                        Difficulty
-                      </label>
-                      <select
-                        id={`${track.id}-difficulty`}
-                        value={selectedDifficulty}
-                        onChange={(event) => {
-                          const nextDifficulty = event.target.value;
-                          setDifficultyByTrack((prev) => ({
-                            ...prev,
-                            [track.id]: nextDifficulty,
-                          }));
-                        }}
-                        className="w-full rounded-xl border border-white/15 bg-white/5 px-3 py-2.5 text-sm text-zinc-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
-                      >
-                        {DIFFICULTY_OPTIONS.map((option) => (
-                          <option key={option} value={option} className="bg-zinc-900 text-zinc-100">
-                            {option === 'any' ? 'Any Difficulty' : `${option[0].toUpperCase()}${option.slice(1)}`}
-                          </option>
-                        ))}
-                      </select>
+                      <p className="text-xs text-zinc-500">
+                        Last selected difficulty: {selectedDifficulty === 'any'
+                          ? 'Mixed'
+                          : `${selectedDifficulty[0].toUpperCase()}${selectedDifficulty.slice(1)}`}
+                      </p>
                     </div>
 
                     <div className="flex items-center justify-between gap-4">
@@ -309,6 +311,44 @@ const Trivia = ({ isAMGMode }) => {
               })}
             </div>
           </div>
+        )}
+
+        {view === 'difficulty' && pendingTrackId && (
+          <article className={`rounded-3xl border p-6 md:p-8 backdrop-blur-xl shadow-2xl ${isAMGMode ? 'bg-black/65 border-white/10' : 'bg-white/5 border-white/10'}`}>
+            <div className="max-w-2xl mx-auto text-center">
+              <p className="text-zinc-400 text-sm uppercase tracking-[0.18em] mb-3">
+                {TRACKS[pendingTrackId].title}
+              </p>
+              <h3 className="text-3xl md:text-4xl font-bold text-white mb-3">
+                Pick Difficulty
+              </h3>
+              <p className="text-zinc-400 mb-8">
+                Choose your difficulty before starting the quiz.
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+                {DIFFICULTY_OPTIONS.map((option) => (
+                  <button
+                    key={option.value}
+                    type="button"
+                    onClick={() => chooseDifficulty(option.value)}
+                    className="px-4 py-3 rounded-xl border border-white/15 bg-white/5 text-zinc-200 font-semibold hover:bg-white/10 hover:border-white/30 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </div>
+
+              <button
+                type="button"
+                onClick={goToSelection}
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl border border-white/15 bg-white/5 text-sm font-semibold text-white hover:bg-white/10 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+              >
+                <ChevronLeft className="w-4 h-4" />
+                Back To Quiz Types
+              </button>
+            </div>
+          </article>
         )}
 
         {view === 'quiz' && activeTrack && (
