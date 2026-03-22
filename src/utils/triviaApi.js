@@ -90,7 +90,7 @@ const logRoundStats = ({ source, requested, collected, selected }) => {
   );
 };
 
-const fetchOpenTriviaRound = async ({ count, source, category }) => {
+const fetchOpenTriviaRound = async ({ count, source, category, difficulty }) => {
   const attempts = 5;
   const collected = [];
   const amountPlan = [Math.max(10, count * 2), Math.max(7, count + 2), count];
@@ -103,6 +103,7 @@ const fetchOpenTriviaRound = async ({ count, source, category }) => {
       });
 
       if (category) params.set('category', String(category));
+      if (difficulty) params.set('difficulty', difficulty);
 
       // Use token first, then gracefully retry without it if OpenTDB is exhausted.
       const token = await getOpenTriviaToken();
@@ -169,6 +170,7 @@ export const fetchGeneralTriviaRound = async ({ recentIds, count = DEFAULT_ROUND
   const collected = await fetchOpenTriviaRound({
     count,
     source: 'general',
+    difficulty: 'easy',
   });
 
   const selected = selectUniqueQuestions({
