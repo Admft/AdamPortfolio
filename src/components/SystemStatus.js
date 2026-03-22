@@ -7,6 +7,8 @@ const techStack = [
   { name: 'WebGL / Three.js', status: 'operational' },
   { name: 'Framer Motion', status: 'operational' },
   { name: 'Tailwind CSS', status: 'operational' },
+  { name: 'Open Trivia DB API', status: 'operational' },
+  { name: 'Open Trivia Token API', status: 'operational' },
 ];
 
 const SystemStatus = ({ isAMGMode }) => {

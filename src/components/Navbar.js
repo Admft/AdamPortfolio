@@ -33,7 +33,7 @@ const Navbar = ({ isAMGMode, setIsAMGMode }) => {
             <div
               className={`h-3 w-3 rounded-full ${isAMGMode
                 ? 'bg-red-500 shadow-[0_0_18px_rgba(239,68,68,0.7)]'
-                : 'bg-purple-400 shadow-[0_0_18px_rgba(192,132,252,0.6)]'
+                : 'bg-green-400 shadow-[0_0_18px_rgba(74,222,128,0.6)]'
                 }`}
             />
             <span className="text-xl font-semibold tracking-[0.18em] uppercase text-white">

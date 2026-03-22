@@ -92,7 +92,7 @@ const About = ({ isAMGMode }) => {
               <span
                 className={
                   isAMGMode
-                    ? 'text-zinc-200'
+                    ? 'text-transparent bg-clip-text bg-gradient-to-r from-zinc-700 via-red-500 to-red-300'
                     : 'text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-500'
                 }
               >
