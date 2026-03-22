@@ -40,6 +40,16 @@ const TRACKS = {
   },
 };
 
+const getTrackBadgeClass = (trackId, isAMGMode) => {
+  if (isAMGMode) {
+    return 'bg-red-500/10 text-red-200 border border-red-500/30';
+  }
+
+  return trackId === 'general'
+    ? 'bg-purple-500/15 text-purple-200 border border-purple-400/30'
+    : 'bg-blue-500/15 text-blue-200 border border-blue-400/30';
+};
+
 const createQuizState = () => ({
   status: 'idle',
   error: '',
@@ -204,7 +214,7 @@ const Trivia = ({ isAMGMode }) => {
           className="text-center mb-10"
         >
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-md mb-4">
-            <ShieldAlert className="w-4 h-4 text-purple-400" />
+            <ShieldAlert className={`w-4 h-4 ${isAMGMode ? 'text-red-300' : 'text-purple-400'}`} />
             <span className="text-sm font-medium text-gray-300">Interview Drill Mode</span>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">Trivia Lab</h2>
@@ -235,7 +245,7 @@ const Trivia = ({ isAMGMode }) => {
                   >
                     <div className="flex items-start justify-between gap-4 mb-5">
                       <div>
-                        <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r ${track.accent} text-black text-[11px] font-semibold uppercase tracking-[0.18em]`}>
+                        <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-semibold uppercase tracking-[0.18em] ${getTrackBadgeClass(track.id, isAMGMode)}`}>
                           <Icon className="w-3.5 h-3.5" />
                           {track.shortLabel}
                         </div>
