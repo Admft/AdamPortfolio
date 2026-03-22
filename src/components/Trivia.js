@@ -34,7 +34,7 @@ const TRACKS = {
     shortLabel: 'SWE',
     subtitle: 'Programming, Linux, DevOps, and technical fundamentals.',
     description:
-      'Technical multiple-choice questions from QuizAPI focused on software engineering and adjacent systems topics.',
+      'Technical multiple-choice questions from Open Trivia DB (computer science category).',
     icon: BrainCircuit,
     accent: 'from-emerald-400 to-cyan-500',
   },
@@ -61,6 +61,7 @@ const Trivia = ({ isAMGMode }) => {
 
   const activeTrack = activeTrackId ? TRACKS[activeTrackId] : null;
   const currentQuestion = quiz.questions[quiz.currentIndex] || null;
+  const totalQuestions = quiz.questions.length || ROUND_SIZE;
 
   const loadRound = useCallback(async (trackId, { fromButton = false } = {}) => {
     setQuiz((prev) => ({
@@ -122,7 +123,10 @@ const Trivia = ({ isAMGMode }) => {
       if (isLastQuestion) {
         setScoreByTrack((scores) => ({
           ...scores,
-          [activeTrackId]: prev.score,
+          [activeTrackId]: {
+            score: prev.score,
+            total: prev.questions.length || ROUND_SIZE,
+          },
         }));
 
         return {
@@ -244,7 +248,9 @@ const Trivia = ({ isAMGMode }) => {
 
                     <div className="flex items-center justify-between gap-4">
                       <p className="text-xs text-zinc-500">
-                        {previousScore === null ? 'No previous score this session.' : `Last score: ${previousScore}/${ROUND_SIZE}`}
+                        {previousScore === null
+                          ? 'No previous score this session.'
+                          : `Last score: ${previousScore.score}/${previousScore.total}`}
                       </p>
                       <button
                         type="button"
@@ -275,7 +281,7 @@ const Trivia = ({ isAMGMode }) => {
                 </button>
 
                 <h3 className="text-3xl font-bold text-white">{activeTrack.title}</h3>
-                <p className="text-zinc-400 text-sm mt-2">5 questions, timed. Difficulty is shown when available.</p>
+                <p className="text-zinc-400 text-sm mt-2">Timed round. Difficulty is shown when available.</p>
               </div>
 
               <div className="flex items-center gap-3">
@@ -309,7 +315,7 @@ const Trivia = ({ isAMGMode }) => {
               <div className="space-y-5">
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
                   <div className="rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-zinc-200">
-                    Question {quiz.currentIndex + 1}/{ROUND_SIZE}
+                    Question {quiz.currentIndex + 1}/{totalQuestions}
                   </div>
                   <div className="rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-zinc-200">
                     Score: {quiz.score}
@@ -390,7 +396,7 @@ const Trivia = ({ isAMGMode }) => {
             {quiz.status === 'ready' && quiz.finished && (
               <div className="rounded-2xl border border-white/10 bg-black/25 p-6 md:p-8 text-center">
                 <p className="text-zinc-400 text-sm uppercase tracking-[0.18em] mb-3">Round Complete</p>
-                <h4 className="text-3xl md:text-4xl font-bold text-white mb-3">{quiz.score}/{ROUND_SIZE}</h4>
+                <h4 className="text-3xl md:text-4xl font-bold text-white mb-3">{quiz.score}/{totalQuestions}</h4>
                 <p className="text-zinc-300 mb-6">You completed the {activeTrack.title} round.</p>
 
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-3">

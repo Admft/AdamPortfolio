@@ -8,6 +8,10 @@ import {
 const OPEN_TRIVIA_TOKEN_STORAGE_KEY = 'portfolio-open-trivia-token';
 const DEFAULT_ROUND_SIZE = 5;
 const OPEN_TRIVIA_SWE_CATEGORY = 18;
+const OPEN_TRIVIA_MIN_REQUEST_GAP_MS = 5200;
+const OPEN_TRIVIA_RATE_LIMIT_BACKOFF_MS = 5200;
+const OPEN_TRIVIA_MAX_RATE_RETRIES = 2;
+let lastOpenTriviaRequestAt = 0;
 
 const getStoredOpenTriviaToken = () => {
   if (typeof window === 'undefined') return null;
@@ -63,6 +67,29 @@ const normalizeOpenTriviaQuestion = (rawQuestion, source = 'general') => {
   };
 };
 
+const sleep = (ms) => new Promise((resolve) => {
+  setTimeout(resolve, ms);
+});
+
+const requestOpenTrivia = async (params) => {
+  const elapsed = Date.now() - lastOpenTriviaRequestAt;
+  const waitMs = Math.max(0, OPEN_TRIVIA_MIN_REQUEST_GAP_MS - elapsed);
+  if (waitMs > 0) await sleep(waitMs);
+
+  const response = await fetch(`https://opentdb.com/api.php?${params.toString()}`);
+  lastOpenTriviaRequestAt = Date.now();
+
+  if (!response.ok) return null;
+  return response.json();
+};
+
+const logRoundStats = ({ source, requested, collected, selected }) => {
+  // Dev-friendly API visibility for shortages without noisy payload logging.
+  console.debug(
+    `[trivia:${source}] requested=${requested} collected=${collected} selected=${selected}`
+  );
+};
+
 const fetchOpenTriviaRound = async ({ count, source, category }) => {
   const attempts = 5;
   const collected = [];
@@ -84,9 +111,18 @@ const fetchOpenTriviaRound = async ({ count, source, category }) => {
       let payload = null;
 
       const requestWithParams = async () => {
-        const response = await fetch(`https://opentdb.com/api.php?${params.toString()}`);
-        if (!response.ok) return null;
-        return response.json();
+        let currentPayload = await requestOpenTrivia(params);
+
+        for (
+          let rateRetry = 0;
+          currentPayload?.response_code === 5 && rateRetry < OPEN_TRIVIA_MAX_RATE_RETRIES;
+          rateRetry += 1
+        ) {
+          await sleep(OPEN_TRIVIA_RATE_LIMIT_BACKOFF_MS);
+          currentPayload = await requestOpenTrivia(params);
+        }
+
+        return currentPayload;
       };
 
       payload = await requestWithParams();
@@ -101,6 +137,16 @@ const fetchOpenTriviaRound = async ({ count, source, category }) => {
           params.delete('token');
         }
         payload = await requestWithParams();
+      }
+
+      if (payload?.response_code === 3) {
+        clearStoredOpenTriviaToken();
+        const refreshedToken = await fetchOpenTriviaToken();
+        if (refreshedToken) {
+          setStoredOpenTriviaToken(refreshedToken);
+          params.set('token', refreshedToken);
+          payload = await requestWithParams();
+        }
       }
 
       if (!payload || payload.response_code !== 0 || !Array.isArray(payload.results)) {
@@ -131,8 +177,15 @@ export const fetchGeneralTriviaRound = async ({ recentIds, count = DEFAULT_ROUND
     recentIds,
   });
 
-  if (selected.length < count) {
-    throw new Error('Could not load enough unique general trivia questions right now.');
+  logRoundStats({
+    source: 'general',
+    requested: count,
+    collected: collected.length,
+    selected: selected.length,
+  });
+
+  if (selected.length === 0) {
+    throw new Error('Could not load any general trivia questions right now.');
   }
 
   return selected;
@@ -151,8 +204,15 @@ export const fetchSweTriviaRound = async ({ recentIds, count = DEFAULT_ROUND_SIZ
     recentIds,
   });
 
-  if (selected.length < count) {
-    throw new Error('Could not load enough unique SWE questions right now.');
+  logRoundStats({
+    source: 'swe',
+    requested: count,
+    collected: collected.length,
+    selected: selected.length,
+  });
+
+  if (selected.length === 0) {
+    throw new Error('Could not load any SWE questions right now.');
   }
 
   return selected;
