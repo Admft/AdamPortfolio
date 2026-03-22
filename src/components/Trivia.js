@@ -17,10 +17,10 @@ import { getRecentQuestionIds, pushRecentQuestionIds } from '../utils/triviaUtil
 const ROUND_SIZE = 5;
 const QUESTION_TIME = 18;
 const DIFFICULTY_OPTIONS = [
-  { value: 'any', label: 'Mixed' },
   { value: 'easy', label: 'Easy' },
   { value: 'medium', label: 'Medium' },
   { value: 'hard', label: 'Hard' },
+  { value: 'any', label: 'Mixed' },
 ];
 
 const TRACKS = {
@@ -326,7 +326,7 @@ const Trivia = ({ isAMGMode }) => {
                 Choose your difficulty before starting the quiz.
               </p>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8">
+              <div className="max-w-sm mx-auto flex flex-col gap-3 mb-8">
                 {DIFFICULTY_OPTIONS.map((option) => (
                   <button
                     key={option.value}
