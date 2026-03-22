@@ -6,10 +6,8 @@ import {
 } from './triviaUtils';
 
 const OPEN_TRIVIA_TOKEN_STORAGE_KEY = 'portfolio-open-trivia-token';
-const OPEN_TRIVIA_BATCH_SIZE = 15;
-const QUIZAPI_BATCH_SIZE = 20;
 const DEFAULT_ROUND_SIZE = 5;
-const SWE_CATEGORIES = ['Code', 'Linux', 'DevOps', 'Docker', 'BASH', 'SQL'];
+const OPEN_TRIVIA_SWE_CATEGORY = 18;
 
 const getStoredOpenTriviaToken = () => {
   if (typeof window === 'undefined') return null;
@@ -19,6 +17,11 @@ const getStoredOpenTriviaToken = () => {
 const setStoredOpenTriviaToken = (token) => {
   if (typeof window === 'undefined' || !token) return;
   window.localStorage.setItem(OPEN_TRIVIA_TOKEN_STORAGE_KEY, token);
+};
+
+const clearStoredOpenTriviaToken = () => {
+  if (typeof window === 'undefined') return;
+  window.localStorage.removeItem(OPEN_TRIVIA_TOKEN_STORAGE_KEY);
 };
 
 const fetchOpenTriviaToken = async () => {
@@ -38,7 +41,7 @@ const getOpenTriviaToken = async () => {
   return token;
 };
 
-const normalizeOpenTriviaQuestion = (rawQuestion) => {
+const normalizeOpenTriviaQuestion = (rawQuestion, source = 'general') => {
   const question = decodeHtmlEntities(rawQuestion.question);
   const correctAnswer = decodeHtmlEntities(rawQuestion.correct_answer);
   const incorrectAnswers = rawQuestion.incorrect_answers.map((answer) => decodeHtmlEntities(answer));
@@ -46,12 +49,12 @@ const normalizeOpenTriviaQuestion = (rawQuestion) => {
 
   return {
     id: buildQuestionId({
-      source: 'general',
+      source,
       question,
       correctAnswer,
       category: decodeHtmlEntities(rawQuestion.category),
     }),
-    source: 'general',
+    source,
     question,
     answers,
     correctAnswer,
@@ -60,127 +63,67 @@ const normalizeOpenTriviaQuestion = (rawQuestion) => {
   };
 };
 
-const resolveQuizApiKey = () => (
-  process.env.REACT_APP_QUIZAPI_KEY
-  || process.env.VITE_QUIZAPI_KEY
-  || process.env.NEXT_PUBLIC_QUIZAPI_KEY
-);
+const fetchOpenTriviaRound = async ({ count, source, category }) => {
+  const attempts = 5;
+  const collected = [];
+  const amountPlan = [Math.max(10, count * 2), Math.max(7, count + 2), count];
 
-const hasConfiguredQuizApiKey = () => Boolean(resolveQuizApiKey());
+  for (let attempt = 0; attempt < attempts && collected.length < count * 2; attempt += 1) {
+    for (const amount of amountPlan) {
+      const params = new URLSearchParams({
+        amount: String(amount),
+        type: 'multiple',
+      });
 
-const normalizeQuizApiQuestion = (rawQuestion) => {
-  const questionText = decodeHtmlEntities(rawQuestion.question || '');
-  const category = decodeHtmlEntities(rawQuestion.category || 'Software Engineering');
+      if (category) params.set('category', String(category));
 
-  const answersEntries = Object.entries(rawQuestion.answers || {})
-    .filter(([, value]) => typeof value === 'string' && value.trim().length > 0)
-    .map(([key, value]) => ({ key, value: decodeHtmlEntities(value) }));
+      // Use token first, then gracefully retry without it if OpenTDB is exhausted.
+      const token = await getOpenTriviaToken();
+      if (token) params.set('token', token);
 
-  const correctEntries = Object.entries(rawQuestion.correct_answers || {})
-    .filter(([, value]) => value === 'true')
-    .map(([key]) => key.replace('_correct', ''));
+      let payload = null;
 
-  if (!questionText || answersEntries.length < 2 || correctEntries.length !== 1) {
-    return null;
+      const requestWithParams = async () => {
+        const response = await fetch(`https://opentdb.com/api.php?${params.toString()}`);
+        if (!response.ok) return null;
+        return response.json();
+      };
+
+      payload = await requestWithParams();
+
+      if (payload?.response_code === 4) {
+        clearStoredOpenTriviaToken();
+        const refreshedToken = await fetchOpenTriviaToken();
+        if (refreshedToken) {
+          setStoredOpenTriviaToken(refreshedToken);
+          params.set('token', refreshedToken);
+        } else {
+          params.delete('token');
+        }
+        payload = await requestWithParams();
+      }
+
+      if (!payload || payload.response_code !== 0 || !Array.isArray(payload.results)) {
+        params.delete('token');
+        payload = await requestWithParams();
+      }
+
+      if (payload && payload.response_code === 0 && Array.isArray(payload.results) && payload.results.length) {
+        collected.push(...payload.results.map((item) => normalizeOpenTriviaQuestion(item, source)));
+      }
+
+      if (collected.length >= count * 2) break;
+    }
   }
 
-  const correctKey = correctEntries[0];
-  const correctMatch = answersEntries.find((entry) => entry.key === correctKey);
-  if (!correctMatch) return null;
-
-  const answers = shuffleArray(answersEntries.map((entry) => entry.value));
-  const correctAnswer = correctMatch.value;
-
-  return {
-    id: `quizapi_${rawQuestion.id || buildQuestionId({
-      source: 'swe',
-      question: questionText,
-      correctAnswer,
-      category,
-    })}`,
-    source: 'swe',
-    question: questionText,
-    answers,
-    correctAnswer,
-    difficulty: rawQuestion.difficulty || undefined,
-    category,
-  };
-};
-
-const fetchQuizApiViaProxy = async () => {
-  const params = new URLSearchParams({
-    limit: String(QUIZAPI_BATCH_SIZE),
-    category: SWE_CATEGORIES.join(','),
-  });
-
-  const response = await fetch(`/api/quizapi?${params.toString()}`);
-  if (!response.ok) {
-    const error = new Error('Quiz proxy request failed');
-    error.status = response.status;
-    throw error;
-  }
-
-  const payload = await response.json();
-  if (!Array.isArray(payload)) {
-    throw new Error('Quiz proxy response was invalid');
-  }
-
-  return payload;
-};
-
-const fetchQuizApiDirect = async (apiKey) => {
-  const params = new URLSearchParams({
-    limit: String(QUIZAPI_BATCH_SIZE),
-    category: SWE_CATEGORIES.join(','),
-  });
-
-  const response = await fetch(`https://quizapi.io/api/v1/questions?${params.toString()}`, {
-    headers: {
-      'X-Api-Key': apiKey,
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error('QuizAPI request failed');
-  }
-
-  const payload = await response.json();
-  if (!Array.isArray(payload)) {
-    throw new Error('QuizAPI response was invalid');
-  }
-
-  return payload;
+  return collected;
 };
 
 export const fetchGeneralTriviaRound = async ({ recentIds, count = DEFAULT_ROUND_SIZE }) => {
-  const token = await getOpenTriviaToken();
-  const attempts = 4;
-  const collected = [];
-
-  for (let attempt = 0; attempt < attempts && collected.length < count * 2; attempt += 1) {
-    const params = new URLSearchParams({
-      amount: String(OPEN_TRIVIA_BATCH_SIZE),
-      type: 'multiple',
-    });
-
-    if (token) params.set('token', token);
-
-    const response = await fetch(`https://opentdb.com/api.php?${params.toString()}`);
-    if (!response.ok) continue;
-
-    const payload = await response.json();
-
-    if (payload.response_code === 4) {
-      const refreshedToken = await fetchOpenTriviaToken();
-      if (refreshedToken) setStoredOpenTriviaToken(refreshedToken);
-      continue;
-    }
-
-    if (payload.response_code !== 0 || !Array.isArray(payload.results)) continue;
-
-    const normalized = payload.results.map(normalizeOpenTriviaQuestion);
-    collected.push(...normalized);
-  }
+  const collected = await fetchOpenTriviaRound({
+    count,
+    source: 'general',
+  });
 
   const selected = selectUniqueQuestions({
     pool: collected,
@@ -196,32 +139,11 @@ export const fetchGeneralTriviaRound = async ({ recentIds, count = DEFAULT_ROUND
 };
 
 export const fetchSweTriviaRound = async ({ recentIds, count = DEFAULT_ROUND_SIZE }) => {
-  const attempts = 4;
-  const collected = [];
-  const apiKey = resolveQuizApiKey();
-  const keyConfigured = hasConfiguredQuizApiKey();
-
-  for (let attempt = 0; attempt < attempts && collected.length < count * 2; attempt += 1) {
-    let batch = [];
-
-    try {
-      batch = await fetchQuizApiViaProxy();
-    } catch (proxyError) {
-      if (!keyConfigured) {
-        throw new Error(
-          'QuizAPI key is missing. Add REACT_APP_QUIZAPI_KEY in .env.local and restart npm start.'
-        );
-      }
-
-      batch = await fetchQuizApiDirect(apiKey);
-    }
-
-    const normalized = batch
-      .map(normalizeQuizApiQuestion)
-      .filter(Boolean);
-
-    collected.push(...normalized);
-  }
+  const collected = await fetchOpenTriviaRound({
+    count,
+    source: 'swe',
+    category: OPEN_TRIVIA_SWE_CATEGORY,
+  });
 
   const selected = selectUniqueQuestions({
     pool: collected,
