@@ -9,7 +9,7 @@ const techStack = [
   { name: 'Tailwind CSS', status: 'operational' },
 ];
 
-const SystemStatus = () => {
+const SystemStatus = ({ isAMGMode }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
 
@@ -47,7 +47,7 @@ const SystemStatus = () => {
         </div>
 
         <div className="flex items-center gap-2 mb-3 border-b border-white/10 pb-2">
-          <Activity className="w-4 h-4 text-purple-400" />
+          <Activity className={`w-4 h-4 ${isAMGMode ? 'text-red-400' : 'text-purple-400'}`} />
           <span className="text-xs font-mono text-gray-300 uppercase tracking-widest">Live Telemetry</span>
         </div>
         
@@ -76,7 +76,7 @@ const SystemStatus = () => {
         >
           <div className="p-4 space-y-3">
              <div className="flex items-center gap-2 mb-2 border-b border-white/10 pb-2">
-              <Activity className="w-4 h-4 text-purple-400" />
+              <Activity className={`w-4 h-4 ${isAMGMode ? 'text-red-400' : 'text-purple-400'}`} />
               <span className="text-xs font-mono text-gray-300 uppercase tracking-widest">Telemetry</span>
             </div>
             {techStack.map((tech, i) => (

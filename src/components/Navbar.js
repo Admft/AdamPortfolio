@@ -30,7 +30,12 @@ const Navbar = ({ isAMGMode, setIsAMGMode }) => {
       >
         <div className="flex items-center justify-between px-6 py-4">
           <a href="/" className="flex items-center gap-3">
-            <div className="h-3 w-3 rounded-full bg-red-500 shadow-[0_0_18px_rgba(239,68,68,0.7)]" />
+            <div
+              className={`h-3 w-3 rounded-full ${isAMGMode
+                ? 'bg-red-500 shadow-[0_0_18px_rgba(239,68,68,0.7)]'
+                : 'bg-purple-400 shadow-[0_0_18px_rgba(192,132,252,0.6)]'
+                }`}
+            />
             <span className="text-xl font-semibold tracking-[0.18em] uppercase text-white">
               Adam
             </span>
@@ -47,7 +52,8 @@ const Navbar = ({ isAMGMode, setIsAMGMode }) => {
                 className="text-sm font-medium uppercase tracking-[0.18em] text-zinc-400 hover:text-white transition-colors relative group"
               >
                 {link.name}
-                <span className="absolute -bottom-1 left-0 w-0 h-px bg-red-500 transition-all group-hover:w-full" />
+                <span className={`absolute -bottom-1 left-0 w-0 h-px transition-all group-hover:w-full ${isAMGMode ? 'bg-red-500' : 'bg-purple-400'
+                  }`} />
               </a>
             ))}
 
@@ -85,7 +91,8 @@ const Navbar = ({ isAMGMode, setIsAMGMode }) => {
                   key={link.name}
                   href={link.href}
                   onClick={() => setIsOpen(false)}
-                  className="text-2xl font-bold uppercase tracking-[0.12em] text-white hover:text-red-400 transition-colors"
+                  className={`text-2xl font-bold uppercase tracking-[0.12em] text-white transition-colors ${isAMGMode ? 'hover:text-red-400' : 'hover:text-purple-300'
+                    }`}
                 >
                   {link.name}
                 </a>

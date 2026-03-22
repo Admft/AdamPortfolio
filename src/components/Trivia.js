@@ -1,14 +1,11 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import {
-  BookOpen,
-  BrainCircuit,
   CheckCircle2,
   ChevronLeft,
   Clock3,
   Loader2,
   RefreshCw,
-  ShieldAlert,
   XCircle,
 } from 'lucide-react';
 import { fetchGeneralTriviaRound, fetchSweTriviaRound } from '../utils/triviaApi';
@@ -31,7 +28,6 @@ const TRACKS = {
     subtitle: 'Culture, history, science, and broad knowledge.',
     description:
       'A broad mix of multiple-choice questions from Open Trivia DB.',
-    icon: BookOpen,
     accent: 'from-indigo-400 to-blue-500',
   },
   swe: {
@@ -41,20 +37,17 @@ const TRACKS = {
     subtitle: 'Programming and software fundamentals.',
     description:
       'Technical multiple-choice questions from Open Trivia DB computer science.',
-    icon: BrainCircuit,
     accent: 'from-emerald-400 to-cyan-500',
   },
 };
 
-const getTrackBadgeClass = (trackId, isAMGMode) => {
-  if (isAMGMode) {
-    return 'bg-red-500/10 text-red-200 border border-red-500/30';
-  }
-
-  return trackId === 'general'
-    ? 'bg-purple-500/15 text-purple-200 border border-purple-400/30'
-    : 'bg-blue-500/15 text-blue-200 border border-blue-400/30';
-};
+const getTrackLineClass = (trackId, isAMGMode) => (
+  isAMGMode
+    ? 'bg-red-500'
+    : trackId === 'general'
+      ? 'bg-purple-400'
+      : 'bg-blue-400'
+);
 
 const createQuizState = () => ({
   status: 'idle',
@@ -240,9 +233,9 @@ const Trivia = ({ isAMGMode }) => {
           viewport={{ once: true }}
           className="text-center mb-10"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/10 bg-white/5 backdrop-blur-md mb-4">
-            <ShieldAlert className={`w-4 h-4 ${isAMGMode ? 'text-red-300' : 'text-purple-400'}`} />
-            <span className="text-sm font-medium text-gray-300">Interview Drill Mode</span>
+          <div className="inline-flex items-center gap-3 mb-4">
+            <span className={`h-[2px] w-10 rounded-full ${isAMGMode ? 'bg-red-500' : 'bg-purple-400'}`} />
+            <span className="text-[11px] tracking-[0.28em] uppercase text-zinc-400">Interview Drill Mode</span>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">Trivia Lab</h2>
           <p className="text-zinc-400 max-w-2xl mx-auto">
@@ -259,7 +252,6 @@ const Trivia = ({ isAMGMode }) => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {Object.values(TRACKS).map((track) => {
-                const Icon = track.icon;
                 const previousScore = scoreByTrack[track.id];
                 const selectedDifficulty = difficultyByTrack[track.id] || 'any';
 
@@ -268,20 +260,23 @@ const Trivia = ({ isAMGMode }) => {
                     key={track.id}
                     type="button"
                     onClick={() => startTrack(track.id)}
-                    className={`w-full rounded-3xl border p-6 md:p-8 backdrop-blur-xl shadow-2xl transition-all duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 ${isAMGMode
-                      ? 'bg-black/65 border-white/10 hover:border-red-400/45 hover:bg-black/75'
+                    className={`group w-full rounded-[30px] border p-7 md:p-9 backdrop-blur-xl shadow-2xl transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 ${isAMGMode
+                      ? 'bg-black/65 border-white/10 hover:border-red-400/45 hover:bg-black/80'
                       : 'bg-white/5 border-white/10 hover:border-purple-400/45 hover:bg-white/10'
                       }`}
                     aria-label={`Start ${track.title}`}
                   >
-                    <div className="min-h-[280px] flex flex-col items-center justify-center text-center">
-                      <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-semibold uppercase tracking-[0.18em] ${getTrackBadgeClass(track.id, isAMGMode)}`}>
-                        <Icon className="w-3.5 h-3.5" />
-                        {track.shortLabel}
+                    <div className="min-h-[310px] flex flex-col items-center justify-center text-center">
+                      <div className="inline-flex items-center gap-3 mb-2">
+                        <span className={`h-[2px] w-8 rounded-full ${getTrackLineClass(track.id, isAMGMode)}`} />
+                        <span className="text-[11px] tracking-[0.2em] uppercase text-zinc-400">
+                          {track.shortLabel}
+                        </span>
+                        <span className={`h-[2px] w-8 rounded-full ${getTrackLineClass(track.id, isAMGMode)}`} />
                       </div>
 
-                      <h4 className="text-2xl font-bold text-white mt-4">{track.title}</h4>
-                      <p className="text-zinc-300 text-sm mt-2">{track.subtitle}</p>
+                      <h4 className="text-[1.9rem] md:text-[2.2rem] font-bold text-white leading-tight mt-4">{track.title}</h4>
+                      <p className="text-zinc-300 text-[15px] mt-3 max-w-sm">{track.subtitle}</p>
                       <p className="text-zinc-400 text-sm leading-relaxed mt-4 max-w-sm">{track.description}</p>
 
                       <div className="mt-5">
