@@ -166,11 +166,20 @@ const fetchOpenTriviaRound = async ({ count, source, category, difficulty }) => 
   return collected;
 };
 
-export const fetchGeneralTriviaRound = async ({ recentIds, count = DEFAULT_ROUND_SIZE }) => {
+export const fetchGeneralTriviaRound = ({
+  recentIds,
+  count = DEFAULT_ROUND_SIZE,
+  difficulty = 'any',
+}) => {
+  const normalizedDifficulty = difficulty === 'any' ? undefined : difficulty;
+  return fetchGeneralTriviaRoundInternal({ recentIds, count, difficulty: normalizedDifficulty });
+};
+
+const fetchGeneralTriviaRoundInternal = async ({ recentIds, count, difficulty }) => {
   const collected = await fetchOpenTriviaRound({
     count,
     source: 'general',
-    difficulty: 'easy',
+    difficulty,
   });
 
   const selected = selectUniqueQuestions({
@@ -193,11 +202,17 @@ export const fetchGeneralTriviaRound = async ({ recentIds, count = DEFAULT_ROUND
   return selected;
 };
 
-export const fetchSweTriviaRound = async ({ recentIds, count = DEFAULT_ROUND_SIZE }) => {
+export const fetchSweTriviaRound = async ({
+  recentIds,
+  count = DEFAULT_ROUND_SIZE,
+  difficulty = 'any',
+}) => {
+  const normalizedDifficulty = difficulty === 'any' ? undefined : difficulty;
   const collected = await fetchOpenTriviaRound({
     count,
     source: 'swe',
     category: OPEN_TRIVIA_SWE_CATEGORY,
+    difficulty: normalizedDifficulty,
   });
 
   const selected = selectUniqueQuestions({

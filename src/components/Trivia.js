@@ -16,6 +16,7 @@ import { getRecentQuestionIds, pushRecentQuestionIds } from '../utils/triviaUtil
 
 const ROUND_SIZE = 5;
 const QUESTION_TIME = 18;
+const DIFFICULTY_OPTIONS = ['any', 'easy', 'medium', 'hard'];
 
 const TRACKS = {
   general: {
@@ -68,6 +69,10 @@ const Trivia = ({ isAMGMode }) => {
   const [activeTrackId, setActiveTrackId] = useState(null);
   const [quiz, setQuiz] = useState(createQuizState);
   const [scoreByTrack, setScoreByTrack] = useState({ general: null, swe: null });
+  const [difficultyByTrack, setDifficultyByTrack] = useState({
+    general: 'any',
+    swe: 'any',
+  });
 
   const activeTrack = activeTrackId ? TRACKS[activeTrackId] : null;
   const currentQuestion = quiz.questions[quiz.currentIndex] || null;
@@ -85,9 +90,10 @@ const Trivia = ({ isAMGMode }) => {
 
     try {
       const recentIds = getRecentQuestionIds(trackId);
+      const difficulty = difficultyByTrack[trackId] || 'any';
       const questions = trackId === 'general'
-        ? await fetchGeneralTriviaRound({ recentIds, count: ROUND_SIZE })
-        : await fetchSweTriviaRound({ recentIds, count: ROUND_SIZE });
+        ? await fetchGeneralTriviaRound({ recentIds, count: ROUND_SIZE, difficulty })
+        : await fetchSweTriviaRound({ recentIds, count: ROUND_SIZE, difficulty });
 
       pushRecentQuestionIds(trackId, questions.map((item) => item.id));
 
@@ -111,7 +117,7 @@ const Trivia = ({ isAMGMode }) => {
         questions: [],
       }));
     }
-  }, []);
+  }, [difficultyByTrack]);
 
   const startTrack = (trackId) => {
     setActiveTrackId(trackId);
@@ -234,6 +240,7 @@ const Trivia = ({ isAMGMode }) => {
               {Object.values(TRACKS).map((track) => {
                 const Icon = track.icon;
                 const previousScore = scoreByTrack[track.id];
+                const selectedDifficulty = difficultyByTrack[track.id] || 'any';
 
                 return (
                   <article
@@ -255,6 +262,33 @@ const Trivia = ({ isAMGMode }) => {
                     </div>
 
                     <p className="text-zinc-400 text-sm leading-relaxed mb-6">{track.description}</p>
+
+                    <div className="mb-5">
+                      <label
+                        htmlFor={`${track.id}-difficulty`}
+                        className="block text-xs text-zinc-400 uppercase tracking-[0.14em] mb-2"
+                      >
+                        Difficulty
+                      </label>
+                      <select
+                        id={`${track.id}-difficulty`}
+                        value={selectedDifficulty}
+                        onChange={(event) => {
+                          const nextDifficulty = event.target.value;
+                          setDifficultyByTrack((prev) => ({
+                            ...prev,
+                            [track.id]: nextDifficulty,
+                          }));
+                        }}
+                        className="w-full rounded-xl border border-white/15 bg-white/5 px-3 py-2.5 text-sm text-zinc-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+                      >
+                        {DIFFICULTY_OPTIONS.map((option) => (
+                          <option key={option} value={option} className="bg-zinc-900 text-zinc-100">
+                            {option === 'any' ? 'Any Difficulty' : `${option[0].toUpperCase()}${option.slice(1)}`}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
 
                     <div className="flex items-center justify-between gap-4">
                       <p className="text-xs text-zinc-500">
@@ -291,7 +325,11 @@ const Trivia = ({ isAMGMode }) => {
                 </button>
 
                 <h3 className="text-3xl font-bold text-white">{activeTrack.title}</h3>
-                <p className="text-zinc-400 text-sm mt-2">Timed round. Difficulty is shown when available.</p>
+                <p className="text-zinc-400 text-sm mt-2">
+                  Timed round. Difficulty: {(difficultyByTrack[activeTrack.id] || 'any') === 'any'
+                    ? 'Any'
+                    : `${difficultyByTrack[activeTrack.id][0].toUpperCase()}${difficultyByTrack[activeTrack.id].slice(1)}`}
+                </p>
               </div>
 
               <div className="flex items-center gap-3">
