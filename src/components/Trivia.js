@@ -30,7 +30,7 @@ const TRACKS = {
     shortLabel: 'General',
     subtitle: 'Culture, history, science, and broad knowledge.',
     description:
-      'A broad mix of multiple-choice questions from Open Trivia DB. Good for quick brain warmups.',
+      'A broad mix of multiple-choice questions from Open Trivia DB.',
     icon: BookOpen,
     accent: 'from-indigo-400 to-blue-500',
   },
@@ -38,9 +38,9 @@ const TRACKS = {
     id: 'swe',
     title: 'SWE Coding Questions',
     shortLabel: 'SWE',
-    subtitle: 'Programming, Linux, DevOps, and technical fundamentals.',
+    subtitle: 'Programming and software fundamentals.',
     description:
-      'Technical multiple-choice questions from Open Trivia DB (computer science category).',
+      'Technical multiple-choice questions from Open Trivia DB computer science.',
     icon: BrainCircuit,
     accent: 'from-emerald-400 to-cyan-500',
   },
@@ -268,42 +268,37 @@ const Trivia = ({ isAMGMode }) => {
                     key={track.id}
                     type="button"
                     onClick={() => startTrack(track.id)}
-                    className={`w-full text-left rounded-3xl border p-6 md:p-7 backdrop-blur-xl shadow-2xl transition-all duration-200 hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 ${isAMGMode
-                      ? 'bg-black/65 border-white/10 hover:border-red-400/50'
-                      : 'bg-white/5 border-white/10 hover:border-purple-400/50'
+                    className={`w-full rounded-3xl border p-6 md:p-8 backdrop-blur-xl shadow-2xl transition-all duration-200 hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 ${isAMGMode
+                      ? 'bg-black/65 border-white/10 hover:border-red-400/45 hover:bg-black/75'
+                      : 'bg-white/5 border-white/10 hover:border-purple-400/45 hover:bg-white/10'
                       }`}
                     aria-label={`Start ${track.title}`}
                   >
-                    <div className="flex items-start justify-between gap-4 mb-5">
-                      <div>
-                        <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-semibold uppercase tracking-[0.18em] ${getTrackBadgeClass(track.id, isAMGMode)}`}>
-                          <Icon className="w-3.5 h-3.5" />
-                          {track.shortLabel}
-                        </div>
-                        <h4 className="text-2xl font-bold text-white mt-3">{track.title}</h4>
-                        <p className="text-zinc-300 text-sm mt-2">{track.subtitle}</p>
+                    <div className="min-h-[280px] flex flex-col items-center justify-center text-center">
+                      <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-semibold uppercase tracking-[0.18em] ${getTrackBadgeClass(track.id, isAMGMode)}`}>
+                        <Icon className="w-3.5 h-3.5" />
+                        {track.shortLabel}
                       </div>
-                    </div>
 
-                    <p className="text-zinc-400 text-sm leading-relaxed mb-6">{track.description}</p>
+                      <h4 className="text-2xl font-bold text-white mt-4">{track.title}</h4>
+                      <p className="text-zinc-300 text-sm mt-2">{track.subtitle}</p>
+                      <p className="text-zinc-400 text-sm leading-relaxed mt-4 max-w-sm">{track.description}</p>
 
-                    <div className="mb-5">
-                      <p className="text-xs text-zinc-500">
-                        Last selected difficulty: {selectedDifficulty === 'any'
-                          ? 'Mixed'
-                          : `${selectedDifficulty[0].toUpperCase()}${selectedDifficulty.slice(1)}`}
-                      </p>
-                    </div>
+                      <div className="mt-5">
+                        <p className="text-xs text-zinc-500">
+                          Difficulty: {selectedDifficulty === 'any'
+                            ? 'Mixed'
+                            : `${selectedDifficulty[0].toUpperCase()}${selectedDifficulty.slice(1)}`}
+                        </p>
+                      </div>
 
-                    <div className="flex items-center justify-between gap-4">
-                      <p className="text-xs text-zinc-500">
-                        {previousScore === null
-                          ? 'No previous score this session.'
-                          : `Last score: ${previousScore.score}/${previousScore.total}`}
-                      </p>
-                      <span className={`text-xs font-semibold uppercase tracking-[0.14em] ${isAMGMode ? 'text-red-200' : 'text-purple-200'}`}>
-                        Click Card To Start
-                      </span>
+                      <div className="mt-3">
+                        <p className="text-xs text-zinc-500">
+                          {previousScore === null
+                            ? 'No previous score this session.'
+                            : `Last score: ${previousScore.score}/${previousScore.total}`}
+                        </p>
+                      </div>
                     </div>
                   </button>
                 );
