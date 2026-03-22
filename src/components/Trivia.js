@@ -264,12 +264,15 @@ const Trivia = ({ isAMGMode }) => {
                 const selectedDifficulty = difficultyByTrack[track.id] || 'any';
 
                 return (
-                  <article
+                  <button
                     key={track.id}
-                    className={`rounded-3xl border p-6 md:p-7 backdrop-blur-xl shadow-2xl ${isAMGMode
-                      ? 'bg-black/65 border-white/10'
-                      : 'bg-white/5 border-white/10'
+                    type="button"
+                    onClick={() => startTrack(track.id)}
+                    className={`w-full text-left rounded-3xl border p-6 md:p-7 backdrop-blur-xl shadow-2xl transition-all duration-200 hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 ${isAMGMode
+                      ? 'bg-black/65 border-white/10 hover:border-red-400/50'
+                      : 'bg-white/5 border-white/10 hover:border-purple-400/50'
                       }`}
+                    aria-label={`Start ${track.title}`}
                   >
                     <div className="flex items-start justify-between gap-4 mb-5">
                       <div>
@@ -298,15 +301,11 @@ const Trivia = ({ isAMGMode }) => {
                           ? 'No previous score this session.'
                           : `Last score: ${previousScore.score}/${previousScore.total}`}
                       </p>
-                      <button
-                        type="button"
-                        onClick={() => startTrack(track.id)}
-                        className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white text-black text-sm font-semibold hover:bg-zinc-200 transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
-                      >
-                        Start Quiz
-                      </button>
+                      <span className={`text-xs font-semibold uppercase tracking-[0.14em] ${isAMGMode ? 'text-red-200' : 'text-purple-200'}`}>
+                        Click Card To Start
+                      </span>
                     </div>
-                  </article>
+                  </button>
                 );
               })}
             </div>
