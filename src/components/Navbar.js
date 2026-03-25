@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const Navbar = ({ isAMGMode, setIsAMGMode }) => {
+const Navbar = ({ isAMGMode, setIsAMGMode, isStatsPage = false }) => {
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -12,10 +12,10 @@ const Navbar = ({ isAMGMode, setIsAMGMode }) => {
   }, []);
 
   const navLinks = [
-    { name: 'About', href: '#about' },
-    { name: 'Projects', href: '#projects' },
-    { name: 'Trivia', href: '#trivia' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'About', href: isStatsPage ? '/#about' : '#about' },
+    { name: 'Projects', href: isStatsPage ? '/#projects' : '#projects' },
+    { name: 'Trivia', href: isStatsPage ? '/#trivia' : '#trivia' },
+    { name: 'Contact', href: isStatsPage ? '/#contact' : '#contact' },
   ];
 
   return (

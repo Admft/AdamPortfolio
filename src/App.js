@@ -9,7 +9,9 @@ import Projects from './components/Projects';
 import Trivia from './components/Trivia';
 import Contact from './components/Contact';
 import SystemStatus from './components/SystemStatus';
+import StatsPage from './components/StatsPage';
 import { Model as C63 } from './components/C63';
+import { trackVisitor } from './lib/visitorStats';
 
 const ScrollRotatingCar = ({ lowPowerMode }) => {
   const carRef = useRef();
@@ -63,6 +65,11 @@ function App() {
   const [isAMGMode, setIsAMGMode] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
   const [isLowPowerDesktop, setIsLowPowerDesktop] = useState(false);
+  const pathname =
+    typeof window !== 'undefined'
+      ? window.location.pathname.replace(/\/+$/, '') || '/'
+      : '/';
+  const isStatsPage = pathname === '/stats';
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(max-width: 768px)');
@@ -81,11 +88,16 @@ function App() {
     return () => mediaQuery.removeEventListener('change', handleViewportChange);
   }, []);
 
+  useEffect(() => {
+    trackVisitor();
+  }, []);
+
   const lowPowerMode = isMobile || isLowPowerDesktop;
 
   return (
 
     <div
+      id="top"
       className={`relative min-h-screen text-white selection:bg-red-500/20 transition-colors duration-500 ${isAMGMode ? 'amg-mode' : 'base-mode'
         }`}
     >
@@ -132,14 +144,24 @@ function App() {
       <div className="fixed inset-0 z-0 pointer-events-none bg-noise opacity-20" />
 
       <div className="relative z-10">
-        <Navbar isAMGMode={isAMGMode} setIsAMGMode={setIsAMGMode} />
-        <main>
-          <About isAMGMode={isAMGMode} />
-          <Projects isAMGMode={isAMGMode} />
-          <Trivia isAMGMode={isAMGMode} />
-          <Contact isAMGMode={isAMGMode} />
-        </main>
-        <SystemStatus isAMGMode={isAMGMode} />
+        <Navbar
+          isAMGMode={isAMGMode}
+          setIsAMGMode={setIsAMGMode}
+          isStatsPage={isStatsPage}
+        />
+        {isStatsPage ? (
+          <StatsPage isAMGMode={isAMGMode} />
+        ) : (
+          <>
+            <main>
+              <About isAMGMode={isAMGMode} />
+              <Projects isAMGMode={isAMGMode} />
+              <Trivia isAMGMode={isAMGMode} />
+              <Contact isAMGMode={isAMGMode} />
+            </main>
+            <SystemStatus isAMGMode={isAMGMode} />
+          </>
+        )}
       </div>
     </div>
   );
