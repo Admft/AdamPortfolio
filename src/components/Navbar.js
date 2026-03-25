@@ -39,9 +39,11 @@ const Navbar = ({ isAMGMode, setIsAMGMode }) => {
             <span className="text-xl font-semibold tracking-[0.18em] uppercase text-white">
               Adam
             </span>
-            <span className="text-sm tracking-[0.35em] uppercase text-zinc-400">
-              AMG
-            </span>
+            {isAMGMode && (
+              <span className="text-sm tracking-[0.35em] uppercase text-zinc-400">
+                AMG
+              </span>
+            )}
           </a>
 
           <div className="hidden md:flex items-center gap-8">
