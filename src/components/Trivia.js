@@ -49,6 +49,8 @@ const getTrackLineClass = (trackId, isAMGMode) => (
       : 'bg-blue-400'
 );
 
+const ANSWER_LABELS = ['A', 'B', 'C', 'D'];
+
 const createQuizState = () => ({
   status: 'idle',
   error: '',
@@ -428,7 +430,11 @@ const Trivia = ({ isAMGMode }) => {
                     {currentQuestion.question}
                   </h4>
 
-                  <div className="space-y-3" role="radiogroup" aria-label="Answer choices">
+                  <div
+                    className="grid grid-cols-1 md:grid-cols-2 gap-3"
+                    role="radiogroup"
+                    aria-label="Answer choices"
+                  >
                     {currentQuestion.answers.map((answer, index) => {
                       const inputId = `${currentQuestion.id}-${index}`;
                       const checked = quiz.selectedAnswer === answer;
@@ -447,7 +453,7 @@ const Trivia = ({ isAMGMode }) => {
                           />
                           <label
                             htmlFor={inputId}
-                            className={`flex cursor-pointer items-center justify-between gap-3 rounded-xl border px-4 py-3 transition ${quiz.isLocked
+                            className={`flex min-h-[112px] cursor-pointer items-start justify-between gap-4 rounded-2xl border px-4 py-4 transition ${quiz.isLocked
                               ? isCorrect
                                 ? 'border-green-500/50 bg-green-500/15 text-green-100'
                                 : checked
@@ -458,9 +464,30 @@ const Trivia = ({ isAMGMode }) => {
                                 : 'border-white/10 bg-white/5 text-zinc-200 hover:border-white/30 hover:bg-white/10'
                               } ${quiz.isLocked ? 'cursor-default' : 'focus-within:ring-2 focus-within:ring-white/70'}`}
                           >
-                            <span className="text-sm md:text-base leading-relaxed">{answer}</span>
-                            {quiz.isLocked && isCorrect && <CheckCircle2 className="w-4 h-4 shrink-0" />}
-                            {quiz.isLocked && checked && !isCorrect && <XCircle className="w-4 h-4 shrink-0" />}
+                            <div className="flex items-start gap-3">
+                              <span
+                                className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full border text-xs font-semibold uppercase tracking-[0.18em] ${
+                                  quiz.isLocked
+                                    ? isCorrect
+                                      ? 'border-green-400/50 bg-green-500/20 text-green-100'
+                                      : checked
+                                        ? 'border-red-400/50 bg-red-500/15 text-red-100'
+                                        : 'border-white/10 bg-white/5 text-zinc-400'
+                                    : checked
+                                      ? 'border-white/40 bg-white/15 text-white'
+                                      : 'border-white/10 bg-white/5 text-zinc-400'
+                                }`}
+                              >
+                                {ANSWER_LABELS[index] || index + 1}
+                              </span>
+                              <span className="text-sm md:text-base leading-relaxed">
+                                {answer}
+                              </span>
+                            </div>
+                            <div className="pt-1">
+                              {quiz.isLocked && isCorrect && <CheckCircle2 className="w-4 h-4 shrink-0" />}
+                              {quiz.isLocked && checked && !isCorrect && <XCircle className="w-4 h-4 shrink-0" />}
+                            </div>
                           </label>
                         </div>
                       );
