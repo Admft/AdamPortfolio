@@ -87,7 +87,7 @@ const About = ({ isAMGMode }) => {
                   : 'bg-gradient-to-br from-purple-600/50 to-blue-600/30'
               }`}
             />
-            <div className="w-32 h-32 md:w-40 md:h-40 rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
+            <div className="w-40 h-40 md:w-48 md:h-48 rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
               <img
                 src={`${process.env.PUBLIC_URL}/Adamheadshot.webp`}
                 alt="Adam Moffat"

@@ -3,18 +3,18 @@
   "name": "Adam Moffat Portfolio",
   "icons": [
     {
-      "src": "profilepic.jpg",
-      "type": "image/jpeg",
+      "src": "Adamheadshot.webp",
+      "type": "image/webp",
       "sizes": "64x64 32x32 24x24 16x16"
     },
     {
-      "src": "profilepic.jpg",
-      "type": "image/jpeg",
+      "src": "Adamheadshot.webp",
+      "type": "image/webp",
       "sizes": "192x192"
     },
     {
-      "src": "profilepic.jpg",
-      "type": "image/jpeg",
+      "src": "Adamheadshot.webp",
+      "type": "image/webp",
       "sizes": "512x512"
     }
   ],

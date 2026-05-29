@@ -31,12 +31,10 @@ const Navbar = ({ isAMGMode, setIsAMGMode, isStatsPage = false }) => {
       >
         <div className="site-container flex items-center justify-between py-4">
           <a href="/" className="flex items-center gap-2.5">
-            <div
-              className={`h-2 w-2 rounded-full ${
-                isAMGMode
-                  ? 'bg-red-500 shadow-[0_0_12px_rgba(239,68,68,0.6)]'
-                  : 'bg-green-400 shadow-[0_0_12px_rgba(74,222,128,0.5)]'
-              }`}
+            <img
+              src={`${process.env.PUBLIC_URL}/Adamheadshot.webp`}
+              alt="Adam Moffat"
+              className="h-9 w-9 rounded-full object-cover border border-white/15"
             />
             <span className="font-display text-lg font-bold text-white">Adam</span>
             {isAMGMode && (
