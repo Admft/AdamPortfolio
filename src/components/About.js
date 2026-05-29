@@ -107,7 +107,7 @@ const About = ({ isAMGMode }) => {
               transition={{ delay: 0.15 }}
               className="text-lg md:text-xl text-zinc-300 max-w-2xl leading-relaxed"
             >
-              Associate Field Application Engineer at Vusiongot.
+              Associate Field Application Engineer at Vusion.
               Cornell M.Eng candidate. Bridging the gap between complex
               technical architecture and enterprise ROI.
             </motion.p>

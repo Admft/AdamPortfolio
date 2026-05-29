@@ -1,7 +1,10 @@
 const COUNT_API_BASE_URL =
-  process.env.REACT_APP_COUNT_API_BASE_URL || 'https://api.countapi.xyz';
+  process.env.REACT_APP_COUNT_API_BASE_URL ||
+  'https://countapi.mileshilliard.com/api/v1';
 const COUNT_API_NAMESPACE =
   process.env.REACT_APP_COUNT_API_NAMESPACE || 'adamrmoffat.com';
+
+const buildCounterKey = (key) => `${COUNT_API_NAMESPACE}-${key}`;
 const STORAGE_PREFIX = 'adamrmoffat:visitor-stats:v1';
 const LOCAL_COUNT_PREFIX = `${STORAGE_PREFIX}:local-count`;
 
@@ -91,16 +94,16 @@ const fetchCountApi = async (path) => {
 
 const hitCounter = async (key) => {
   const data = await fetchCountApi(
-    `/hit/${encodeURIComponent(COUNT_API_NAMESPACE)}/${encodeURIComponent(key)}`
+    `/hit/${encodeURIComponent(buildCounterKey(key))}`
   );
-  return data.value || 0;
+  return data?.value ?? 0;
 };
 
 const readCounter = async (key) => {
   const data = await fetchCountApi(
-    `/get/${encodeURIComponent(COUNT_API_NAMESPACE)}/${encodeURIComponent(key)}`
+    `/get/${encodeURIComponent(buildCounterKey(key))}`
   );
-  return data?.value || 0;
+  return data?.value ?? 0;
 };
 
 export const trackVisitor = async () => {
