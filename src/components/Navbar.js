@@ -39,6 +39,9 @@ const Navbar = ({ isAMGMode, setIsAMGMode, isStatsPage = false }) => {
             <span className="text-xl font-semibold tracking-[0.18em] uppercase text-white">
               Adam
             </span>
+            <span className="hidden lg:inline text-[10px] tracking-[0.22em] uppercase text-zinc-500 border-l border-white/10 pl-3 ml-1">
+              Solutions Eng
+            </span>
             {isAMGMode && (
               <span className="text-sm tracking-[0.35em] uppercase text-zinc-400">
                 AMG
