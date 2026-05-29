@@ -24,30 +24,6 @@ const ScrollRotatingCar = ({ lowPowerMode }) => {
     }
   };
 
-  const scheduleRotationUpdate = () => {
-    if (!isVisibleRef.current || animationFrameRef.current !== null) {
-      return;
-    }
-
-    animationFrameRef.current = requestAnimationFrame(function step() {
-      animationFrameRef.current = null;
-
-      const car = carRef.current;
-      if (!car || !isVisibleRef.current) {
-        return;
-      }
-
-      const target = targetRotationRef.current;
-      const next = THREE.MathUtils.lerp(car.rotation.y, target, 0.18);
-      car.rotation.y = next;
-      invalidate();
-
-      if (Math.abs(next - target) > 0.001) {
-        animationFrameRef.current = requestAnimationFrame(step);
-      }
-    });
-  };
-
   useFrame(() => {
     if (!carRef.current || lowPowerMode) return;
 
@@ -62,7 +38,32 @@ const ScrollRotatingCar = ({ lowPowerMode }) => {
   useEffect(() => {
     if (!lowPowerMode) return undefined;
 
-    const queueRotationUpdate = () => {      targetRotationRef.current = getScrollRotation();
+    const scheduleRotationUpdate = () => {
+      if (!isVisibleRef.current || animationFrameRef.current !== null) {
+        return;
+      }
+
+      animationFrameRef.current = requestAnimationFrame(function step() {
+        animationFrameRef.current = null;
+
+        const car = carRef.current;
+        if (!car || !isVisibleRef.current) {
+          return;
+        }
+
+        const target = targetRotationRef.current;
+        const next = THREE.MathUtils.lerp(car.rotation.y, target, 0.18);
+        car.rotation.y = next;
+        invalidate();
+
+        if (Math.abs(next - target) > 0.001) {
+          animationFrameRef.current = requestAnimationFrame(step);
+        }
+      });
+    };
+
+    const queueRotationUpdate = () => {
+      targetRotationRef.current = getScrollRotation();
       scheduleRotationUpdate();
     };
 
@@ -86,7 +87,7 @@ const ScrollRotatingCar = ({ lowPowerMode }) => {
       window.removeEventListener('resize', queueRotationUpdate);
       document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
-  }, [lowPowerMode]);
+  }, [lowPowerMode, invalidate]);
 
   return (
     <group ref={carRef}>
