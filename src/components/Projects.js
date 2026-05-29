@@ -8,7 +8,7 @@ import {
   FileSpreadsheet,
   Brain,
 } from 'lucide-react';
-import SectionLabel from './ui/SectionLabel';
+import SectionHeader from './ui/SectionHeader';
 
 const fieldProjects = [
   {
@@ -67,20 +67,16 @@ const ProjectCard = ({ project, index, isAMGMode, size = 'standard' }) => {
   const Icon = project.icon;
   const hoverTitle = isAMGMode ? 'group-hover:text-red-400' : 'group-hover:text-purple-400';
   const isFeatured = size === 'featured';
-
-  const imageHeight = isFeatured ? 'h-56 md:h-72' : 'h-48 md:h-52';
+  const imageHeight = isFeatured ? 'h-52 md:h-64' : 'h-44 md:h-48';
 
   return (
     <motion.article
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: index * 0.06 }}
-      whileHover={{ y: -8 }}
-      className={`group relative rounded-2xl overflow-hidden transition-all duration-300 shadow-lg glow-card h-full flex flex-col ${
-        isAMGMode
-          ? 'bg-black/55 border border-white/10 hover:border-red-500/50'
-          : 'bg-white/5 border border-white/10 hover:border-purple-500/50'
+      viewport={{ once: true, margin: '-40px' }}
+      transition={{ delay: index * 0.05 }}
+      className={`group panel flex flex-col overflow-hidden p-0 ${
+        isAMGMode ? 'panel-amg' : 'panel-base'
       }`}
     >
       <div
@@ -88,50 +84,50 @@ const ProjectCard = ({ project, index, isAMGMode, size = 'standard' }) => {
           project.screenshot ? `bg-zinc-950 ${imageHeight}` : imageHeight
         }`}
       >
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/15 to-transparent z-10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10" />
         <img
           src={project.image}
           alt={project.title}
-          className={`w-full h-full transition-transform duration-700 ${
+          className={`w-full h-full transition-transform duration-500 ${
             project.screenshot
-              ? 'object-contain p-4 group-hover:scale-[1.02]'
-              : 'object-cover group-hover:scale-110'
+              ? 'object-contain p-3 group-hover:scale-[1.02]'
+              : 'object-cover group-hover:scale-105'
           }`}
         />
-        <div className="absolute top-4 left-4 z-20">
+        <div className="absolute top-3 left-3 z-20">
           <span
-            className={`inline-flex h-9 w-9 items-center justify-center rounded-xl border backdrop-blur-md ${
+            className={`inline-flex h-8 w-8 items-center justify-center rounded-lg border backdrop-blur-md ${
               isAMGMode
                 ? 'border-red-500/30 bg-red-500/15 text-red-200'
                 : 'border-purple-400/30 bg-purple-500/15 text-purple-200'
             }`}
           >
-            <Icon className="w-5 h-5" />
+            <Icon className="w-4 h-4" />
           </span>
         </div>
       </div>
 
-      <div className={`flex flex-col flex-1 ${isFeatured ? 'p-6 md:p-7' : 'p-5 md:p-6'}`}>
+      <div className={`flex flex-col ${isFeatured ? 'p-5 md:p-6' : 'p-4 md:p-5'}`}>
         <h3
-          className={`font-bold mb-2 transition-colors ${hoverTitle} ${
-            isFeatured ? 'text-xl md:text-2xl' : 'text-lg md:text-xl'
+          className={`font-display font-bold mb-2 transition-colors ${hoverTitle} ${
+            isFeatured ? 'text-xl' : 'text-lg'
           }`}
         >
           {project.title}
         </h3>
         <p
-          className={`text-gray-400 mb-4 leading-7 flex-1 ${
-            isFeatured ? 'text-sm md:text-base line-clamp-4' : 'text-sm line-clamp-3'
+          className={`text-zinc-400 mb-4 leading-6 ${
+            isFeatured ? 'text-sm md:text-base' : 'text-sm'
           }`}
         >
           {project.description}
         </p>
 
-        <div className="flex flex-wrap gap-2 mb-4">
+        <div className="flex flex-wrap gap-1.5 mb-4 mt-auto">
           {project.tags.map((tag) => (
             <span
               key={tag}
-              className="text-xs font-mono px-2 py-1 rounded bg-white/5 text-gray-300 border border-white/10"
+              className="text-[11px] font-mono px-2 py-0.5 rounded-md bg-black/30 text-zinc-400 border border-white/10"
             >
               {tag}
             </span>
@@ -143,12 +139,12 @@ const ProjectCard = ({ project, index, isAMGMode, size = 'standard' }) => {
             href={project.link}
             target="_blank"
             rel="noopener noreferrer"
-            className={`inline-flex items-center gap-2 text-sm font-bold text-white transition-colors ${hoverTitle}`}
+            className={`inline-flex items-center gap-2 text-sm font-medium text-white transition-colors ${hoverTitle}`}
           >
-            View Project <ExternalLink className="w-4 h-4" />
+            View Project <ExternalLink className="w-3.5 h-3.5" />
           </a>
         ) : (
-          <span className="text-xs uppercase tracking-[0.16em] text-zinc-500">
+          <span className="text-[11px] uppercase tracking-[0.14em] text-zinc-500">
             {project.screenshot ? 'Enterprise delivery' : 'Personal / academic'}
           </span>
         )}
@@ -159,27 +155,21 @@ const ProjectCard = ({ project, index, isAMGMode, size = 'standard' }) => {
 
 const Projects = ({ isAMGMode }) => {
   return (
-    <section id="projects" className="py-24 px-6 relative">
-      <div className="max-w-6xl mx-auto">
-        <div className="mb-12">
-          <SectionLabel isAMGMode={isAMGMode}>Selected Works</SectionLabel>
-          <h2 className="text-4xl font-bold mb-3 tracking-tight">Projects</h2>
-          <p className="text-zinc-400 max-w-2xl leading-7">
-            Pilot analytics from VusionGroup and product builds from school and side
-            projects.
-          </p>
-          <div
-            className={`h-1 w-20 rounded-full mt-5 ${
-              isAMGMode ? 'bg-red-500' : 'bg-purple-500'
-            }`}
-          />
-        </div>
+    <section id="projects" className="site-section border-t border-white/5">
+      <div className="site-container">
+        <SectionHeader
+          eyebrow="Selected Works"
+          title="Projects"
+          description="Pilot analytics from VusionGroup and product builds from school and side projects."
+          isAMGMode={isAMGMode}
+          className="mb-5 md:mb-6"
+        />
 
-        <div className="mb-12">
-          <h3 className="text-sm uppercase tracking-[0.2em] text-zinc-500 mb-5">
+        <div className="mb-8">
+          <p className="text-xs uppercase tracking-[0.2em] text-zinc-500 mb-3">
             Field & analytics
-          </h3>
-          <div className="grid md:grid-cols-2 gap-6">
+          </p>
+          <div className="grid md:grid-cols-2 gap-5 items-start">
             {fieldProjects.map((project, index) => (
               <ProjectCard
                 key={project.title}
@@ -193,10 +183,10 @@ const Projects = ({ isAMGMode }) => {
         </div>
 
         <div>
-          <h3 className="text-sm uppercase tracking-[0.2em] text-zinc-500 mb-5">
+          <p className="text-xs uppercase tracking-[0.2em] text-zinc-500 mb-3">
             Products
-          </h3>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          </p>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 items-start">
             {buildProjects.map((project, index) => (
               <ProjectCard
                 key={project.title}

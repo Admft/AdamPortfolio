@@ -5,6 +5,10 @@
 :root {
   --background: #050505;
   --foreground: #f5f5f5;
+  --surface: rgba(255, 255, 255, 0.04);
+  --border: rgba(255, 255, 255, 0.08);
+  --accent: #ef4444;
+  --accent-soft: rgba(239, 68, 68, 0.12);
 }
 
 * {
@@ -27,6 +31,19 @@ body {
 
 .font-display {
   font-family: 'Syne', 'Inter', sans-serif;
+  letter-spacing: -0.02em;
+}
+
+.site-section {
+  @apply relative px-6 py-10 md:py-12;
+}
+
+.site-section + .site-section {
+  @apply !pt-5 md:!pt-6;
+}
+
+.site-container {
+  @apply mx-auto max-w-6xl;
 }
 
 .bg-noise {
@@ -34,14 +51,40 @@ body {
   inset: 0;
   pointer-events: none;
   z-index: 0;
-  opacity: 0.03;
+  opacity: 0.035;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
+.panel {
+  @apply rounded-2xl border p-5 md:p-6 backdrop-blur-md transition-colors duration-300;
+  background: var(--surface);
+  border-color: var(--border);
+}
+
+.panel-amg {
+  background: rgba(0, 0, 0, 0.5);
+  border-color: rgba(255, 255, 255, 0.09);
+}
+
+.panel-amg:hover {
+  border-color: rgba(239, 68, 68, 0.28);
+}
+
+.panel-base {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.panel-base:hover {
+  border-color: rgba(168, 85, 247, 0.35);
+}
+
+.panel-glow,
 .glow-card {
   position: relative;
 }
 
+.panel-glow::before,
 .glow-card::before {
   content: '';
   position: absolute;
@@ -50,26 +93,59 @@ body {
   padding: 1px;
   background: linear-gradient(
     135deg,
-    rgba(255, 255, 255, 0.14),
-    transparent 45%,
-    rgba(255, 255, 255, 0.05)
+    rgba(255, 255, 255, 0.12),
+    transparent 50%,
+    rgba(255, 255, 255, 0.04)
   );
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   pointer-events: none;
-  opacity: 0.7;
+  opacity: 0.65;
 }
 
+.amg-mode .panel-glow:hover::before,
 .amg-mode .glow-card:hover::before {
   background: linear-gradient(
     135deg,
-    rgba(239, 68, 68, 0.5),
-    transparent 50%,
-    rgba(239, 68, 68, 0.15)
+    rgba(239, 68, 68, 0.45),
+    transparent 55%,
+    rgba(239, 68, 68, 0.12)
   );
   opacity: 1;
+}
+
+.chip {
+  @apply inline-flex items-center rounded-full border px-3 py-1 text-xs;
+}
+
+.chip-amg {
+  background: var(--accent-soft);
+  border-color: rgba(239, 68, 68, 0.22);
+  color: #fecaca;
+}
+
+.chip-base {
+  background: rgba(168, 85, 247, 0.1);
+  border-color: rgba(168, 85, 247, 0.22);
+  color: #e9d5ff;
+}
+
+.stat-strip {
+  @apply flex flex-wrap gap-x-6 gap-y-3;
+}
+
+.stat-strip > div {
+  @apply flex items-baseline gap-2;
+}
+
+.stat-strip strong {
+  @apply font-display text-lg text-white;
+}
+
+.stat-strip span {
+  @apply text-sm text-zinc-500;
 }
 
 ::-webkit-scrollbar {
@@ -98,31 +174,12 @@ body {
 .amg-mode {
   background-color: #070707;
   background-image:
-    linear-gradient(45deg, rgba(255, 255, 255, 0.025) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.025) 75%, rgba(255, 255, 255, 0.025)),
-    linear-gradient(45deg, rgba(255, 255, 255, 0.025) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.025) 75%, rgba(255, 255, 255, 0.025)),
-    radial-gradient(circle at top right, rgba(220, 38, 38, 0.10), transparent 28%),
+    linear-gradient(45deg, rgba(255, 255, 255, 0.02) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.02) 75%, rgba(255, 255, 255, 0.02)),
+    linear-gradient(45deg, rgba(255, 255, 255, 0.02) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.02) 75%, rgba(255, 255, 255, 0.02)),
+    radial-gradient(circle at 85% 0%, rgba(220, 38, 38, 0.08), transparent 32%),
     linear-gradient(to bottom, #040404, #090909 45%, #050505);
   background-position: 0 0, 10px 10px, top right, center;
   background-size: 20px 20px, 20px 20px, auto, auto;
-}
-
-.amg-mode h1,
-.amg-mode h2,
-.amg-mode h3 {
-  text-transform: uppercase;
-  letter-spacing: -0.03em;
-}
-
-.amg-mode .bg-white\/5 {
-  background-color: rgba(255, 255, 255, 0.05) !important;
-}
-
-.amg-mode .bg-white\/10 {
-  background-color: rgba(255, 255, 255, 0.08) !important;
-}
-
-.amg-mode .border-white\/10 {
-  border-color: rgba(255, 255, 255, 0.12) !important;
 }
 
 .amg-mode .text-gray-300 {
@@ -152,12 +209,18 @@ body {
   background-color: rgba(239, 68, 68, 0.12) !important;
 }
 
-.amg-mode button,
-.amg-mode a.inline-flex {
-  transition: all 0.25s ease;
+.amg-mode .btn-primary {
+  @apply bg-red-500 text-white border-red-400 hover:bg-red-400;
 }
 
-.amg-mode button:hover,
-.amg-mode a.inline-flex:hover {
-  box-shadow: 0 0 0 1px rgba(239, 68, 68, 0.28), 0 0 18px rgba(239, 68, 68, 0.08);
+.base-mode .btn-primary {
+  @apply bg-white text-black border-white hover:bg-zinc-200;
+}
+
+.amg-mode .accent-gradient {
+  @apply bg-gradient-to-r from-zinc-600 via-red-500 to-red-300;
+}
+
+.base-mode .accent-gradient {
+  @apply bg-gradient-to-r from-purple-400 to-blue-500;
 }

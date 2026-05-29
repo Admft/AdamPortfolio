@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { motion } from 'framer-motion';
 import {
   CheckCircle2,
   ChevronLeft,
@@ -8,6 +7,7 @@ import {
   RefreshCw,
   XCircle,
 } from 'lucide-react';
+import SectionHeader from './ui/SectionHeader';
 import { fetchGeneralTriviaRound, fetchSweTriviaRound } from '../utils/triviaApi';
 import { getRecentQuestionIds, pushRecentQuestionIds } from '../utils/triviaUtils';
 
@@ -222,37 +222,20 @@ const Trivia = ({ isAMGMode }) => {
   }, [quiz.timer]);
 
   return (
-    <section id="trivia" className="py-24 px-6 relative overflow-hidden">
-      <div className="absolute top-0 left-0 w-full h-full pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-900/10 rounded-full blur-[100px]" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-900/10 rounded-full blur-[100px]" />
-      </div>
-
-      <div className="max-w-6xl mx-auto relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 18 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-10"
-        >
-          <div className="inline-flex items-center gap-3 mb-4">
-            <span className={`h-[2px] w-10 rounded-full ${isAMGMode ? 'bg-red-500' : 'bg-purple-400'}`} />
-            <span className="text-[11px] tracking-[0.28em] uppercase text-zinc-400">Interview Drill Mode</span>
-          </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">Trivia Lab</h2>
-          <p className="text-zinc-400 max-w-2xl mx-auto">
-            Pick a quiz track, answer 5 timed questions, and see how you score.
-          </p>
-        </motion.div>
+    <section id="trivia" className="site-section border-t border-white/5 overflow-hidden">
+      <div className="site-container relative z-10">
+        <SectionHeader
+          eyebrow="Interview Drill Mode"
+          title="Trivia Lab"
+          description="Pick a quiz track, answer 5 timed questions, and see how you score."
+          isAMGMode={isAMGMode}
+          align="center"
+          className="mb-6"
+        />
 
         {view === 'select' && (
           <div>
-            <div className="text-center mb-8">
-              <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">Which type of quiz would you like to do?</h3>
-              <p className="text-zinc-400">Choose your track. You can switch any time.</p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               {Object.values(TRACKS).map((track) => {
                 const previousScore = scoreByTrack[track.id];
                 const selectedDifficulty = difficultyByTrack[track.id] || 'any';
@@ -262,13 +245,13 @@ const Trivia = ({ isAMGMode }) => {
                     key={track.id}
                     type="button"
                     onClick={() => startTrack(track.id)}
-                    className={`group w-full rounded-[30px] border p-7 md:p-9 backdrop-blur-xl shadow-2xl transition-all duration-300 hover:-translate-y-1 hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 ${isAMGMode
+                    className={`group w-full rounded-2xl border p-6 md:p-7 backdrop-blur-xl shadow-2xl transition-all duration-300 hover:-translate-y-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70 ${isAMGMode
                       ? 'bg-black/65 border-white/10 hover:border-red-400/45 hover:bg-black/80'
                       : 'bg-white/5 border-white/10 hover:border-purple-400/45 hover:bg-white/10'
                       }`}
                     aria-label={`Start ${track.title}`}
                   >
-                    <div className="min-h-[310px] flex flex-col items-center justify-center text-center">
+                    <div className="flex flex-col items-center text-center">
                       <div className="inline-flex items-center gap-3 mb-2">
                         <span className={`h-[2px] w-8 rounded-full ${getTrackLineClass(track.id, isAMGMode)}`} />
                         <span className="text-[11px] tracking-[0.2em] uppercase text-zinc-400">

@@ -152,7 +152,7 @@ const SystemStatus = ({ isAMGMode }) => {
               setIsVisible(true);
               setIsOpen(false);
             }}
-            className="fixed top-5 right-5 z-50 bg-black/90 backdrop-blur-xl border border-white/10 px-3.5 py-2 rounded-full flex items-center gap-2 shadow-xl"
+            className="fixed bottom-6 right-6 z-50 bg-black/90 backdrop-blur-xl border border-white/10 px-3.5 py-2 rounded-full flex items-center gap-2 shadow-xl"
           >
             <Activity className={`w-4 h-4 ${isAMGMode ? 'text-red-400' : 'text-purple-400'}`} />
             <span className="text-[10px] font-mono text-white tracking-[0.16em] uppercase">Telemetry</span>
