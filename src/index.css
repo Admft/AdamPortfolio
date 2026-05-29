@@ -12,7 +12,6 @@
 }
 
 html {
-  /* Smooth scrolling is handled by Lenis in `App.js` */
   scroll-behavior: auto;
 }
 
@@ -30,12 +29,13 @@ body {
   font-family: 'Syne', 'Inter', sans-serif;
 }
 
-.hero-grid {
-  background-image:
-    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-  background-size: 48px 48px;
-  mask-image: radial-gradient(ellipse at center, black 20%, transparent 75%);
+.bg-noise {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
 .glow-card {
@@ -50,48 +50,26 @@ body {
   padding: 1px;
   background: linear-gradient(
     135deg,
-    rgba(255, 255, 255, 0.12),
+    rgba(255, 255, 255, 0.14),
     transparent 45%,
-    rgba(255, 255, 255, 0.04)
+    rgba(255, 255, 255, 0.05)
   );
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   pointer-events: none;
-  opacity: 0.6;
+  opacity: 0.7;
 }
 
 .amg-mode .glow-card:hover::before {
   background: linear-gradient(
     135deg,
-    rgba(239, 68, 68, 0.45),
+    rgba(239, 68, 68, 0.5),
     transparent 50%,
-    rgba(239, 68, 68, 0.12)
+    rgba(239, 68, 68, 0.15)
   );
   opacity: 1;
-}
-
-.metric-pill {
-  transition: border-color 0.25s ease, transform 0.25s ease;
-}
-
-.metric-pill:hover {
-  transform: translateY(-2px);
-  border-color: rgba(255, 255, 255, 0.18);
-}
-
-.amg-mode .metric-pill:hover {
-  border-color: rgba(239, 68, 68, 0.25);
-}
-
-.bg-noise {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.03;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
 ::-webkit-scrollbar {

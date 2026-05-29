@@ -23,24 +23,23 @@ const Navbar = ({ isAMGMode, setIsAMGMode, isStatsPage = false }) => {
       <motion.nav
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        className={`fixed top-4 left-0 right-0 z-50 mx-auto w-[92%] max-w-6xl rounded-2xl transition-all duration-300 ${scrolled
+        className={`fixed top-4 left-0 right-0 z-50 mx-auto w-[92%] max-w-6xl rounded-2xl transition-all duration-300 ${
+          scrolled
             ? 'bg-black/50 backdrop-blur-xl border border-white/10 shadow-2xl'
             : 'bg-transparent'
-          }`}
+        }`}
       >
         <div className="flex items-center justify-between px-6 py-4">
           <a href="/" className="flex items-center gap-3">
             <div
-              className={`h-3 w-3 rounded-full ${isAMGMode
-                ? 'bg-red-500 shadow-[0_0_18px_rgba(239,68,68,0.7)]'
-                : 'bg-green-400 shadow-[0_0_18px_rgba(74,222,128,0.6)]'
-                }`}
+              className={`h-3 w-3 rounded-full ${
+                isAMGMode
+                  ? 'bg-red-500 shadow-[0_0_18px_rgba(239,68,68,0.7)]'
+                  : 'bg-green-400 shadow-[0_0_18px_rgba(74,222,128,0.6)]'
+              }`}
             />
             <span className="text-xl font-semibold tracking-[0.18em] uppercase text-white">
               Adam
-            </span>
-            <span className="hidden lg:inline text-[10px] tracking-[0.22em] uppercase text-zinc-500 border-l border-white/10 pl-3 ml-1">
-              Solutions Eng
             </span>
             {isAMGMode && (
               <span className="text-sm tracking-[0.35em] uppercase text-zinc-400">
@@ -57,17 +56,21 @@ const Navbar = ({ isAMGMode, setIsAMGMode, isStatsPage = false }) => {
                 className="text-sm font-medium uppercase tracking-[0.18em] text-zinc-400 hover:text-white transition-colors relative group"
               >
                 {link.name}
-                <span className={`absolute -bottom-1 left-0 w-0 h-px transition-all group-hover:w-full ${isAMGMode ? 'bg-red-500' : 'bg-purple-400'
-                  }`} />
+                <span
+                  className={`absolute -bottom-1 left-0 w-0 h-px transition-all group-hover:w-full ${
+                    isAMGMode ? 'bg-red-500' : 'bg-purple-400'
+                  }`}
+                />
               </a>
             ))}
 
             <button
               onClick={() => setIsAMGMode((prev) => !prev)}
-              className={`px-4 py-2 rounded-full border text-xs font-semibold uppercase tracking-[0.18em] transition-all ${isAMGMode
+              className={`px-4 py-2 rounded-full border text-xs font-semibold uppercase tracking-[0.18em] transition-all ${
+                isAMGMode
                   ? 'bg-red-500 text-white border-red-400'
                   : 'bg-white/5 text-zinc-300 border-white/10 hover:border-white/20'
-                }`}
+              }`}
             >
               {isAMGMode ? 'AMG On' : 'AMG Off'}
             </button>
@@ -96,8 +99,9 @@ const Navbar = ({ isAMGMode, setIsAMGMode, isStatsPage = false }) => {
                   key={link.name}
                   href={link.href}
                   onClick={() => setIsOpen(false)}
-                  className={`text-2xl font-bold uppercase tracking-[0.12em] text-white transition-colors ${isAMGMode ? 'hover:text-red-400' : 'hover:text-purple-300'
-                    }`}
+                  className={`text-2xl font-bold uppercase tracking-[0.12em] text-white transition-colors ${
+                    isAMGMode ? 'hover:text-red-400' : 'hover:text-purple-300'
+                  }`}
                 >
                   {link.name}
                 </a>
@@ -105,10 +109,11 @@ const Navbar = ({ isAMGMode, setIsAMGMode, isStatsPage = false }) => {
 
               <button
                 onClick={() => setIsAMGMode((prev) => !prev)}
-                className={`mt-4 mx-auto px-5 py-3 rounded-full border text-sm font-semibold uppercase tracking-[0.15em] ${isAMGMode
+                className={`mt-4 mx-auto px-5 py-3 rounded-full border text-sm font-semibold uppercase tracking-[0.15em] ${
+                  isAMGMode
                     ? 'bg-red-500 text-white border-red-400'
                     : 'bg-white/5 text-zinc-300 border-white/10'
-                  }`}
+                }`}
               >
                 {isAMGMode ? 'Disable AMG' : 'Enable AMG'}
               </button>
