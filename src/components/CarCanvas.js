@@ -123,7 +123,7 @@ const CarCanvas = ({ isMobile, isLowPowerDesktop }) => {
           castShadow={false}
         />
         <Environment
-          preset="city"
+          files="/potsdamer_platz_1k.hdr"
           resolution={lowPowerMode ? 64 : 128}
           background={false}
         />

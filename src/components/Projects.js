@@ -7,6 +7,7 @@ import {
   Map,
   FileSpreadsheet,
   Brain,
+  Globe,
 } from 'lucide-react';
 import SectionHeader from './ui/SectionHeader';
 
@@ -34,6 +35,15 @@ const fieldProjects = [
 ];
 
 const buildProjects = [
+  {
+    title: 'SkinByKaylaa',
+    description:
+      'Client site for a Rockwall esthetician. SEO-tuned pages, online booking, and a service showcase built to drive local search and appointments.',
+    link: 'https://www.skinbykaylaa.vercel.app/',
+    image: '/SkinByKaylaa.png',
+    icon: Globe,
+    tags: ['React', 'SEO', 'Booking', 'Client Work'],
+  },
   {
     title: 'FinTeach',
     description:
@@ -63,6 +73,19 @@ const buildProjects = [
   },
 ];
 
+const getProductGridClass = (count) => {
+  const base = 'grid gap-5 items-stretch';
+
+  if (count <= 1) return `${base} grid-cols-1`;
+  if (count === 2) return `${base} grid-cols-1 sm:grid-cols-2`;
+  if (count === 3) return `${base} grid-cols-1 sm:grid-cols-2 lg:grid-cols-3`;
+  if (count === 4) return `${base} grid-cols-1 sm:grid-cols-2`;
+  if (count % 4 === 0) return `${base} grid-cols-1 sm:grid-cols-2 xl:grid-cols-4`;
+  if (count % 3 === 0) return `${base} grid-cols-1 sm:grid-cols-2 lg:grid-cols-3`;
+
+  return `${base} grid-cols-1 sm:grid-cols-2`;
+};
+
 const ProjectCard = ({ project, index, isAMGMode, size = 'standard' }) => {
   const Icon = project.icon;
   const hoverTitle = isAMGMode ? 'group-hover:text-red-400' : 'group-hover:text-purple-400';
@@ -75,7 +98,7 @@ const ProjectCard = ({ project, index, isAMGMode, size = 'standard' }) => {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-40px' }}
       transition={{ delay: index * 0.05 }}
-      className={`group panel flex flex-col overflow-hidden p-0 ${
+      className={`group panel flex h-full flex-col overflow-hidden p-0 ${
         isAMGMode ? 'panel-amg' : 'panel-base'
       }`}
     >
@@ -186,7 +209,7 @@ const Projects = ({ isAMGMode }) => {
           <p className="text-xs uppercase tracking-[0.2em] text-zinc-500 mb-3">
             Products
           </p>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 items-start">
+          <div className={getProductGridClass(buildProjects.length)}>
             {buildProjects.map((project, index) => (
               <ProjectCard
                 key={project.title}
@@ -202,4 +225,4 @@ const Projects = ({ isAMGMode }) => {
   );
 };
 
-export default Projects;
+export default Projects
