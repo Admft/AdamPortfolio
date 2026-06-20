@@ -42,7 +42,6 @@ const buildProjects = [
     image: '/CornellSchedulePlanner.png',
     icon: Calendar,
     tags: ['React', 'TypeScript', 'Vite', 'ExcelJS'],
-    screenshot: true,
   },
   {
     title: 'SkinByKaylaa',
