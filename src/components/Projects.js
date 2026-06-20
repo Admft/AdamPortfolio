@@ -6,6 +6,7 @@ import {
   Map,
   FileSpreadsheet,
   Globe,
+  Calendar,
 } from 'lucide-react';
 import SectionHeader from './ui/SectionHeader';
 
@@ -33,6 +34,16 @@ const fieldProjects = [
 ];
 
 const buildProjects = [
+  {
+    title: 'Cornell MEM Schedule Planner',
+    description:
+      'Won our Cornell M.Eng. residential hackathon. Built to stop MEM Distance Learning students from fighting spreadsheets and outdated degree requirements every semester.',
+    link: 'https://www.cornellmemscheduleplanner.com/',
+    image: '/CornellSchedulePlanner.png',
+    icon: Calendar,
+    tags: ['React', 'TypeScript', 'Vite', 'ExcelJS'],
+    screenshot: true,
+  },
   {
     title: 'SkinByKaylaa',
     description:
