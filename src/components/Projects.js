@@ -3,10 +3,8 @@ import { motion } from 'framer-motion';
 import {
   ExternalLink,
   Rocket,
-  Dumbbell,
   Map,
   FileSpreadsheet,
-  Brain,
   Globe,
 } from 'lucide-react';
 import SectionHeader from './ui/SectionHeader';
@@ -52,24 +50,6 @@ const buildProjects = [
     image: '/finteach2.jpg',
     icon: Rocket,
     tags: ['React', 'Flask', 'OpenAI', 'Plaid'],
-  },
-  {
-    title: 'KTP SportsApp',
-    description:
-      'Predictive sports analytics with real-time game and player insights. React, Redux, Java, and nba_api.',
-    link: '',
-    image: '/SportsApp.jpg',
-    icon: Brain,
-    tags: ['React', 'Redux', 'Java', 'NBA API'],
-  },
-  {
-    title: 'DynaFit',
-    description:
-      'AI-driven fitness app for personalized workout plans and tracking. React Native, Java, and AWS.',
-    link: '',
-    image: '/Dynafit.jpg',
-    icon: Dumbbell,
-    tags: ['React Native', 'Java', 'AWS'],
   },
 ];
 
