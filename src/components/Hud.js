@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import useEngineAudio from '../hooks/useEngineAudio';
 
 const SECTORS = [
   { id: 'grid', label: 'S1 · GRID' },
@@ -23,10 +22,9 @@ const SYSTEMS = [
   'KQL PIPELINE',
 ];
 
-const Hud = ({ trackMode }) => {
+const Hud = ({ trackMode, soundOn, toggleSound, setRpm, tick }) => {
   const [sectorLabel, setSectorLabel] = useState(SECTORS[0].label);
   const [systemsOpen, setSystemsOpen] = useState(false);
-  const { enabled: soundOn, toggle: toggleSound, setRpm, tick } = useEngineAudio();
 
   const rpmFillRef = useRef(null);
   const gearRef = useRef(null);

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const Navbar = ({ trackMode, setTrackMode, isStatsPage = false }) => {
+const Navbar = ({ trackMode, onTrackModeToggle, isStatsPage = false }) => {
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -55,7 +55,7 @@ const Navbar = ({ trackMode, setTrackMode, isStatsPage = false }) => {
             ))}
 
             <button
-              onClick={() => setTrackMode((prev) => !prev)}
+              onClick={onTrackModeToggle}
               className={`flex items-center gap-2 border px-3.5 py-1.5 font-tele text-[10px] uppercase tracking-[0.2em] transition-all ${
                 trackMode
                   ? 'border-race-red bg-race-red/90 text-white'
@@ -102,7 +102,10 @@ const Navbar = ({ trackMode, setTrackMode, isStatsPage = false }) => {
               ))}
 
               <button
-                onClick={() => setTrackMode((prev) => !prev)}
+                onClick={() => {
+                  onTrackModeToggle();
+                  setIsOpen(false);
+                }}
                 className={`mx-auto mt-2 border px-5 py-2.5 font-tele text-xs uppercase tracking-[0.2em] ${
                   trackMode
                     ? 'border-race-red bg-race-red text-white'

@@ -13,12 +13,14 @@ import Contact from './components/Contact';
 import Hud from './components/Hud';
 import TrackMap from './components/TrackMap';
 import StatsPage from './components/StatsPage';
+import useEngineAudio from './hooks/useEngineAudio';
 import { trackVisitor } from './lib/visitorStats';
 
 const CarCanvas = React.lazy(() => import('./components/CarCanvas'));
 
 function App() {
   const [trackMode, setTrackMode] = useState(false);
+  const { enabled: soundOn, toggle: toggleSound, setSoundEnabled, setRpm, tick } = useEngineAudio();
   const [isMobile, setIsMobile] = useState(false);
   const [isLowPowerDesktop, setIsLowPowerDesktop] = useState(false);
   const [mountCanvas, setMountCanvas] = useState(false);
@@ -78,6 +80,12 @@ function App() {
     };
   }, [isStatsPage]);
 
+  const handleTrackModeToggle = () => {
+    const next = !trackMode;
+    setTrackMode(next);
+    setSoundEnabled(next);
+  };
+
   return (
     <div
       id="top"
@@ -95,7 +103,7 @@ function App() {
       <div className="relative z-10">
         <Navbar
           trackMode={trackMode}
-          setTrackMode={setTrackMode}
+          onTrackModeToggle={handleTrackModeToggle}
           isStatsPage={isStatsPage}
         />
         {isStatsPage ? (
@@ -118,7 +126,13 @@ function App() {
       {!isStatsPage && (
         <>
           <TrackMap />
-          <Hud trackMode={trackMode} />
+          <Hud
+            trackMode={trackMode}
+            soundOn={soundOn}
+            toggleSound={toggleSound}
+            setRpm={setRpm}
+            tick={tick}
+          />
         </>
       )}
     </div>

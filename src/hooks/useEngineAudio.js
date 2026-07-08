@@ -54,27 +54,37 @@ const useEngineAudio = () => {
     return { ctx, master, filter, oscA, oscB, sub };
   };
 
+  const syncEngineGain = useCallback((next) => {
+    if (next) {
+      if (!engineRef.current) {
+        engineRef.current = buildEngine();
+      }
+      const engine = engineRef.current;
+      if (engine) {
+        engine.ctx.resume();
+        engine.master.gain.setTargetAtTime(0.035, engine.ctx.currentTime, 0.4);
+      }
+    } else if (engineRef.current) {
+      const engine = engineRef.current;
+      engine.master.gain.setTargetAtTime(0, engine.ctx.currentTime, 0.15);
+    }
+  }, []);
+
+  const setSoundEnabled = useCallback((next) => {
+    setEnabled((prev) => {
+      if (prev === next) return prev;
+      syncEngineGain(next);
+      return next;
+    });
+  }, [syncEngineGain]);
+
   const toggle = useCallback(() => {
     setEnabled((prev) => {
       const next = !prev;
-
-      if (next) {
-        if (!engineRef.current) {
-          engineRef.current = buildEngine();
-        }
-        const engine = engineRef.current;
-        if (engine) {
-          engine.ctx.resume();
-          engine.master.gain.setTargetAtTime(0.035, engine.ctx.currentTime, 0.4);
-        }
-      } else if (engineRef.current) {
-        const engine = engineRef.current;
-        engine.master.gain.setTargetAtTime(0, engine.ctx.currentTime, 0.15);
-      }
-
+      syncEngineGain(next);
       return next;
     });
-  }, []);
+  }, [syncEngineGain]);
 
   // rpm in [0, 1] — pitches the hum with scroll velocity.
   const setRpm = useCallback((rpm) => {
@@ -115,7 +125,7 @@ const useEngineAudio = () => {
     }
   }, []);
 
-  return { enabled, toggle, setRpm, tick };
+  return { enabled, toggle, setSoundEnabled, setRpm, tick };
 };
 
 export default useEngineAudio;
