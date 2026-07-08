@@ -1,8 +1,9 @@
-import React, { Suspense, useEffect, useRef } from 'react';
+import React, { Suspense, useCallback, useEffect, useRef } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Environment, Float, PresentationControls } from '@react-three/drei';
 import * as THREE from 'three';
 import { Model as C63 } from './C63';
+import { DriftParticles } from './DriftParticles';
 
 const getScrollRotation = () => {
   const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
@@ -16,6 +17,19 @@ const ScrollRotatingCar = ({ lowPowerMode }) => {
   const targetRotationRef = useRef(0);
   const animationFrameRef = useRef(null);
   const isVisibleRef = useRef(true);
+  const driftIntensityRef = useRef(0);
+  const lastScrollYRef = useRef(typeof window !== 'undefined' ? window.scrollY : 0);
+
+  const updateDriftFromScroll = useCallback(() => {
+    const scrollY = window.scrollY;
+    const scrollDelta = scrollY - lastScrollYRef.current;
+    lastScrollYRef.current = scrollY;
+
+    if (scrollDelta !== 0) {
+      const boost = Math.min(Math.abs(scrollDelta) / 6, 1);
+      driftIntensityRef.current = Math.max(driftIntensityRef.current, boost);
+    }
+  }, []);
 
   const stopAnimation = () => {
     if (animationFrameRef.current !== null) {
@@ -25,7 +39,12 @@ const ScrollRotatingCar = ({ lowPowerMode }) => {
   };
 
   useFrame(() => {
-    if (!carRef.current || lowPowerMode) return;
+    if (!carRef.current) return;
+
+    updateDriftFromScroll();
+    driftIntensityRef.current *= lowPowerMode ? 0.94 : 0.97;
+
+    if (lowPowerMode) return;
 
     targetRotationRef.current = getScrollRotation();
     carRef.current.rotation.y = THREE.MathUtils.lerp(
@@ -34,6 +53,15 @@ const ScrollRotatingCar = ({ lowPowerMode }) => {
       0.05
     );
   });
+
+  useEffect(() => {
+    const handleScroll = () => {
+      updateDriftFromScroll();
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [updateDriftFromScroll]);
 
   useEffect(() => {
     if (!lowPowerMode) return undefined;
@@ -54,6 +82,7 @@ const ScrollRotatingCar = ({ lowPowerMode }) => {
         const target = targetRotationRef.current;
         const next = THREE.MathUtils.lerp(car.rotation.y, target, 0.18);
         car.rotation.y = next;
+        driftIntensityRef.current *= 0.94;
         invalidate();
 
         if (Math.abs(next - target) > 0.001) {
@@ -63,6 +92,7 @@ const ScrollRotatingCar = ({ lowPowerMode }) => {
     };
 
     const queueRotationUpdate = () => {
+      updateDriftFromScroll();
       targetRotationRef.current = getScrollRotation();
       scheduleRotationUpdate();
     };
@@ -87,14 +117,22 @@ const ScrollRotatingCar = ({ lowPowerMode }) => {
       window.removeEventListener('resize', queueRotationUpdate);
       document.removeEventListener('visibilitychange', handleVisibilityChange);
     };
-  }, [lowPowerMode, invalidate]);
+  }, [lowPowerMode, invalidate, updateDriftFromScroll]);
+
+  const carScale = lowPowerMode ? 90 : 100;
 
   return (
     <group ref={carRef}>
-      <C63
-        scale={lowPowerMode ? 90 : 100}
-        position={[2, -1, -2]}
-      />
+      <C63 scale={carScale} position={[2, -1, -2]} />
+      <group position={[2, -1, -2]} scale={carScale}>
+        <group scale={0.01}>
+          <DriftParticles
+            position={[0, 0.14, -2.08]}
+            intensityRef={driftIntensityRef}
+            lowPowerMode={lowPowerMode}
+          />
+        </group>
+      </group>
     </group>
   );
 };
