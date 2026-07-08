@@ -152,16 +152,17 @@ function useParticleGeometry(pool, withPuffScale = false) {
   }, [pool, withPuffScale]);
 }
 
-export const REAR_TIRE_POSITIONS = [
-  [-0.78, 0.07, -1],
-  [0.78, 0.07, -1],
-];
 
-export function DriftParticles({ intensityRef, lowPowerMode, emitterOrigin = [0, 0, 0], ...props }) {
+const spawnOrigin = [0, 0, 0];
+
+export function DriftParticles({
+  intensityRef,
+  lowPowerMode,
+  markerRef,
+  ...props
+}) {
   const dustPoolRef = useRef(createPool(lowPowerMode ? 24 : 40));
   const cloudPoolRef = useRef(createPool(lowPowerMode ? 10 : 18, true));
-  const originRef = useRef(emitterOrigin);
-  originRef.current = emitterOrigin;
   const { invalidate } = useThree();
 
   const dustGeometry = useParticleGeometry(dustPoolRef.current);
@@ -198,16 +199,22 @@ export function DriftParticles({ intensityRef, lowPowerMode, emitterOrigin = [0,
   useFrame((_, delta) => {
     const intensity = Math.max(0, intensityRef?.current ?? 0);
 
+    if (markerRef?.current) {
+      const { x, y, z } = markerRef.current.position;
+      spawnOrigin[0] = x;
+      spawnOrigin[1] = y;
+      spawnOrigin[2] = z;
+    }
+
     if (intensity > 0.01) {
-      const origin = originRef.current;
       const dustSpawns = Math.min(Math.ceil(intensity * 2 + intensity * delta * 10), 3);
       for (let s = 0; s < dustSpawns; s += 1) {
-        spawnDust(dustPoolRef.current, Math.min(intensity, 1), origin);
+        spawnDust(dustPoolRef.current, Math.min(intensity, 1), spawnOrigin);
       }
 
       const cloudSpawns = Math.min(Math.ceil(intensity * 1.2 + intensity * delta * 4), 1);
       for (let s = 0; s < cloudSpawns; s += 1) {
-        spawnCloud(cloudPoolRef.current, Math.min(intensity, 1), origin);
+        spawnCloud(cloudPoolRef.current, Math.min(intensity, 1), spawnOrigin);
       }
     }
 

@@ -1,9 +1,10 @@
-import React, { Suspense, useCallback, useEffect, useRef } from 'react';
+import React, { Suspense, useCallback, useEffect, useMemo, useRef } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Environment, Float, PresentationControls } from '@react-three/drei';
 import * as THREE from 'three';
 import { Model as C63 } from './C63';
-import { DriftParticles, REAR_TIRE_POSITIONS } from './DriftParticles';
+import { RearTireDriftEffects } from './RearTireDriftEffects';
+import { DriftMarks } from './DriftMarks';
 
 const getScrollRotation = () => {
   const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
@@ -19,6 +20,9 @@ const ScrollRotatingCar = ({ lowPowerMode }) => {
   const isVisibleRef = useRef(true);
   const driftIntensityRef = useRef(0);
   const lastScrollYRef = useRef(typeof window !== 'undefined' ? window.scrollY : 0);
+  const leftTireRef = useRef();
+  const rightTireRef = useRef();
+  const tireRefs = useMemo(() => [leftTireRef, rightTireRef], []);
 
   const updateDriftFromScroll = useCallback(() => {
     const scrollY = window.scrollY;
@@ -122,21 +126,23 @@ const ScrollRotatingCar = ({ lowPowerMode }) => {
   const carScale = lowPowerMode ? 90 : 100;
 
   return (
-    <group ref={carRef}>
-      <C63 scale={carScale} position={[2, -1, -2]} />
-      <group position={[2, -1, -2]} scale={carScale}>
-        <group scale={0.01}>
-          {REAR_TIRE_POSITIONS.map((tirePos, index) => (
-            <DriftParticles
-              key={index}
-              emitterOrigin={tirePos}
-              intensityRef={driftIntensityRef}
-              lowPowerMode={lowPowerMode}
-            />
-          ))}
-        </group>
+    <>
+      <group ref={carRef}>
+        <C63 scale={carScale} position={[2, -1, -2]} />
+        <RearTireDriftEffects
+          carRef={carRef}
+          tireRefs={tireRefs}
+          intensityRef={driftIntensityRef}
+          lowPowerMode={lowPowerMode}
+          carScale={carScale}
+        />
       </group>
-    </group>
+      <DriftMarks
+        tireRefs={tireRefs}
+        intensityRef={driftIntensityRef}
+        lowPowerMode={lowPowerMode}
+      />
+    </>
   );
 };
 
