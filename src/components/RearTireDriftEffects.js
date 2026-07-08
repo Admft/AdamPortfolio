@@ -10,7 +10,6 @@ const FALLBACK_TIRE_POSITIONS = [
 ];
 
 const TIRE_GROUND_OFFSET = new THREE.Vector3(0, -0.35, 0);
-const worldPosition = new THREE.Vector3();
 const localPosition = new THREE.Vector3();
 
 const findRearWheel = (root, side) => {
