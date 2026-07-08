@@ -13,6 +13,14 @@ const getScrollRotation = () => {
   return scrollProgress * Math.PI * 2;
 };
 
+const getScrollCarOpacity = () => {
+  const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+  if (maxScroll <= 0) return 1;
+  const progress = window.scrollY / maxScroll;
+  // 100% at top, 0% at middle, 100% at bottom
+  return 2 * Math.abs(progress - 0.5);
+};
+
 const ScrollRotatingCar = ({ lowPowerMode }) => {
   const carRef = useRef();
   const { invalidate } = useThree();
@@ -151,9 +159,28 @@ const ScrollRotatingCar = ({ lowPowerMode }) => {
 
 const CarCanvas = ({ isMobile, isLowPowerDesktop }) => {
   const lowPowerMode = isMobile || isLowPowerDesktop;
+  const layerRef = useRef(null);
+
+  const updateCarOpacity = useCallback(() => {
+    if (!layerRef.current) return;
+    layerRef.current.style.opacity = String(getScrollCarOpacity());
+  }, []);
+
+  useEffect(() => {
+    updateCarOpacity();
+    window.addEventListener('scroll', updateCarOpacity, { passive: true });
+    window.addEventListener('resize', updateCarOpacity);
+    return () => {
+      window.removeEventListener('scroll', updateCarOpacity);
+      window.removeEventListener('resize', updateCarOpacity);
+    };
+  }, [updateCarOpacity]);
 
   return (
-    <div className="fixed inset-0 z-[1] pointer-events-none car-layer">
+    <div
+      ref={layerRef}
+      className="fixed inset-0 z-[1] pointer-events-none car-layer"
+    >
       <Canvas
         camera={{ position: [0, 0, 8], fov: 45 }}
         frameloop={lowPowerMode ? 'demand' : 'always'}
