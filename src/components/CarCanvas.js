@@ -13,12 +13,36 @@ const getScrollRotation = () => {
   return scrollProgress * Math.PI * 2;
 };
 
+const smoothstep = (t) => {
+  const clamped = Math.min(Math.max(t, 0), 1);
+  return clamped * clamped * (3 - 2 * clamped);
+};
+
 const getScrollCarOpacity = () => {
   const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
   if (maxScroll <= 0) return 1;
+
   const progress = window.scrollY / maxScroll;
-  // 100% at top, 0% at middle, 100% at bottom
-  return 2 * Math.abs(progress - 0.5);
+  const EDGE_FULL = 0.1;
+  const FADE_OUT_END = 0.24;
+  const FADE_IN_START = 0.76;
+  const MIDDLE_OPACITY = 0;
+
+  if (progress <= EDGE_FULL || progress >= 1 - EDGE_FULL) {
+    return 1;
+  }
+
+  if (progress < FADE_OUT_END) {
+    const t = (progress - EDGE_FULL) / (FADE_OUT_END - EDGE_FULL);
+    return 1 - smoothstep(t);
+  }
+
+  if (progress > FADE_IN_START) {
+    const t = (progress - FADE_IN_START) / (1 - EDGE_FULL - FADE_IN_START);
+    return smoothstep(t);
+  }
+
+  return MIDDLE_OPACITY;
 };
 
 const ScrollRotatingCar = ({ lowPowerMode }) => {
