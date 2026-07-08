@@ -65,17 +65,17 @@ const createPool = (count, withClouds = false) => ({
   nextIndex: 0,
 });
 
-const spawnDust = (pool, intensity) => {
+const spawnDust = (pool, intensity, origin) => {
   const i = pool.nextIndex % pool.count;
   pool.nextIndex += 1;
 
-  const spread = 0.22 + intensity * 0.1;
-  pool.positions[i * 3] = (Math.random() - 0.5) * spread;
-  pool.positions[i * 3 + 1] = Math.random() * 0.03;
-  pool.positions[i * 3 + 2] = (Math.random() - 0.5) * 0.06;
+  const spread = 0.1 + intensity * 0.06;
+  pool.positions[i * 3] = origin[0] + (Math.random() - 0.5) * spread;
+  pool.positions[i * 3 + 1] = origin[1] + Math.random() * 0.02;
+  pool.positions[i * 3 + 2] = origin[2] + (Math.random() - 0.5) * spread * 0.3;
 
   const speed = 14 + intensity * 20;
-  pool.velocities[i * 3] = (Math.random() - 0.5) * 10;
+  pool.velocities[i * 3] = (Math.random() - 0.5) * 8;
   pool.velocities[i * 3 + 1] = 1 + Math.random() * 2;
   pool.velocities[i * 3 + 2] = -speed - Math.random() * 8;
 
@@ -85,17 +85,17 @@ const spawnDust = (pool, intensity) => {
   pool.alpha[i] = pool.startAlpha[i];
 };
 
-const spawnCloud = (pool, intensity) => {
+const spawnCloud = (pool, intensity, origin) => {
   const i = pool.nextIndex % pool.count;
   pool.nextIndex += 1;
 
-  const spread = 0.28 + intensity * 0.14;
-  pool.positions[i * 3] = (Math.random() - 0.5) * spread;
-  pool.positions[i * 3 + 1] = 0.02 + Math.random() * 0.05;
-  pool.positions[i * 3 + 2] = (Math.random() - 0.5) * 0.08;
+  const spread = 0.12 + intensity * 0.08;
+  pool.positions[i * 3] = origin[0] + (Math.random() - 0.5) * spread;
+  pool.positions[i * 3 + 1] = origin[1] + Math.random() * 0.03;
+  pool.positions[i * 3 + 2] = origin[2] + (Math.random() - 0.5) * spread * 0.3;
 
   const speed = 10 + intensity * 14;
-  pool.velocities[i * 3] = (Math.random() - 0.5) * 12;
+  pool.velocities[i * 3] = (Math.random() - 0.5) * 10;
   pool.velocities[i * 3 + 1] = 2 + Math.random() * 3;
   pool.velocities[i * 3 + 2] = -speed - Math.random() * 6;
 
@@ -152,9 +152,16 @@ function useParticleGeometry(pool, withPuffScale = false) {
   }, [pool, withPuffScale]);
 }
 
-export function DriftParticles({ intensityRef, lowPowerMode, ...props }) {
-  const dustPoolRef = useRef(createPool(lowPowerMode ? 48 : 80));
-  const cloudPoolRef = useRef(createPool(lowPowerMode ? 20 : 36, true));
+export const REAR_TIRE_POSITIONS = [
+  [-0.78, 0.07, -1],
+  [0.78, 0.07, -1],
+];
+
+export function DriftParticles({ intensityRef, lowPowerMode, emitterOrigin = [0, 0, 0], ...props }) {
+  const dustPoolRef = useRef(createPool(lowPowerMode ? 24 : 40));
+  const cloudPoolRef = useRef(createPool(lowPowerMode ? 10 : 18, true));
+  const originRef = useRef(emitterOrigin);
+  originRef.current = emitterOrigin;
   const { invalidate } = useThree();
 
   const dustGeometry = useParticleGeometry(dustPoolRef.current);
@@ -192,14 +199,15 @@ export function DriftParticles({ intensityRef, lowPowerMode, ...props }) {
     const intensity = Math.max(0, intensityRef?.current ?? 0);
 
     if (intensity > 0.01) {
-      const dustSpawns = Math.min(Math.ceil(intensity * 3 + intensity * delta * 14), 5);
+      const origin = originRef.current;
+      const dustSpawns = Math.min(Math.ceil(intensity * 2 + intensity * delta * 10), 3);
       for (let s = 0; s < dustSpawns; s += 1) {
-        spawnDust(dustPoolRef.current, Math.min(intensity, 1));
+        spawnDust(dustPoolRef.current, Math.min(intensity, 1), origin);
       }
 
-      const cloudSpawns = Math.min(Math.ceil(intensity * 1.5 + intensity * delta * 6), 3);
+      const cloudSpawns = Math.min(Math.ceil(intensity * 1.2 + intensity * delta * 4), 1);
       for (let s = 0; s < cloudSpawns; s += 1) {
-        spawnCloud(cloudPoolRef.current, Math.min(intensity, 1));
+        spawnCloud(cloudPoolRef.current, Math.min(intensity, 1), origin);
       }
     }
 

@@ -3,7 +3,7 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Environment, Float, PresentationControls } from '@react-three/drei';
 import * as THREE from 'three';
 import { Model as C63 } from './C63';
-import { DriftParticles } from './DriftParticles';
+import { DriftParticles, REAR_TIRE_POSITIONS } from './DriftParticles';
 
 const getScrollRotation = () => {
   const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
@@ -126,11 +126,14 @@ const ScrollRotatingCar = ({ lowPowerMode }) => {
       <C63 scale={carScale} position={[2, -1, -2]} />
       <group position={[2, -1, -2]} scale={carScale}>
         <group scale={0.01}>
-          <DriftParticles
-            position={[0, 0.14, -2.08]}
-            intensityRef={driftIntensityRef}
-            lowPowerMode={lowPowerMode}
-          />
+          {REAR_TIRE_POSITIONS.map((tirePos, index) => (
+            <DriftParticles
+              key={index}
+              emitterOrigin={tirePos}
+              intensityRef={driftIntensityRef}
+              lowPowerMode={lowPowerMode}
+            />
+          ))}
         </group>
       </group>
     </group>
