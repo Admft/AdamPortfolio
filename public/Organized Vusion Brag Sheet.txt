@@ -1,0 +1,533 @@
+﻿Brag Sheet
+1. Technical Implementation & Network Engineering
+Hardware Migration & Network Optimization
+* Went onsite to Walmart headquarters in Bentonville, Arkansas, including the Home Office campus, and Walmart stores to support hardware swaps, integrations, and field validation work tied to ESL, BLE, IoT, and network performance.
+* At Walmart Store 2686, went onsite with Mike Ojo, met with the Walmart network engineer, and helped coordinate the migration of BLE 2.4 GHz traffic and ESL traffic from the existing Mist/Juniper APs to the new Rigado APs.
+* Helped separate network responsibilities so BLE and 2.4 GHz IoT traffic routed through Rigado APs while Wi-Fi traffic stayed on Mist APs, improving signal integrity, reducing mixed-traffic complexity, and supporting better performance for IoT devices.
+* Documented the Walmart 2686 onsite process in Confluence, including what was done onsite, who was involved, how the AP traffic split worked, and why the architecture change mattered for field operations.
+RF Spectrum Analysis & Validation
+* Performed Bluetooth traffic testing on the existing Mist/Juniper AP using the Ellisys Bluetooth Vanguard, quoted as an “Advanced All-in-One Bluetooth® Analysis System,” to capture and analyze Bluetooth behavior before the Rigado migration.
+* Activated the Rigado APs and repeated the Bluetooth/RF testing to compare performance before and after the network change.
+* Compared multiple validation sources, including the Mist dataset, Rigado dataset, pre-deployment VManager snapshot, and post-deployment VManager snapshot, to confirm whether the signal handoff and new AP architecture were working as intended.
+* Used the testing process to help validate that ESL and BLE traffic were properly transitioning to the new Rigado AP setup instead of relying on assumptions from configuration alone.
+Hardware Root Cause Analysis
+* Extracted batteries from IoT devices onsite to analyze voltage drops and identify whether hardware-level degradation was contributing to device failures or degraded performance.
+* Connected physical battery findings with backend system behavior, using the voltage drop analysis to help explain error logs, failed device behavior, and performance issues seen in the field.
+Field Investigations at Walmart Stores
+* Conducted field investigations at USWM 1216, Carrollton Supercenter and USWM 4182, Plano NHM / Neighborhood Market to evaluate damaged E Ink and rail display behavior in real store conditions.
+* Collected onsite information about IoT devices with damaged displays, including faded displays, split displays, stuck displays, ghost displays, and damaged rail displays.
+* Counted and estimated the number of faded, split, stuck, ghost, and rail display issues across the stores to help quantify the scale of the hardware/display problem.
+* Targeted 40–50 rail display label IDs that specifically showed split, stuck, or ghost behavior so the investigation focused on the most relevant damaged devices.
+* Used VManager to export all link IDs and rail IDs, then created an Excel sheet containing only the rail display label IDs that showed the targeted damage types.
+* At Store 1216, followed the instruction to avoid talking to anyone during the investigation.
+* At Store 4182, informed the store manager that you work for the “DSLs” and were the engineer checking the store, while confirming that your work would not affect daily store operations.
+Proximity Feature Testing at Walmart 1216
+* Worked onsite at Walmart 1216 from 2/26–2/27/2026 testing the platform’s proximity feature in real store conditions.
+* Tested the proximity feature across 6 different scenarios using 4 RSSI thresholds: -80 dBm, -70 dBm, -62 dBm, and -50 dBm.
+* Started each test approximately 12 meters away from the ESL, walked toward the ESL, and recorded the distance where the app triggered the toast message, such as “flashing now.”
+* Discovered that the original test design was flawed because there was a delay after initiating the proximity feature, meaning the toast could trigger later even without meaningful movement toward the ESL.
+* Found that if you stood still long enough, most RSSI levels would eventually trigger the toast, except -50 dBm, which was the only threshold that required getting legitimately close to the ESL.
+* Found that -62 dBm could trigger from around 20 meters away, which showed that the test results could be misleading and that the test method needed to be redesigned.
+* Later performed a follow-up test using a newer and improved APK, saw much better results, and confirmed that the original field testing and feedback helped contribute to improvements in the app/backend design.
+Rigado Follow-Up Monitoring Report
+* Created a professional report monitoring post-Rigado deployment performance after the hardware/network migration.
+* Identified major performance concerns, including massive failures, high re-onboarding activity, and RSSI values hovering near the -80 dBm onboarding threshold, indicating poor signal conditions and unstable onboarding behavior.
+* Used KQL queries to map access point locations and connect telemetry data to store-level AP behavior.
+* Created RSSI buckets per aisle and separate ping/onboarding RSSI buckets to make signal-quality issues easier to understand and explain.
+* Summarized the findings in a professional report that translated raw telemetry into clear conclusions about Rigado performance, onboarding health, and possible problem areas.
+* Helped replicate Rigado reporting using Log Analytics, with a goal of producing a before-and-after report three days after installation to show what changed after deployment.
+* Focused Rigado follow-up reporting on aisle-level distribution, average RSSI, ping RSSI, and onboarding behavior per device so performance issues could be tied to specific store areas and access point behavior.
+Features Connectivity & Device Behavior Troubleshooting
+* Investigated Features tags that were not connecting as expected as standalone devices and were intermittently failing to auto-onboard.
+* Documented a workaround for moved or offline Features tags: identify the store the tag is connected to, delete it from that store, then push it to the intended store.
+* Identified a visibility gap where if a Features tag is offline in a new store and also offline in the old store it was moved from, it becomes difficult to determine where the tag physically is.
+* Documented Features connectivity behavior, including that devices send a synchronizing ping to the AP every 15 minutes and are considered offline if there is no successful ping within an hour.
+* Planned documentation for a Features flowchart explaining how the system works and how error handling should be understood.
+* Planned documentation for setting up a store in VManager, setting up APs for that store, and testing Features behavior end-to-end.
+* Worked with internal stakeholders on critical Features/API support, including Eric, FX, Yair, Akbar, and the WMQ1 app context.
+* Coordinated with the Cloud team around VManager/VTransmitter-related issues.
+* Supported continuity while Ritesh was away by noting that Aduit Joshi was his replacement/contact for Features-related project work.
+EdgeSense / ESL Error Investigation
+* Captured troubleshooting notes for faded tag and ESL errors related to EdgeSense rather than Features.
+* Documented key ESL error codes:
+   * Error 14 — corrupted hash message
+   * Error 12 — missing hash message
+* Documented the workaround for Error 14 in VCloud: resend image.
+* Captured the risk that if the tag already has a corrupted image, refreshing the tag may refresh the corrupted image again.
+* Documented VCloud refresh behavior where VCloud checks labels every midnight for the past 72 hours and triggers an image refresh if one has not occurred.
+* Captured retry behavior, including one try, five retries, and the rule that if the refresh succeeds, it will not retry again for another 72 hours.
+* Documented that if the refresh fails, VCloud checks whether it failed the previous day and continues sending image refreshes until successful.
+* Identified that repeated refresh loops can hurt battery life.
+* Captured the firmware improvement where if the loop runs for three minutes, it stops.
+* Identified the related log phrase as “Refresh display update task.”
+Documentation
+* Wrote Confluence documentation for Features, including how Features works, how to send price updates to tags, and how price update protocols should be handled.
+* Wrote documentation on hardware installation procedures to help standardize how field and technical teams perform installs and support hardware operations.
+* Wrote documentation on the first Walmart 2686 onsite visit, including the AP migration from Mist/Juniper to Rigado and the reasoning behind routing BLE/2.4 GHz traffic separately from Wi-Fi.
+* Created documentation for the Store Telemetry Heatmaps system so other people could understand how to use the tool, where inputs go, and how to generate outputs.
+* Created or planned documentation explaining how to send a price or image update to a Features tag, including the Features Manager flow for selecting active store displays, choosing an aisle location, finding the ESL ID, and using the update flow.
+* Documented price type options for Features updates, including EDLP, Clearance, Rollback, and Manager Special.
+* Documented that EDLP uses only current price, while other price types can include current price and was price, with validation rules such as current price between 0.01 and 99.99 and was price above current price.
+* Worked from Confluence guidance to create a template first, then validate the flow by sending an image to a Features tag before finalizing documentation.
+API Training & Setup
+* Worked with Akbar to set up his Postman environment so he could interact with the Features API correctly.
+* Taught Akbar how to send and receive API calls for updating pricing on Features, helping transfer knowledge and reduce dependency on one person for basic API operations.
+* Worked with Yair to simulate image transmission for Features and validate documentation against real behavior.
+________________
+
+
+2. Data Analytics & Automation
+Automated Reporting Pipeline
+* Built Python scripting to automate PowerPoint reports by pulling live data through KQL queries from Walmart’s Azure database, reducing manual reporting work and making reporting more repeatable.
+* Integrated pandas and matplotlib so CSV outputs from KQL queries could be processed, transformed, and converted into custom graphs for automated reporting.
+* Focused on keeping PowerPoint outputs editable wherever possible, avoiding pivot tables and static images when the requirement was to keep text, charts, and graphs editable in PowerPoint.
+* Added matplotlib and pandas support to the auto report generator so CSV files could automatically become custom graphs and reporting visuals without manually rebuilding them each time.
+* Built the workflow around Python, Azure Log Analytics, KQL, pandas, OpenPyXL, matplotlib, and PowerPoint so data could flow from backend query results into executive/reporting assets.
+* Began report automation by first architecting the automation solution and visualizing sample data before Azure access was available.
+* Built and tested early PowerPoint automation concepts by linking Excel data to PowerPoint graphs to validate the reporting template approach.
+* Set up the project structure for report automation before full Azure access was available, allowing work to continue despite access blockers.
+* Worked with Mauricio to set up Python for his tool and later helped him with reports, showing cross-team support on analytics and reporting workflows.
+* Worked with Sal to understand the Features Manager and get a tour of how the tool worked so that reporting and documentation could reflect actual product behavior.
+* Continued improving the automation system after initial setup by fixing issues, learning from Mauricio, and applying Python analytics to weekly/biweekly PowerPoint reports.
+* Used Jupyter notebooks, Python, pandas, and matplotlib to go deeper into analysis around pings, onboardings, unique devices per AP, RSSI duration at onboarding, and cleaned-up report outputs.
+* Finished setting up the automation infrastructure and built initial tables and charts for automated reporting.
+Reporting Pipeline Stack
+* Used Python 3 / Python 3.14 in a local virtual environment as the core runtime for the reporting automation work.
+* Used pandas for CSV/XLSX handling, dataframe manipulation, metric aggregation, and data cleanup.
+* Used OpenPyXL for Excel export and Excel-based output handling.
+* Used matplotlib for chart and table generation, including presentation-ready visuals for reporting.
+* Used Azure Monitor / Log Analytics SDK, Azure Monitor Query SDK, Azure Identity, and Azure CLI for authentication and query execution against Azure Log Analytics.
+* Used KQL templates as the query layer, with structured filesystem folders such as Runs/ and Latest/ to manage executions, published outputs, and reusable reporting paths.
+* Noted that there is a tiny package.json, but it does not appear to be part of the real application stack.
+Modular Reporting Pipeline
+* Built the reporting system as a structured pipeline that takes KQL templates, injects a reporting window, executes the queries, exports structured data, optionally generates charts/tables, and publishes results into a stable Latest/ directory.
+* Created a query templating layer that programmatically normalizes .kql files by removing existing date variables and replacing them with injected datetime literals, preventing cross-query variable resolution issues.
+* Built weekly reporting logic that supports last N completed weeks, shifted reporting windows such as weeks-ago modes, and explicit start dates.
+* Aligned reporting windows to Monday 00:00 US/Central and converted those windows to UTC so the queries matched Azure Log Analytics requirements.
+* Used Azure CLI-based authentication to acquire tokens and execute queries through LogsQueryClient.
+* Handled full query success, partial query results, query errors, rows returned, duration, and error logs, then captured that execution metadata into manifests for traceability.
+* Wrote outputs into structured run folders containing generated KQL files, CSV results, Excel conversions, optional chart outputs, run_meta.json, and manifest.csv.
+* Published stable Latest/ snapshots after each run so downstream tools like PowerPoint or dashboards could reference consistent file paths without depending on changing run-folder names.
+* Created a chart plugin system where scripts in a /charts directory could run independently, allowing visualization logic to be developed separately from the core query execution pipeline.
+* Designed the project structure with separation of concerns between query templates, execution outputs, latest published results, and visualization logic, making the system easier to maintain and extend.
+Chart Builders
+* Built an Image Update Table chart builder that converts aggregated CSV metrics into a formatted table, including dynamic sizing, column-width logic, and intelligent formatting for counts versus percentages.
+* Built a success vs. failure chart builder that extracts success percentages, computes failure as the complement, and renders a horizontal stacked bar chart with adaptive scaling and clean labeling.
+* Built a daily trend chart builder that normalizes dates, fills missing days, aggregates duplicates, and plots daily counts alongside failure rates using dynamic scaling.
+* Built a daily table builder that formats daily metrics into a clean table with dates, counts, success percentage, and failure percentage, including date-gap filling and duplicate aggregation.
+Query Engineering & Reporting
+* Modified, ran, and optimized complex KQL queries on Walmart’s Azure database to generate reporting on device health, ping success rates, battery levels, onboardings, re-onboardings, ping failures, battery voltages, and other KPIs.
+* Produced weekly and biweekly reports for the Features Gen 1 rollout, covering onboardings, re-onboardings, pings, ping failures, battery voltages, and other important performance indicators.
+* Delivered those weekly and biweekly reports on time, helping keep stakeholders updated on rollout health and device performance.
+* Expanded analysis beyond basic KPI reporting by investigating how pings correlate with onboardings, how unique devices distribute across APs, and how RSSI behaves during onboarding.
+* Worked on deeper query improvements, including adding arg_max to queries and fixing UTC/location handling after removing final project statements from KQL queries.
+* Created or planned reports that could compare store KPIs over longer timeframes, including 18-month or two-year trend views for Golden Store reporting.
+Failure & Correlation Analysis
+* Analyzed correlation between ping successes, ping failures, display refreshes, and pings to determine whether issues were tied to the same device repeatedly or spread across multiple devices.
+* Created reports that explained device-level failure behavior in plain language, such as “this device failed twice” or “this device failed once.”
+* Created onboarding status distribution reporting and failed onboarding reporting to make failure patterns easier to review.
+* Added onboarding status distribution and failed onboarding data from Walmart RnD Monitoring Report 2025_10_19V2.
+* Based the re-onboarding status work on Sheet 1 of Re-onboardings_status_distribution, grouping results by prefixes and dates together.
+* Added reporting slides for Re-onboarding Status Distribution, Refresh Display Status, and Failed Onboardings: Error Code Distribution.
+* Avoided pivot tables because they brought in extra content, and used regular editable graphs/charts in PowerPoint wherever possible.
+Geospatial Visualization
+* Used the Nominatim API in Python with pilot store addresses from an Excel sheet to geocode pilot locations and produce visuals showing where pilot stores were located.
+* Built custom address-formatting logic that tried multiple address formats until the API successfully returned coordinates.
+* Output exact latitude and longitude coordinates, then used pandas and matplotlib to create data analytics visuals for pilot location placement.
+* Built the geocoding workflow as a standalone Python batch job using pandas for Excel input/output and dataframe manipulation, and requests with urllib3 Retry/HTTPAdapter for resilient HTTP requests.
+* Created an Excel-based data pipeline that reads store data from an .xlsx file, processes rows sequentially, appends latitude, longitude, query, and status fields, and writes results to a new Excel file.
+* Added periodic checkpoint saves so long-running geocoding jobs would not lose progress if interrupted.
+* Integrated OpenStreetMap Nominatim with country filtering, user agent identification, and best-result selection from returned JSON responses.
+* Added custom address normalization and query generation logic to clean address, city, and state values, remove noisy locality words, and generate fallback query variations.
+* Added rate limiting, retry logic, throttling controls, 429 handling, row skipping for already geocoded entries, success/failure status tracking, and progress logs for transparency and resumability.
+________________
+
+
+3. Strategic Client Engagement & Project Management
+Walmart Pilot Monitoring & Onsite Reporting
+* Deployed onsite to Walmart HQ in Bentonville, Arkansas to manage reporting for the pilot store integrating AI vision cameras, Features, and tags.
+* Created and managed reporting around pilot integration health, feature tagging, store readiness, and operational performance.
+* Provided daily status updates so stakeholders had visibility into pilot progress, technical issues, and integration health.
+Agile & Standup Leadership
+* Participated in daily standups where you reported what was completed yesterday, what was planned for today, and any blockers.
+* Served as a technical liaison between Vusion R&D and Walmart operational teams by translating field findings, telemetry data, and technical issues into updates that different teams could act on.
+Feature Management & Tracking
+* Managed the Features Gen 1 rollout by reporting on all features, creating timelines, and keeping rollout data organized in a new SharePoint folder.
+* Attended and contributed to twice-weekly discussions on product features, phase 1 development, designs, testing, development progress, and implementation needs.
+* Contributed to discussions around a phase 1 development effort costing the company $77,400, providing input related to feature design, testing, and development.
+* Participated in biweekly discussions on the creation process for Features Gen 2, continuing involvement beyond Gen 1 rollout support.
+* Participated in FAE Features planning around monthly activities, including February Gen 1 performance reporting, March lab testing and Gen 1 monitoring/reporting, and April first implementation/unit testing.
+* Helped provide Features specs to Akbar using information from PowerPoint and Confluence, including update frequency by size/type such as Y011 and Y010, plus dimension/spec details.
+* Participated in discussions around Phase 1 vs. Phase 2 planning, including trying to reduce IC count from 11 to 10 for requested content.
+Customer Experience Center Setup
+* Set up Features, the product you manage, for the Vusion Dallas CEC / Customer Experience Center for a client demo on Tuesday, working with Ritesh.
+* Helped Ritesh, Senior Product Manager, buy items for the CEC, set up the CEC, and make sure the CEC environment was tested and working correctly.
+* Supported demo pricing workflows by being the person who can make Postman API calls to change feature pricing in CEC environments such as Dallas CEC, Bentonville CEC, and Chicago CEC for high-client demos.
+Advanced Troubleshooting — wmd2 Environment
+* Investigated a critical “Technical Error” in the wmd2 development environment that was blocking image transmissions and price updates on hardware Y010-002A in store feature.factory.
+* Bypassed basic UI troubleshooting and went directly into Azure Log Analytics to investigate the backend flow.
+* Built a custom KQL query using union across workspaces and fuzzy string matching to trace the error path across logs.
+* Isolated the backend root cause as: originalErrorMessage: “Label type not supported.”
+* Confirmed the issue was likely a version incompatibility in the Visual Transmission / VT deployment.
+* Delivered a fact-based report to Cloud Ops with specific timestamps and error codes, reducing back-and-forth investigation and helping engineering move faster toward a fix.
+* Investigated the Features image transmission failure where updating a price image in the WMQ1/dev environment caused VManager to briefly show a synchronizing message before failing with “Technical error.”
+* Investigated failures involving hardware Y010-002A, where image transmission for Page 0 showed failure between 02/04/2026 10:01:55 am and 02/04/2026 10:01:59 am with the error “Technical error.”
+* Used multiple KQL approaches to locate the failure, including searching traces for specific prefixes such as Y010, Y011, and Y011-005B, searching directly for Y010-002A, and running union queries across multiple app/workspace trace sources.
+* Filtered the incident window around 2026-02-04 16:00:00 to 16:10:00 UTC and projected timestamp, source app, combined message, severity level, and type to isolate the relevant backend evidence.
+* Located the backend error record tied to the failed image transmission and identified key failure details including store ID feature.factory, label ID Y010-002A, timeline type IMAGE_TRANSMISSION, event type MATCHING, status FAILURE, firmware 2.7.51, studio type ID HF_T105F01_FULL_COLOR, connectivity RSSI -48, transmission unit sesvtmwmd2-04, original error key 5, and original error message “Label type not supported.”
+* Found that the failure also included an Elasticsearch write-index error involving alias vusion-timeline-labels, where the log stated that no write index was defined for the alias.
+* Preserved and communicated the suspected root-cause theory that for the wmd2 issue, the most probable cause was that someone redeployed another version of VT that was not compatible with those patterns.
+* Also preserved a later note that the technical error was “because port was blocked” after working with Yair, while keeping the deeper log evidence showing “Label type not supported.”
+Power BI Dashboard
+* Started working on a Power BI dashboard to monitor Store 3164, expanding reporting work into dashboard-based monitoring.
+* Worked on bringing Walmart KPIs into Power BI to create a monitoring dashboard for Store 3164.
+* Planned dashboard features such as linked Azure queries, drilldowns, filters by store/store ID, and scheduled refresh/cron-style automation that could run every set number of hours, such as every 6 hours.
+* Coordinated with Poojita, who knew how to link Azure queries to Power BI, to support dashboard publishing and data connectivity.
+________________
+
+
+4. Walmart Mexico & Canada Rollout
+* Created a comprehensive rollout overview and support strategy report for Walmart Mexico and Canada’s 2026 ESL deployment.
+* Created the “WM Mexico and Canada 2026 Rollout Plan” deck, documenting rollout scope, FAE support strategy, readiness checks, proactive monitoring, BLE benchmark validation, underperforming-store identification, RCA/remediation steps, and reporting expectations.
+* Consolidated deployment scope, wave plans, store profiles, device requirements, tag requirements, AP requirements, and end-to-end FAE support strategy into an executive-ready rollout document.
+* Synthesized rollout details across 100+ Mexico stores and Canada pilot locations.
+* Documented the monitoring, KPI/SLA validation, BLE benchmarking, troubleshooting, RCA, and recovery framework needed to support deployment readiness and long-term store performance.
+* Added Walmart Mexico rollout information to Confluence and worked on adding Canada store information to Confluence as part of rollout documentation and support readiness.
+* Helped document and organize rollout planning information so Mexico and Canada deployment details were easier to access, maintain, and communicate.
+________________
+
+
+5. Walmart Golden Store 1216 / Best Buy Benchmark
+4/14–4/15 Impact Highlights
+* Created a Walmart Golden Store 1216 benchmark baseline for onboarding, ping, and flash behavior that could be used to evaluate Best Buy pilot performance against a stable real-store reference.
+* Enabled a more meaningful comparison of Best Buy’s electronics-heavy device population by comparing it to known Walmart Golden Store behavior instead of reviewing the Best Buy pilot in isolation.
+* Turned unstable scripts and inconsistent exports into repeatable Python reporting workflows.
+* Improved data reliability by fixing schema issues, pathing issues, parsing issues, grouping issues, and runtime issues.
+* Produced AP-, aisle-, and prefix-based outputs that made operational differences easier to identify, explain, and compare.
+Polished Brag-Sheet Version
+* Led a Store 1216 ESL analytics and reporting effort to create a benchmark baseline from Walmart Golden Store 1216 for comparison against the Best Buy pilot.
+* Analyzed freezer and electronics onboarding, ping success/failure behavior, and flash performance across April 2–4 operational data.
+* Structured the analysis around APs, aisles, and device prefixes so the outputs reflected real store behavior rather than generic aggregate metrics.
+* Built and stabilized Python-based reporting workflows using pandas, matplotlib, and pathlib.
+* Resolved pathing failures, schema mismatches, timestamp parsing issues, grouped-event logic problems, and Windows-specific runtime bugs across inconsistent CSV/XLSX production-style exports.
+* Delivered repeatable analysis assets that made it possible to compare Best Buy pilot performance against a steady Golden Store benchmark.
+* Improved visibility into device stability, retry behavior, AP-linked performance, and operational trends.
+Performance Review Bullet
+* Built a Walmart Golden Store 1216 ESL benchmark across onboarding, ping, and flash workflows so Best Buy pilot performance could be evaluated against a stable real-store baseline.
+* Turned fragile scripts and inconsistent exports into repeatable Python reporting workflows, improving the team’s ability to compare device stability, retry behavior, and AP-linked performance across stores.
+Promo-Style Version
+* Took ownership of a high-value benchmarking effort by turning Walmart Golden Store 1216 operational data into a reusable ESL performance baseline for Best Buy pilot comparison.
+* Combined technical debugging, event-level analysis, and business-focused reporting to deliver a repeatable benchmark across onboarding, ping, and flash behavior.
+* Gave the team a stronger basis for evaluating pilot performance, identifying abnormal patterns, and reducing manual reporting effort.
+________________
+
+
+6. Store Heatmap Generator
+* Designed and built a full end-to-end “Store Telemetry Heatmaps” system that converts raw backend logs into spatial, store-level visual insights.
+* Combined two completely separate data domains that were not originally designed to work together: Azure backend telemetry and Walmart in-store map spatial data.
+* Wrote a set of KQL queries centered around a master query to extract device telemetry from Azure logs, including onboarding attempts, ping RSSI, success/failure rates, label IDs, and location keys such as zone, aisle, and section.
+* Exported KQL query results into CSV files that served as structured telemetry inputs for the Python heatmap pipeline.
+* Reverse-engineered Walmart’s in-store map API by pulling HTML source from endpoints like https://developer.api.walmart.com/api-proxy/service/Store-Services/Instore-Maps/v1/store/{storeId}/map.
+* Identified the embedded window.mapData object in the map HTML and parsed it to extract exact X/Y coordinates for aisle locations in the store.
+* Built a Python pipeline that ingests both telemetry CSVs and map HTML inputs, normalizes identifiers, joins device telemetry to physical store coordinates, aggregates metrics per location, and renders heatmaps.
+* Used bubble size to represent device density and color to represent performance metrics, making it easier to understand where weak signal zones, onboarding hotspots, and performance issues exist physically in the store.
+* Designed the system as a reusable pipeline where a new store’s KQL export and map HTML can be dropped into an inputs folder to automatically generate onboarding heatmaps, RSSI maps, and coverage visuals.
+* Created documentation explaining how to use the Store Telemetry Heatmaps system.
+* Built an out-of-the-box integration between backend telemetry and frontend spatial data, creating a visualization that neither system could provide alone.
+* Especially helpful i showing walmart before and after going from mist ap’s to rigados
+________________
+
+
+7. Critical Kroger Demo Support / Regression Testing
+* Supported a high-priority Kroger demo on a tight deadline by performing end-to-end regression testing in Android Studio across key app experiences.
+* Supported preparation for the May 11 Kroger demo, one of the most strategic and visible demos for the team because Vusion was actively trying to expand its relationship with Kroger.
+* Helped support a high-pressure demo effort with major business impact, where the team had only four weeks to prepare and the work was structured around fast development, bug fixing, stability, and final testing.
+* Participated in Kroger demo planning where the team aligned around a four-week execution plan:
+   * Week 1: planning and initial product work
+   * Week 2: development work
+   * Week 3: bug fixes and stability
+   * Week 4: full testing and demo readiness
+* Helped with testing and readiness for a demo that involved around 10 people on the call and carried significant visibility because it was described as one of the team’s best chances to move forward with Kroger.
+* Supported one of Vusion’s most strategic Kroger demo efforts leading up to the May 11 demo, helping with Dallas CEC testing, Android regression testing, Jira bug tracking, station readiness, and demo-flow validation across Loyalty, Fresh, eCommerce, and Associate journeys.
+* Worked under a compressed four-week timeline where the team had to move from planning to development, stabilization, and full testing, helping ensure the demo environment, app flows, IoT devices, label IDs, and customer story were ready for a highly visible Kroger opportunity.
+* Tested major demo flows including Station 1 Home, multiple Agentic Shopping flows, multiple Proximity Shopping flows, Retail Media, Nil Pick Detection screens, wayfinding, and navigation.
+* Helped support demo work across four main stations: Loyalty, Fresh, eCommerce, and Associate.
+* Helped validate Loyalty station flows including Agentic Shopping, Wayfinding, Proximity, product recommendations, and Retail Media.
+* Helped support Fresh station planning, including use of the app to simulate/mock up bakery-related flows.
+* Helped support eCommerce station planning, including wayfinding, pick-to-light, picking subflows, location warning flags, computer vision out-of-stock scenarios, and tote movement into the backroom after picking for storage and order preparation.
+* Helped support Associate station planning around associate journey flows, including task management, wayfinding, planogram, backroom picking, and returns processes.
+* Worked with Stacie and Ritesh to help test the Dallas CEC environment and get up to speed quickly so development feedback could move faster.
+* Participated in demo coordination where the team had to “nail the story” and avoid repetition across stations, while still reusing the same feature in different ways to tell different customer stories.
+* Supported the team’s color-coded demo readiness process, where tiles/screens were tracked by readiness status. Notes preserved:
+   * Green meant ready to go.
+   * Yellow meant ready soon / ready within a short time window.
+   * Gray meant still working through design.
+   * Blue was later used for development.
+   * Yellow was also used for test complete in tracking.
+* Participated in the CEC App standup on 2026-04-17, where the team aligned on release decisions, development ownership, Jira tracking, communication channels, and Kroger demo station focus.
+* Supported the decision to focus development only on Kroger demo stations and avoid work outside the station scope, helping keep the team focused under a compressed timeline.
+* Followed the testing process where bugs found during regression testing were documented as Jira tickets, likely cloned/linked when needed, assigned back to developers, and tracked in Jira and Excel after testing.
+* Validated app behavior against Figma to make sure the demo experience matched design expectations and that the implemented app behavior reflected the intended customer experience.
+* Identified issues through hands-on debugging, Android Studio testing, log review, source-level investigation, and repeated testing of fixed bugs.
+* Partnered closely with engineers to resolve blockers quickly and created actionable Jira tickets when follow-up work was needed.
+* Traced a BlueDot/map failure to missing Pointr configuration IDs for Dallas CEC, helped get the backend fix in place, and confirmed the experience worked again without requiring a new APK.
+* Worked physically in the CEC to make sure the demo app functioned correctly with the CEC environment and IoT hardware.
+* Confirmed that tag flashing and Retail Media demo behavior worked properly on IoT devices in-store.
+* Replaced a faulty Engage rail in the CEC because it had slow response behavior, then ran comparison tests with the old rail and replacement rail.
+* Acted as the “eyes and hands” in the CEC, ensuring the store environment, hardware, labels, and app flows were set up properly for the demo.
+* Worked with a senior PM to confirm that demo label IDs were correct and that the right information was available for the demo.
+* Spent three weeks performing critical regression testing, finding bugs, testing fixed bugs, and locating the source-code-level issues causing bugs.
+* Went into the office even on remote days to support testing and demo readiness, showing dedication during a compressed timeline.
+* Performed extensive wayfinding and navigation testing, including flows that use BLE signals from tags in the CEC to approximate user location and generate routes to items for shopping or restocking.
+Kroger / CEC Jira Tickets from Screenshot
+* CEC-415 Station 1: Loyalty
+   * Agentic Shopping + Wayfinding
+   * Linked item shown: CEC-417
+* CEC-418 -Station1-Proximity Shopping- Account Icon Does Not Open Checkout QR Code for Home
+   * Linked item shown: CEC-452
+* CEC-418 -Station1-Proximity Shopping- Lock Screen and Aisle Buggy Mispelled words.
+   * Linked item shown: CEC-453
+* CEC-418 -Station1-Proximity Shopping- in Checkout, the home button should be clickable and bring you to the home
+   * Linked item shown: CEC-455
+* CEC-417 -Station1-AgenticShopping- Back button on Map brings you to candles page instead of shopping list
+   * Linked item shown: CEC-456
+* CEC-418 -Station1-ProximityShopping- The text on the notification of the lock screen doesn't wrap
+   * Linked item shown: CEC-457
+* CEC-417 -Station1-AgenticShopping- Birthday Shopping, Shopping List, Flash Price opens the map instead of the toast for Price Flash
+   * Linked item shown: CEC-458
+* CEC-418 -Station1-Proximity Shopping- All Home Buttons Anywhere should take you home and update home button size
+   * Linked item shown: CEC-459
+* CEC-417 -Station1-AgenticShopping- Name of Kroger Numeral 4 candles in shopping list is incorrect.
+   * Linked item shown: CEC-462
+________________
+
+
+8. Captana Vision AI Training
+* Completed a three-day Captana Vision AI training covering what Captana/Topstock is, how it works, and how it supports store operations.
+* Learned use cases such as measuring on-shelf availability and identifying the correct product position using barcode recognition and LED rail flashing.
+* Learned that the system can identify products by barcode and flash the correct item position on a full rail with an LED strip so associates know where to place products.
+* Captured that high-resolution cameras are needed to read barcodes accurately.
+* Learned that the system uses a three-lens setup, with each lens quoted as 108 MP.
+* Learned that Captana identifies label IDs through a Morse-code-style flashing pattern from the label ID.
+* Learned that the system takes video, collects metadata, and sends the label ID identifier metadata instead of sending a full video file, because the camera processes the video internally.
+* Learned that the system needs a Wi-Fi stack because BLE is too slow for its data needs, but BLE is still used because rails can auto-connect/onboard and receive Wi-Fi credentials through that process.
+* Learned that the system has always-on, super-low-power connectivity that can trigger actions such as instant image capture or instant configuration.
+* Planned/attended all-day Captana/Topstock training around May 4–6, based on the training notes.
+________________
+
+
+9. Additional CEC Support
+* Continued helping Ritesh, Senior Product Manager, buy items for the CEC, set up the CEC, and make sure everything was tested and working properly.
+* Helped Ritesh match totes to staging using the VLink app on 5/6/26.
+* Helped Ryan Nibu install seven 32-inch Engage displays on 5/6/26.
+
+
+5/7/2026 - did extensive testing for the kroger demo specifically the navigation working with a pointr engineer and our pointr swe and pm, essentially ran multiple tests since it works based off phone locationing and beaconing from tags located in the store. So i had to find which parts of the cec have the locationing so we could change the starts for different stations and ran a bunch of tests and recorded the data. Did this for 3 diff time intervals, found that certain parts of the store aren’t good for positioning so we relocated start points and label id’s so the demo has a better chance of being more successful. Sent pictures to some labelID’s
+
+
+Weekly Update 5/26-5/31
+5/26 
+- added the rssi map to the features biweekly report 
+- For Kroger CEC Demo App, Tested CEC-312 reported multiple UI bugs, created CEC - 492 in Jira to report this 
+- For Kroger CEC Demo App, found a solution to a critical Pointr handshake error preventing building the app in Android Studio
+- For Kroger CEC Demo App, Worked with Ryan Mag on collecting logs from logcat in Android Studio for blue dot (wayfinding navigation)
+- For Kroger CEC Demo App, Tested CEC-406 and found a bug regarding wrong version number listed, created Jira ticket CEC-493 to report this
+- For Kroger CEC Demo App, Tested CEC-467 and found that -50 RSSI had too much coverage and various inconsistencies were found in the testing, Created Jira ticket CEC-494 to resolve this, found the line of code causing this issue and recommended a fix (cooldown interval for resetting the displayed rssi was set to to high of an interval so i reocmmmended making it from 10s to 1s)
+- updated the Engage rail id image for Ritesh in CEC
+-Worked with Yair to setup the Mist AP to test a Uniqlo E700 11.1 BWRYBG tag, but received an image generation error.
+Worked with Kristin to put in an order for a box of 2026 CW10 - Uniqlo E700 11.1 BWRYBG for Mike for testing.
+
+
+
+
+5/27
+* Worked with Luis to learn about the battery draining and testing
+Parent Ticket
+	Description
+	Bug Ticket
+	Owner
+	CEC-378-ARM
+	UI/UX bugs and functionality bugs
+	CEC-496
+	RS
+	CEC-282-ARM
+	Home Page Minor Tweaks
+	CEC-497
+	RS
+	CEC-406-ARM
+	App version to Settings — wrong version listed
+	CEC-493
+	PV
+	CEC-467-ARM
+	UI bugs and alignment bugs
+	CEC-494
+	PV
+	CEC-313-ARM
+	UI/UX bugs and issues
+	CEC-495
+	S
+	* 
+
+5/28 
+* Took off 
+5/29 
+* Going in office to test blue dot and bluedot UI
+* Have to test update settings trigger, test, backroom picking, and topstock,  approve PR for RSSI Map, 
+Jira
+	Title
+	Activity
+	CEC-502
+	ARM - Home page has UI bug: text is overflowing in bubble to 2 rows; it should be 1 row
+	Created 3 minutes ago
+	CEC-501
+	ARM - Login Page UI is incorrect for Login text
+	Updated 4 minutes ago
+	CEC-470
+	Login
+	Updated 43 minutes ago
+	CEC-492
+	ARM - Topstock - Demo Setting: Create topstock list from Product List - UI Bugs
+	Updated 14 hours ago
+	Past week
+Jira
+	Title
+	Activity
+	CEC-498
+	ARM - Login missing “Text” after 2nd login button
+	Updated 2 days ago
+	CEC-497
+	ARM - Home Page Minor Tweaks
+	Updated 2 days ago
+	CEC-482
+	STL - Feature Stocking - Missing Notification Banner
+	Updated 2 days ago
+	CEC-496
+	ARM - UI/UX bugs and functionality bugs
+	Updated 2 days ago
+	CEC-495
+	ARM - UI/UX bugs and issues
+	Updated 2 days ago
+	CEC-494
+	ARM - UI bugs and alignment bugs
+	Updated 2 days ago
+	CEC-382
+	RSSI Map Performance + Scale
+	Commented 2 days ago
+	CEC-493
+	ARM - App version to Settings - wrong version listed
+	Updated 3 days ago
+	CEC-312
+	Topstock
+	Commented 3 days ago
+	
+
+ 
+	Mobile dark mode ruins UI
+	CEC-301
+	x
+	8
+	 
+	 
+	Pujitha-Sai
+	Adam
+	 
+	In Progress
+	in work, finish by May 29, Tested by Adam
+	 Tested this as well 
+
+
+June 2 - June 5 
+Monday - OOO
+Tuesday - Did Biweekly Features gen 1  report WM Features Store Report.pptx , updated and fixed the report generator it’s fully automated now, attempted to implement location handling in there but the Features walmart 3164 webapp had a critical login bug that I worked with IT to fix. Basically the password for a service account that  was being used in a critical walmart deployment would change every 90 days or request and i finally fixed it so it wont anymore by working with it. I also created a doc that has all the aisle id’s for all the features thereby giving the locations and I have added that to confluence. Then added a features heatmap to my biweekly report and automated that in the powerpoint creation as well. 
+
+
+Wednesday - fix those missing locations in the features heatmap and create the powerbi dash
+* Fixed the missing locations in the heatmap for features goldenstores report
+* Worked on powerbi dash learned a little bit of working in power bi
+* Took the heatmap maker tool, automated it so now it uses azure cli to run the query automatically the user no longer has to run it manually and here is the workflow The user opens tkinter (with tkcalendar for dates), configures Azure via dropdowns, and azure_bootstrap uses subprocess to install or call the external Azure CLI for login, tenant/subscription switching, and listing Log Analytics workspaces; when they click Generate maps, run_inputs_master_pipeline downloads the store floor plan with urllib, parses map JSON with json/re, renders the KQL template from KqlQueries/MasterQuery.kql with zoneinfo for US/Central times, and runs the query through az monitor log-analytics query to get a CSV; pandas (on numpy) loads and joins map + telemetry, aggregates onboarding/RSSI/AP stats, and matplotlib (Agg) draws the heatmaps as PNGs into runs/store_<id>_<timestamp>/master_outputs/, with progress shown in the GUI log—all packaged for distribution as a single PyInstaller EXE that still expects Azure CLI on the machine. StoreHeatMapGen.zip 
+* Attended meeting for… 1216 devices have problems with rail batteries losing batteries. Freefall =  in 2-3 weeks we lost one volt, it stays awake and does image transmission instead of sleeping so after 3 min it stops now 1.5.8 but why is it dropping we need to investigate because that helped a lil but still dropping off. Shri event bus power on = number of times the bus is powered. Shri error data line short shri event inserts some of the top have like 20-70k number, some have 0, go to the store and see what the problem is. Shri event inserts is num it was inserted. Tomorrow morning investigate these rails and see why 
+Thursday -
+Learn how to use a power profiler, attend features gen 2 meeting and 
+* Made a tool that will locate any aisle on a map for onsite investigations (work in progress)
+* Went onsite and identified rails that had a large voltage drop in the battery  over the past 30 days and investigated by using the power profiler to find the tags causing a massive usage over the norm and pulled those tags so we can investigate why they are draining so much power. 
+* Investigated 5 edgesense rails with battery drainage issues, pulled 11 recordings of the powerprofiler of me running various tests on each rail which led to the pulling of 3 tags with issues draining the rail 
+June 8 - 
+In-Person Free-Fall Device Investigation – June 2026
+I supported an in-person store investigation into free-falling rail devices after a firmware update, using VManager data, physical rail inspections, and power profiler readings to isolate root causes across multiple affected rails. The investigation confirmed that many “bad battery” alerts were caused by field conditions rather than simple battery failure, including loose or improperly seated displays, dirty/stuck tags, dusty base-deck rails, high-current bad displays, and one faulty rail controller.
+Key impact:
+* Identified multiple high-current displays that were draining rails, including cases where removing a single bad display dropped current from 5.16 mA to 14–20 µA and from ~2.17 mA to very low microamp levels.
+* Found that several rails recovered after reseating loose or partially inserted tags, with one rail dropping from 7–12 mA back to ~50 µA once the display was fully installed.
+* Diagnosed a faulty rail controller on Z001-6VKA, where current stayed at 242 µA even after removing displays, then dropped to a healthy ~20 µA after replacing the controller.
+* Proved that high insert counts and dusty/dirty base-deck conditions were contributing to false battery issues and unstable rail behavior.
+* Helped narrow the issue from a broad “bad battery/free-fall” problem into actionable hardware, installation, and maintenance findings.
+Brag-sheet version:
+Conducted a hands-on field investigation of free-falling rail devices, combining VManager diagnostics, physical inspection, and power profiler testing to identify root causes behind bad battery alerts and abnormal current draw. Isolated issues to improperly seated displays, dirty/stuck tags, dusty rails, bad rail displays, and a faulty rail controller. Several fixes immediately reduced current consumption from milliamp-level drain to healthy microamp levels, helping turn a broad field issue into specific corrective actions for hardware replacement, display reseating, and rail maintenance.
+June 9 -
+
+
+Cec App Testing
+* Validated CEC-469 user + location based settings across all Associate Experience features. Testing covered login/logout/login persistence, regular settings, private template save/load, and public/shared location template save/load. Also validated that public templates can be loaded by another user in the same location, while private templates remain user-specific. Checked that applied templates become the current user’s settings without automatically affecting other users.
+* Reported a bug 
+* Tested ticket 469 with associate experience
+*  Worked with sal on voltage fall off report 
+June 10 - 
+Tested 469 
+Found bug preventing branch sprint-apr2026 from building
+Tested new 469 on the sprint-apr2026 branch
+Found bug of retail media crashing when clicked in the iteration branch - false alarm 
+
+
+June 11
+Tested cec 488 the agentic shopping and found these bugs 
+CEC 488 - Agentic Shopping - delete button doesn't work and the text isn't dynamic
+Key details
+Description
+• Unsaved changes
+1. When you enter a custom prompt from the settings in the agentic shopping.
+The text isn’t dynamic and will get off in the text bubble.
+2. The delete button in the shopping list doesn’t work either.
+June 22 - Week
+* Learned im going to be heavily involved in topstock, rail testing installations, automations, 
+* Built a tool for the FAE team to be able to navigate all the Walmart stores and find aisles and comes preloaded with all of the golden stores and stores with advanced logs.
+* Did my biweekly features gen 2 report
+_____Stuff I will be doing notes _____________________________________________________
+* 100 gen 2 rails being installed in 1216 tomorrow night
+* we need access to companion app to install.
+* TopStock UI - manager-wms3.vusion.io
+* get installation document from Zelle
+* once isntallation is done, we need someone at the store everyday to check all the rails to see if everything is okay keep checking everything. so check 100 rails.
+* First store is 5624 in farmers branch
+* Everyone will be assigned to 1 store, since it's simultaniously so go in store and check on rails for 1-2 weeks and make sure installation is done correctly, check the functionality. Fae will be assigned to at least one store.
+* Need someone to go to FIH at least in the beginning stage first 2-3 days to see that everything works, rails are connected to wifi and ble and everything works.
+* FIH is assembling 100 rails right now on wmd0. The actual 40,000 rails would be on efp2 (factory environment)
+* in factory just make sure everything is working in terms of the network part. Set up wifi and AP for them and stay for 1 hour just to see that everything works in terms of the factory. Once everything is working well we don't need to be there again.
+June 23
+* Researched topstock and installation to prep for installation, went onsite to do installation of first 40 rails, then noted down all the link id’s and topstock id’s 
+Asisted with the installation of 9 out of 40 topstock gen 2 rails, initiated them as well
+June 24 
+   * Helped Mike with a list of installed stores for Walmart
+   * Working on topstock reporting, and reporting automation
+June 25
+   * Shipped link id’s to walmart - ignore 
+   * Made a list of all the serial numbers pulled from the battery fall off investigation- ignore
+   * Built KQL discovery queries to reverse-engineer TopStock/ShelfEye workflows, identify operational KPIs, and publish standardized Confluence documentation for engineering and support teams. 
+   * Set up images in the topstock display tags in the dallas lab for walmart so they can see what it would look like when the tags have the aisle and mod number image on them for identifying shelves.
+June 29 - did features report
+Made canva for aisle id image template
+June 30 - recorded all image capture successes and failures 
+Made a powerpoint for gayatri with the new template compared to the old one 
+July 1  - recorded all topstock image capture successes and failure for topstock 
+Y01R-0190
+TopStockAutoWebScript is a Python 3 automation tool for VManager TopStock in VUSION / Walmart WMPC, originally built for store uswm.1216 — TX:1216 Carrollton SUP, but configurable for other chains and stores. It uses Playwright sync API >= 1.40.0 to drive a real Chromium browser through launch_persistent_context, preserving Microsoft SSO login in a local .browser_profile so users only need to log in once with --login-only. The script automates the repetitive process of visiting roughly 90 topstock rails, selecting either the Topstock or Shelf camera, reading the “On demand image capture” counter, clicking the camera icon, and confirming the capture dialog until each rail reaches its quota, defaulting to 6 Topstock captures and 3 Shelf captures. To avoid the site’s cooldown when switching cameras too quickly on the same rail, it works in full alternating passes: all rails on Topstock, then all rails on Shelf, repeating until complete. It saves resumable progress to local JSON files, reads rail IDs from rail_ids.txt, and skips rails when the quota is already met, capture is in progress, the camera button is disabled, or the counter cannot be safely read. The main file is topstock_capture.py, with support files including requirements.txt, .gitignore, generated capture_progress*.json files, the generated .browser_profile, and saved VManager HTML snapshots used for selector inspection. It targets Windows 10/11 and PowerShell, stores data locally in plain text and JSON, and does not use a database, web server, Docker, CI pipeline, or automated test suite.
+Did full end to end regression testing in CEC app for a big client demo the following day, tested every feature and reported bugs for all of them - this buillet point is important, it was 4 straight hours of looking at the figma and testing various features, copying the logcat in android studio and reporting bugs, whether it was certain bugs not working or if it was something else.
+7/6/2026 - ran camera capture script that i created that goes through all 90 camera 6x -  3 for OSA and 3 for Topstock camera - which makes it so the manual camera captures are taken for reporting
+Went onsite and investigated all camera failures in the past 24 hours, found items blocking the cameras, vision ai detecting faces on products and blurring, etc. 
+
+
+7/7/2026
+
+
+   * This investigation compared in-store label and shelf performance before and after Walmart’s AP switch from Mist to Rigado, using heatmaps and telemetry from the same eight stores across two noon-to-noon US/Central windows: June 25–30 as the Mist pre-switch baseline and July 2–7 as the Rigado post-switch comparison. The stores analyzed were 1167/wmp9, 123/wmpb, 1933/wmp4, 2535/wmp8, 2816/wmp4, 5140/wmp3, 5276/wmp9, and 5990/wmp2, for a total of 16 successful runs across both periods. For each store and period, the StoreHeatMapGen pipeline generated onboarding heatmaps, RSSI heatmaps, AP coverage maps, top-20 AP views by tag count, ping RSSI by AP, and supporting datasets such as joined device locations, AP summaries, aggregated locations, archived map HTML, and Azure query CSVs. The maps were built from live Walmart floor plans and Azure Log Analytics onboarding, ping, and location telemetry routed to the correct namespace and production subscription for each store, including Store 123’s wmpb namespace mapping to the wmp11 subscription. Namespace-specific KQL files were generated from a master template using generate_namespace_queries.py, and run_new_rigado_batch.py automated the batch process by setting the appropriate Azure subscription, running each store and period through the pipeline, and saving results under StoreHeatMapGen/NewRigadoBatchRuns/ in matching Mist and Rigado folders per store. All 16 runs completed with non-empty telemetry, producing tens of thousands of rows per store and period, making it straightforward to compare onboarding density by aisle or zone, ping and onboarding RSSI distributions, AP coverage, and top-serving APs to determine whether the Rigado rollout improved, degraded, or shifted in-store label performance compared with Mist.
+
+
+   * Updated topstock Queries in confluence https://ses-esl.atlassian.net/wiki/x/BQDTeAE

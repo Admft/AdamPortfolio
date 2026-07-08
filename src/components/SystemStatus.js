@@ -3,12 +3,12 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Activity, GripHorizontal, ChevronUp, ChevronDown } from 'lucide-react';
 
 const techStack = [
-  { name: 'React.js Core', status: 'operational' },
+  { name: 'Azure Log Analytics', status: 'operational' },
+  { name: 'KQL / Python Pipelines', status: 'operational' },
+  { name: 'RAG / Qdrant / Ollama', status: 'operational' },
+  { name: 'React / TypeScript', status: 'operational' },
+  { name: 'FastAPI / PostgreSQL', status: 'operational' },
   { name: 'WebGL / Three.js', status: 'operational' },
-  { name: 'Framer Motion', status: 'operational' },
-  { name: 'Tailwind CSS', status: 'operational' },
-  { name: 'Open Trivia DB API', status: 'operational' },
-  { name: 'Open Trivia Token API', status: 'operational' },
 ];
 
 const SystemStatus = ({ isAMGMode }) => {

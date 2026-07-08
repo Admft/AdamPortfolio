@@ -1,0 +1,210 @@
+﻿Adam Moffat - Comprehensive Knowledge Base
+Compiled Date: Feb 15 2026
+Purpose: This document serves as a complete, centralized knowledge base containing all provided information about Adam Moffat. No details have been omitted or summarized beyond minor rephrasing for clarity and organization. All content is derived directly from resumes, LinkedIn profile data, conversation history, user confirmations, and additional snippets provided across sources.
+________________
+
+
+Personal Information
+* Full Name: Adam Moffat
+* Email: arm393@cornell.edu (primary)
+* Phone: (630) 207-2417
+* Location: Dallas, Texas / Wylie, Texas (Dallas-Fort Worth area, United States)
+* LinkedIn: linkedin.com/in/adamrmoffat
+* Personal Website: adamrmoffat.com
+* LinkedIn Connections: 500+
+* LinkedIn Followers: 983
+* Profile Analytics (Recent): 188 profile views, 248 post impressions (past 7 days), 59 search appearances
+________________
+
+
+Professional Summary
+Adam Moffat is a results-driven technical professional blending Computer Science expertise with strong sales, account management, and client enablement skills. Key themes:
+* Technical Account Manager / Field Application Engineer with deep experience in SLED/Public Sector (Aerospace & Defense).
+* Proven "hunter" sales mentality: Closed $125K–$130K+ in personal revenue; did $60K+ monthly revenue from 2.5 months of d2d at evo marketing.
+* Expertise in pre-sales technical cycles, high-impact product demonstrations (remote & on-site), facility integration, troubleshooting, and cradle-to-grave account management.
+* Skilled in Salesforce CRM pipeline management, channel partner enablement, prospecting, cold calling, complex deal structures, and consultative sales.
+* Passionate about CLOUD and AI, cybersecurity, network security, API integration, full-stack development, JTAG boundary-scan testing, and client success.
+* Targeted roles: Inside Territory Account Manager (SLED), Pre-Sales Solution Engineer , Brand Technical Specialist (IBM), Software Programmer, Product Manager, Project Manager, Field Application Engineer, Sales Engineer, Associate Field Application Engineer.
+LinkedIn "About" Section (Full Text)
+As a Computer Science graduate from The University of Texas at Dallas, I have honed my skills in Python, JavaScript/TypeScript, and frameworks like ReactJS and NextJS. In my role as an Field Applications Engineer at Asset InterTech, I integrate JTAG Boundary-Scan Test solutions for defense and medical systems, enhancing client satisfaction. Previously, as a Sales Manager at Evo Marketing I led a team that onboarded over 100 clients monthly, generating over $60K in revenue monthly. In both positions, I utilized Salesforce CRM to manage client relationships and streamline operations. I co-developed FinTeach, an award-winning financial planning tool for Texas educators, recognized at HackUNT 2024. As a Project Manager for Kappa Theta Phi, I led the development of DynaFit, an AI-driven fitness application, employing Agile methodologies to ensure efficient project delivery. I am eager to connect with professionals and organizations passionate about leveraging technology for meaningful change. Let's collaborate to transform complex challenges into impactful solutions.
+________________
+
+
+Education
+* Master of Engineering Management (Distance Learning for Professionals)
+   * Cornell University, Ithaca, NY (Remote)
+   * Expected Dec 2027 (Admitted Spring 2026 – announced publicly on LinkedIn)
+   * Focus: Technology Sales Strategy, Operations Management, Business Leadership
+* Bachelor of Science in Computer Science (3.6 GPA)
+   * The University of Texas at Dallas, Richardson, TX
+   * August 2021 – May 2025
+   * Academic Excellence Full-Ride Scholarship
+   * Relevant Coursework: Network Security, Professional Sales, Database Management, Communication Systems, Data Structures, Algorithms, Cloud Computing
+* High School Diploma (Mathematics and Computer Science)
+   * Wylie High School
+   * 2019 – 2021
+Activities & Societies (UTD): Kappa Theta Phi (KTP) – Technical CS Fraternity
+________________
+
+
+Business Ventures & Entrepreneurship
+* SEO Site Solutions, LLC: Founder & Lead Consultant (Established September 2024). Focuses on digital strategy and SEO consulting.
+* Real Estate: Active interest in real estate investment, specifically targeting multi-family properties in the DFW area for "house-hacking" strategies.
+* Portfolio Development: Actively building a personal portfolio website using React (GitHub: AdamPortfolio).
+________________
+
+
+Professional Experience
+VusionGroup (Coppell, TX / On-site)
+VusionGroup | Coppell, TX (On-Site)
+Associate Field Application Engineer | January 2026 – Present
+* Role Overview: Serve as the primary technical bridge between North American Operations and Global R&D, managing the end-to-end deployment, staging, and optimization of Electronic Shelf Label (ESL) and retail IoT solutions.
+Technical Implementation & Network Engineering
+* Hardware Migration & Network Optimization: Went onsite to Walmart headquarters in Bentonville, Arkansas (Home Office campus), and Walmart stores to facilitate hardware swaps and integrations. At Walmart store 2686, pulled up with Mike Ojo, met the Walmart network engineer, and coordinated the swap of all BLE 2.4 GHz and ESLs (Electronic Shelf Labels) from the existing Mist (Juniper) APs to new Rigado APs. This segregated traffic so BLE and 2.4 GHz IoT traffic routes to Rigado APs while Wi-Fi routes to Mist APs, improving signal integrity and performance.
+* RF Spectrum Analysis & Validation: Performed testing on the current Mist Juniper AP using the Ellisys Bluetooth Vanguard (Advanced All-in-One Bluetooth® Analysis System) to capture and analyze Bluetooth traffic. Then activated the Rigado APs and ran a new test, comparing the two datasets plus VManager snapshots (pre- and post-deployment) to validate successful signal handoff and architecture efficacy.
+* Hardware Root Cause Analysis: Extracted batteries from IoT devices onsite to analyze voltage drops, correlating physical hardware degradation/failures with system-level error logs and performance issues.
+* Field Investigations at Walmart Stores:
+   * Conducted field investigation at USWM 1216 (Carrollton Supercenter) and USWM 4182 (Plano NHM – Neighborhood Market).
+   * Counted faded/split/stuck/ghost/rail displays (E Ink damage types).
+   * Targeted 40-50 label IDs (rail displays) showing split/stuck/ghost issues.
+   * Used VManager to export all link IDs and rail IDs; created an Excel sheet with only rail display label IDs exhibiting those damages.
+   * Estimated the count of ghost/split/stuck displays across stores.
+   * At 1216, avoided talking to anyone; at 4182, informed the store manager that I work for the DSLs (likely Digital Shelf Labels team) as the FAE (Field Application Engineer) to check on the store, confirming it would not affect daily operations.
+* Proximity Feature Testing (Onsite 1216): Worked 2/26–2/27/2026 onsite at Walmart 1216 testing the proximity feature in the platform. Initiated the proximity feature across 6 different scenarios with 4 RSSI thresholds (-80, -70, -62, -50 dBm). Started 12m away, walked toward the ESL, and recorded the distance when it triggered a toast message (e.g., "flashing now"). Discovered the test was flawed due to a delay after initiation—if standing still, most RSSI levels would eventually toast except -50 (which required getting legitimately close). Even -62 worked from 20m away. Concluded the 2 days were partially wasted, and a new test method is needed.
+* Rigado Follow-Up Monitoring Report: Created a report monitoring post-Rigado deployment performance; identified massive failures, high re-onboardings, and RSSI hovering near the -80 dBm onboarding threshold (indicating poor performance). Used KQL queries to map access point locations, created RSSI buckets per aisle, ping/onboarding RSSI buckets, and summarized findings in a professional report.
+* Documentation: Wrote comprehensive documentation in Confluence on features (including sending price updates to tags), price update protocols, hardware installation procedures, and the first onsite at Walmart 2686 to standardize field operations.
+* API Training & Setup: Worked with Akbar to set up his Postman environment and taught him how to send/receive API calls to update pricing on Features (the product managed).
+2. Data Analytics & Automation
+* Automated Reporting Pipeline: Built Python scripting to automate PowerPoint reports, pulling live data via KQL queries from Walmart’s Azure database. Integrated Matplotlib and Pandas to take CSVs and generate custom graphs for full automation (editable graphs/charts in PowerPoint—no pivot tables or images to keep everything text/graph-editable).
+* Query Engineering & Reporting: Modified and ran/optimized complex KQL queries on Walmart’s Azure database to generate reports on device health, ping success rates, battery levels, onboardings, re-onboardings, ping failures, battery voltages, and other key KPIs.
+* Weekly/Biweekly Feature Reports: Produced weekly and biweekly reports on Features Gen 1 rollout, covering onboardings, re-onboardings, pings, ping failures, battery voltages, and other KPIs—delivered on time.
+* Failure & Correlation Analysis: Analyzed correlation between ping successes/failures and display refreshes/pings; determined if failures were isolated to the same device or multiple/systemic. Created "Error Code Distribution" for failed onboardings and "Re-onboarding Status Distribution" dashboards (based on sheet 1 of Re-onboardings_status_distribution, grouped by prefixes and dates together; included failed onboardings from Walmart RnD Monitoring Report 2025_10_19V2). Added slides for Re-onboarding Status Distribution, Refresh Display Status, and Failed Onboardings: Error Code Distribution. Avoided pivot tables (due to extra content); used regular editable graphs/charts in PowerPoint.
+* Geospatial Visualization: Used Nominatim API in Python + pilot store addresses from an Excel sheet; wrote custom code to format addresses multiple ways until successful geocoding, output exact coordinates, then used Pandas/Matplotlib in data analytics to create visuals of pilot location placements.
+* Onboarding & Status Reporting: Generated reports saying things like "this device failed twice, this one failed once," etc., plus onboarding status distribution and failed onboardings.
+3. Strategic Client Engagement & Project Management (Walmart Pilot & Internal)
+* Enterprise Pilot Monitoring & Onsite Reporting: Deployed onsite to Walmart HQ (Bentonville, Arkansas) to manage reporting for the pilot store integrating AI vision cameras, features, and tags. Provided daily status updates on integration health, feature tagging, etc.
+* Agile & Standup Leadership: Participated in daily standups reporting what was done yesterday, planned for today, and any blockers; served as primary technical liaison between Vusion R&D and Walmart operational teams.
+* Feature Management & Tracking: Managed Features Gen 1 rollout; created timelines for all features (data stored in a new SharePoint folder). Attended and contributed to bi-weekly (2x/week) discussions on product features, phase 1 development (costing company $77,400), designs, testing, and development.
+* Customer Experience Center Setup: Set up Features (the product managed) for Vusion Dallas CEC (Customer Experience Center) for a client demo on Tuesday; collaborated with Ritesh on this.
+* Advanced Troubleshooting (wmd2 Environment): Investigated a critical "Technical Error" blocking image transmissions/price updates on specific hardware (Y010-002A) in the wmd2 dev environment (store: feature.factory). Bypassed UI troubleshooting; used Azure Log Analytics with custom KQL query (union across workspaces + fuzzy string matching) to trace error flow. Isolated root cause to backend log: originalErrorMessage: "Label type not supported" (version incompatibility in Visual Transmission deployment). Delivered fact-based report with timestamps/error codes to Cloud Ops, accelerating engineering fix.
+
+
+ASSET InterTech, Inc. (Dallas, TX / Hybrid) Field Application Engineer (Technical Account Manager / FAE) January 2025 – January 2026
+Collaborate with Sales Executives on facility integration strategies for Aerospace/Defense accounts, including major clients: Tinker Air Force Base, BAE Systems, GE Aviation, RTX (Raytheon).
+* Lead full pre-sales technical cycle: High-impact product demonstrations, aligning value proposition with compliance requirements; project manage on-site facility tours, deployments, evaluations; map client hardware to solutions; influence deal structure and SOW generation.
+* Primary liaison between client engineering leadership and internal sales teams.
+* Post-sales retention: Rapid-response troubleshooting, managed/resolved 100+ complex cases (JTAG diagnostics, hardware validation), 95% satisfaction rating, renewal contracts.
+* End-to-end project leadership on 4+ client test projects (SOW authoring to customized JTAG boundary-scan test suites using BSDLs/netlists).
+* Advanced client training: Conducted 5+ intensive week-long onsite training sessions for 40–50+ engineers on ScanWorks (basic & advanced) at major defense facilities.
+* Documentation: Authored/updated 40–100+ knowledge-base documents, tutorials, application notes (WordPress, HTML, MS Office).
+* Cross-functional collaboration: Participated in 10+ pre-sales discovery calls; translated feedback into 3 major feature enhancements.
+* Software QA: Identified 15+ bugs, rigorous testing on new releases.
+* Published article: "Accelerating Time-to-Market with Fast Flash Programming" (medical device focus, JTAG optimization). Thanked collaborators: Matthew Van Alstyne, Sherra Avila, W. Layton Ellington, Ethan Waters.
+
+
+all my onsites, from the advanced rtx trainings x2, to then the ge aviation onsite, the bae onsite, and tinker afb onsite. -also went out of my way to tour the floors of each onsite and generated reports of their manufacturing and production floors and processes in order for ASSET to gain a better understanding my cases my documents published with matt - The ROI of In-House Testing: A Director’s Guide to Strategic Value - Accelerating Time-to-Market with Fast Flash Programming - No Blind Spots: How ScanWorks Delivers Pin-Level Diagnostic Precision ScanWorks help and documentation - **[A Deep Dive into ScanWorks Fast Flash Programming (FFP)](https://scanworkshelp.com/wp-admin/post.php?post=8661&action=edit&classic-editor) - Using ScanWorks Actions in General - # Interconnect - # Memory Access Verify (MAV) - # Scan Path Verification - # Scan Path Wizard Worked with Ronil to create assetlibrarian tool
+
+
+Application Engineer (Internship) January 2025 – May 2025
+EVO Marketing (Louisville, KY / On-site) Sales Manager (Inside Sales & Business Development) January 2024 – September 2024 (9 months)
+* Managed 200+ client database; generated $125K–$130K+ personal revenue; led team of 5 to do 180k monthly for a total of 900k downline total rev, achieving $60K+ monthly personal revenue.
+* Did d2d with occasional cold calling on sick days
+* Full sales cycle management in Salesforce CRM.
+* Led daily stand-ups (Jira/Slack) to refine scripts, objection handling, and team productivity.
+* Orchestrated marketing: Digital campaigns, partnerships (Google, Facebook, Groupon),  direct outreach
+* for evo marketing i did The Evo Marketing Hustle: Your time in Louisville is pure, relentless sales. Generating $125k–$130k in 2.5 months, 60k a month we'll call it in personal revenue selling acv of $750 d2d pest control sales and leading a team of 5 to $180k+ monthly shows you aren't afraid to pick up the phone, handle objections, and close. For a Sales Engineer, blending that raw sales grit with your deep engineering knowledge is the ultimate combination. and then for
+CaringGuide (Richardson, TX / Remote) Software Engineer Intern (Product Growth) April 2023 – December 2023 (9 months)
+* Full-stack development: ReactJS, NodeJS, TailwindCSS, PostgreSQL; mobile-first web app.
+* Containerized app; managed CI/CD on AWS Elastic Beanstalk.
+* Python automation: Scraped 1000+ lead sources; custom web scraper for 1000+ sites/run.
+* API-driven data integration from RESTful sources.
+* Database management, feature additions, bug resolution, testing.
+The University of Texas at Dallas ML Network Intrusion Detection Researcher January 2024 – May 2025 (1 year 5 months)
+* Developed ML models (Python/Scikit-learn) to detect/classify threats (DDoS, Probe).
+* Analyzed TCP/IP and Wi-Fi anomalies.
+________________
+
+
+Technical Projects
+* FinTeach – Financial Planning Tool
+   * 1st Place Winner – HackUNT 2024 ("Best Financial Hack" & "Best Beginner Hack")
+   * Full-stack web app for Texas educators (ReactJS frontend, NodeJS/Express backend, deployed on Vercel serverless).
+* DynaFit – AI-Driven Fitness Application
+   * Project Manager role via Kappa Theta Phi fraternity (August–December 2023)
+   * Led cross-functional team using Agile/Scrum; deployed on AWS Cloud stack.
+* Network Intrusion Detection System
+   * Cybersecurity research project (August–December 2023)
+   * Python-based ML model for malicious packet detection.
+* Home Lab: Setting up a personal home lab (December 2025) for JTAG hardware testing.
+________________
+
+
+Skills & Competencies
+Category
+	Skills
+	Sales & Territory
+	Pipeline Management, Forecasting, Deal Registration, Channel/Partner Sales, SLED Strategy, Prospecting, Cold Calling, Consultative Methods, PoC Delivery, Client Enablement, Technical Proposal Writing, Negotiation.
+	Security & Networking
+	Network Intrusion Detection, Firewalls (Concepts), TCP/IP, IoT Protocols, Hardware Security, Cybersecurity, Network Design, Network Automation, JTAG/Boundary-Scan.
+	Languages & Frameworks
+	Java, Python (Scripting, Pandas, Scikit-learn), JavaScript/TypeScript, NodeJS, ReactJS, NextJS, SQL (PostgreSQL), HTML, CSS, RAML, OpenAPI (OAS).
+	Tools & Platforms
+	Salesforce CRM, Jira, Slack, Splunk, Microsoft Office Suite, Google Workspace, Git, Postman, AWS (EB, S3, Lambda, Elastic Beanstalk), WordPress.
+	Methodologies
+	API-Led Connectivity, Solution Architecture, Agile Project Management, Technical Troubleshooting, Client Relationship Management, Cross-Functional Collaboration.
+	LinkedIn Endorsed Skills (47 total): Includes Network Design, Network Automation, Presales, Sales, Testing Process, Integrated Systems, etc.
+________________
+
+
+Certifications & Professional Development
+* Certifications & Professional Development Microsoft Certified: 
+* Azure Administrator Associate (AZ-104) – Currently Pursuing Microsoft Certified: 
+* Azure AI Engineer Associate (AI-102/103) – Currently Pursuing Microsoft Certified: 
+* Azure Solutions Architect Expert (AZ-305) – Currently Pursuing Microsoft Certified: 
+* Azure Fundamentals (AZ-900) – Microsoft (Issued January 2026) Validates foundational knowledge of cloud concepts, Azure architecture, services, workloads, security, privacy, pricing, and support. What is Data Science? – IBM (Issued March 2024, Credential ID 9ERF6BH5HLL7)
+* What is Data Science? – IBM (Issued March 2024, Credential ID 9ERF6BH5HLL7)
+Active Projects & Development HouseFax is an AI-powered residential due-diligence platform—conceptually a "Carfax for houses"—that functions as a reliable underwriting copilot by adhering to the core architectural principle that LLMs explain, databases ground, deterministic tools calculate, and robust evals police. The application is built on a full-stack architecture featuring a Next.js and TypeScript frontend for type-safe interactions and PDF generation, backed by a Dockerized FastAPI service deployed on AWS (EC2/ECS, RDS, S3) that handles agentic orchestration while using Redis to cache rate-limited data from RentCast, ATTOM, Census, FRED, and FEMA APIs. At the data layer, it avoids the complexity of disjointed infrastructure by centralizing property records, geospatial comp searches, and RAG embeddings within a unified Postgres database utilizing PostGIS and pgvector. The end-to-end AI workflow relies on a highly reliable hosted LLM (like Claude or GPT) that strictly uses hand-rolled tool-calling to execute deterministic financial functions—such as calculating monthly payments, cap rates, and cash flow—coupled with a distinct LlamaIndex multi-document RAG module for synthesizing cross-referenced insights from uploaded HOA and inspection disclosures into a structured report featuring an executive verdict, neighborhood thesis, and risk profile. To navigate the severe challenges and liabilities of deploying generative AI for half-million-dollar real estate decisions, the system's true differentiator is a stringent, GitHub Actions-integrated evaluation harness that actively blocks deployments containing mathematical errors, unsupported hallucinations, poor-quality comps, overconfident ROI guarantees, tool indiscipline, or demographic-coded fair-housing violations. By focusing purely on structured, source-grounded decision support rather than predictive financial advice, and purposefully deferring over-engineered solutions like Kubernetes, Kafka, framework-driven RAG, or self-hosted quantized models until scale genuinely demands them, HouseFax ensures a highly auditable, legally compliant, and deterministically accurate platform.
+
+
+
+
+________________
+
+
+Notable Activity & Interests
+* Published Article: Shared "Accelerating Time-to-Market with Fast Flash Programming" on ASSET InterTech site (3 months ago).
+* Academic Success: Announced admission to Cornell MEM program (3 weeks ago), thanking manager Ben Bales and professors Klyne Smith and Dr. Brian Ricks.
+* Automotive: Car enthusiast; owns 2013 Mercedes-Benz S550 and 2017 Mercedes-AMG C63s.
+* Personal Interests: Avant-garde fashion (Rick Owens, Raf Simons), luxury watches (Breitling, Omega, Panerai), gaming (Skyrim Modding, Minecraft), and strength training.
+* Upcoming Plans: 17-day family trip to China (March 2026); startin vusiongroup role 
+ASSET
+1. Etg issue with stuart murray not defining correct pins, essentially he had an old version of vivado and etg where you didn't have to define certain pins in the fpga you were using to program your flash device. He built his project in the old version and is now picking up on the project in a new environment with newer versions. I worked directly with Stuart Murray over the phone. First I requested the part numbers he was using and quickly built the project from scratch on my end (its easier to build it on my end then get clearance from him to send his project). Then I test these solutions i fix a few bugs with these but notice my the eda he was using expected one of those inputs for the pin to be empty so I had to save the project and manually edit the inputs inside the file instead of through the project setup tool in scanworks
+2. I worked with a client who was unable to test the interconnects on the board so I helped him a little billed him for services then helped define the non boundary scan devices and undefined pins on his setup.
+3. Worked with the team to alpha beta test CT mode, first I had to go over the documentation on how to implement it and we recently got a sale for implementing this feature so it was important this new technology was perfectly integrated into this test. I went through documentation, made the changes to the memory model and worked with the customer sent back the updated project and he was able to successfully test it against his hardware
+4.  I had a client from a major defense contractor (Thales/DRT) contact me with a baffling issue. He was running a Boundary Scan loopback test on a secure board. The problem was that the test was passing even when he physically removed the loopback connector. This is a "False Positive," which is the worst-case scenario in testing because it means a broken board could ship as "Good."
+
+
+EVO Marketing
+1. I was a top salesman, broke rookie sales, traveled across the country performing sales in vastly different states, cultures, and environments.
+2. Used jira to mark areas prevent arguments or area overflow between team leads (I was the only rookie allowed to do this as well)
+Caring Guide
+1. Did database admin, backend, frontend
+2. Wrote python script to webscrape, pushed to database, then organized on frontend. 
+3. Hard tested site for bugs and resolved and inputted qa issues 
+ML Network intrusion detection research
+1. focusing on Anomaly Detection. Specifically, we were researching 'Smokescreen' attacks—where hackers launch a massive DDoS attack to distract IT, while secretly stealing data out the back door.
+2. My job was to build Machine Learning models that could look at Network Flow (Netflow) data and distinguish between the loud DDoS noise and the subtle signal of data theft
+3. I used Python libraries like Scikit-learn to train models like Isolation Forest and One-Class SVM. I used Matplotlib to visualize the decision boundaries and Splunk to analyze the live logs. The biggest challenge was False Positives—if our model was too sensitive, it would alert on everything, so I spent a lot of time tuning the 'contamination' hyperparameters to lower the noise.
+UTD 
+1. Learned Computer Networks, learned about packet loss latency vs throughput, and some wifi standards
+2. OS taught me about resource management and process scheduling
+3. Project management, When getting my referral for cornell from professor, I spoke to him about my current troubleshooting workflow and he taught me about d i r r d
+4. Learned agile scrum gathering requirements and managing scope 
+Cornell
+1. "I’m actually really excited to share that I’ve been accepted into Cornell’s Engineering Management program starting remotely this Spring.
+2. I specifically chose this program because it’s designed for working professionals and it focuses on the intersection of technical engineering and business operations.
+3. It directly applies to this FAE role because the curriculum covers Supply Chain Management and Technical Project Management. It’s going to give me the tools to better understand the business challenges Vusion's retail clients are facing, beyond just the hardware bugs."
+Ive worked with license renewals, recommending hardware test controllers to clients, ive worked with license upgrades, hardware upgrades, ive done consulting demos, worked with multi year clients performed trainings on our products. One of the biggest things ive worked on at asset was when a issue was not a bug with our software which isnt covered in the maintenance contract so i had to recommend a po for a bucket of hours of my time for a services contract, i was a trusted advisor, ive had to go onsite and pm clients and build relations with engineers. Ive learned when to accurately time my follow ups and responses with clients, ive built relations with over 50 engineers at multiple defense, medical device, and manufacturing clinets at asset i know how to read schematics and datasheets 
+
+
+Did a cornell mini hackathon during my residential intensive and won, the tool was

@@ -2,6 +2,8 @@ import React, { Suspense, useEffect, useState } from 'react';
 
 import Navbar from './components/Navbar';
 import About from './components/About';
+import Experience from './components/Experience';
+import Research from './components/Research';
 import Projects from './components/Projects';
 import Trivia from './components/Trivia';
 import Contact from './components/Contact';
@@ -98,6 +100,8 @@ function App() {
           <>
             <main>
               <About isAMGMode={isAMGMode} />
+              <Experience isAMGMode={isAMGMode} />
+              <Research isAMGMode={isAMGMode} />
               <Projects isAMGMode={isAMGMode} />
               <Trivia isAMGMode={isAMGMode} />
               <Contact isAMGMode={isAMGMode} />

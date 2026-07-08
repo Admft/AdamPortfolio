@@ -13,6 +13,8 @@ const Navbar = ({ isAMGMode, setIsAMGMode, isStatsPage = false }) => {
 
   const navLinks = [
     { name: 'About', href: isStatsPage ? '/#about' : '#about' },
+    { name: 'Experience', href: isStatsPage ? '/#experience' : '#experience' },
+    { name: 'Research', href: isStatsPage ? '/#research' : '#research' },
     { name: 'Projects', href: isStatsPage ? '/#projects' : '#projects' },
     { name: 'Trivia', href: isStatsPage ? '/#trivia' : '#trivia' },
     { name: 'Contact', href: isStatsPage ? '/#contact' : '#contact' },

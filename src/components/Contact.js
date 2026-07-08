@@ -35,7 +35,7 @@ const Contact = ({ isAMGMode }) => {
         <SectionHeader
           eyebrow="Contact"
           title="Let's build something."
-          description="Open to pre-sales, solutions engineering, field application, and technical account roles. Pilots, demos, integrations, or an ROI story that needs clearer data."
+          description="Open to Solutions Engineer, Forward Deployed Engineer, AI Engineer, and startup software roles. Cloud pipelines, RAG systems, pilot deployments, or a demo that needs someone who can debug below the UI."
           isAMGMode={isAMGMode}
           align="center"
         />
