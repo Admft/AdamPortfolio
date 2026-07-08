@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const Navbar = ({ isAMGMode, setIsAMGMode, isStatsPage = false }) => {
+const Navbar = ({ trackMode, setTrackMode, isStatsPage = false }) => {
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -11,13 +11,15 @@ const Navbar = ({ isAMGMode, setIsAMGMode, isStatsPage = false }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const prefix = isStatsPage ? '/' : '';
   const navLinks = [
-    { name: 'About', href: isStatsPage ? '/#about' : '#about' },
-    { name: 'Experience', href: isStatsPage ? '/#experience' : '#experience' },
-    { name: 'Research', href: isStatsPage ? '/#research' : '#research' },
-    { name: 'Projects', href: isStatsPage ? '/#projects' : '#projects' },
-    { name: 'Trivia', href: isStatsPage ? '/#trivia' : '#trivia' },
-    { name: 'Contact', href: isStatsPage ? '/#contact' : '#contact' },
+    { name: 'Driver', href: `${prefix}#driver` },
+    { name: 'Pit Wall', href: `${prefix}#pitwall` },
+    { name: 'Garage', href: `${prefix}#garage` },
+    { name: 'R&D', href: `${prefix}#research` },
+    { name: 'Results', href: `${prefix}#results` },
+    { name: 'Quali', href: `${prefix}#quali` },
+    { name: 'Radio', href: `${prefix}#radio` },
   ];
 
   return (
@@ -27,51 +29,52 @@ const Navbar = ({ isAMGMode, setIsAMGMode, isStatsPage = false }) => {
         animate={{ y: 0 }}
         className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
           scrolled
-            ? 'bg-black/70 backdrop-blur-xl border-b border-white/10'
+            ? 'bg-black/75 backdrop-blur-xl border-b border-white/10'
             : 'bg-transparent'
         }`}
       >
-        <div className="site-container flex items-center justify-between py-4">
+        <div className="site-container flex items-center justify-between px-6 py-3.5">
           <a href="/" className="flex items-center gap-2.5">
-            <img
-              src={`${process.env.PUBLIC_URL}/Adamheadshot.webp`}
-              alt="Adam Moffat"
-              className="h-9 w-9 rounded-full object-cover border border-white/15"
-            />
-            <span className="font-display text-lg font-bold text-white">Adam</span>
-            {isAMGMode && (
-              <span className="text-[10px] tracking-[0.3em] uppercase text-zinc-500 hidden sm:inline">
-                AMG
-              </span>
-            )}
+            <span className="flex h-8 w-8 items-center justify-center bg-race-red font-display text-base leading-none text-white">
+              63
+            </span>
+            <span className="font-display text-lg uppercase tracking-wide text-white">
+              Moffat
+            </span>
           </a>
 
-          <div className="hidden md:flex items-center gap-7">
+          <div className="hidden items-center gap-6 md:flex">
             {navLinks.map((link) => (
               <a
                 key={link.name}
                 href={link.href}
-                className="text-sm text-zinc-400 hover:text-white transition-colors"
+                className="font-tele text-[11px] uppercase tracking-[0.18em] text-zinc-400 transition-colors hover:text-white"
               >
                 {link.name}
               </a>
             ))}
 
             <button
-              onClick={() => setIsAMGMode((prev) => !prev)}
-              className={`px-3.5 py-1.5 rounded-full border text-xs font-medium transition-all ${
-                isAMGMode
-                  ? 'bg-red-500/90 text-white border-red-400/80'
-                  : 'bg-white/5 text-zinc-300 border-white/10 hover:border-white/20'
+              onClick={() => setTrackMode((prev) => !prev)}
+              className={`flex items-center gap-2 border px-3.5 py-1.5 font-tele text-[10px] uppercase tracking-[0.2em] transition-all ${
+                trackMode
+                  ? 'border-race-red bg-race-red/90 text-white'
+                  : 'border-white/15 bg-black/40 text-zinc-300 hover:border-race-red/60 hover:text-white'
               }`}
+              aria-pressed={trackMode}
             >
-              {isAMGMode ? 'AMG' : 'Standard'}
+              <span
+                className={`h-1.5 w-1.5 rounded-full ${
+                  trackMode ? 'bg-white lamp-on' : 'bg-zinc-500'
+                }`}
+              />
+              Track Mode
             </button>
           </div>
 
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden text-sm text-zinc-300 px-3 py-1.5 border border-white/10 rounded-lg"
+            className="border border-white/10 px-3 py-1.5 font-tele text-[11px] uppercase tracking-[0.16em] text-zinc-300 md:hidden"
           >
             {isOpen ? 'Close' : 'Menu'}
           </button>
@@ -92,23 +95,21 @@ const Navbar = ({ isAMGMode, setIsAMGMode, isStatsPage = false }) => {
                   key={link.name}
                   href={link.href}
                   onClick={() => setIsOpen(false)}
-                  className={`font-display text-2xl font-bold text-white ${
-                    isAMGMode ? 'hover:text-red-400' : 'hover:text-purple-300'
-                  }`}
+                  className="font-display text-3xl uppercase text-white hover:text-race-red"
                 >
                   {link.name}
                 </a>
               ))}
 
               <button
-                onClick={() => setIsAMGMode((prev) => !prev)}
-                className={`mt-2 mx-auto px-5 py-2.5 rounded-full border text-sm font-medium ${
-                  isAMGMode
-                    ? 'bg-red-500 text-white border-red-400'
-                    : 'bg-white/5 text-zinc-300 border-white/10'
+                onClick={() => setTrackMode((prev) => !prev)}
+                className={`mx-auto mt-2 border px-5 py-2.5 font-tele text-xs uppercase tracking-[0.2em] ${
+                  trackMode
+                    ? 'border-race-red bg-race-red text-white'
+                    : 'border-white/15 bg-black/40 text-zinc-300'
                 }`}
               >
-                {isAMGMode ? 'Disable AMG' : 'Enable AMG'}
+                {trackMode ? 'Exit Track Mode' : 'Enter Track Mode'}
               </button>
             </div>
           </motion.div>

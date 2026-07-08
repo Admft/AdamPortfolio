@@ -1,218 +1,223 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import {
-  ExternalLink,
-  Rocket,
-  Map,
-  FileSpreadsheet,
-  Globe,
-  Calendar,
-} from 'lucide-react';
-import SectionHeader from './ui/SectionHeader';
+import { ExternalLink } from 'lucide-react';
+import SectorHeader from './ui/SectorHeader';
 
-const fieldProjects = [
+const entries = [
   {
-    title: 'Store Telemetry Heatmaps',
-    description:
-      'Azure telemetry mapped to Walmart store layouts. Onboarding, RSSI, ping success, and weak-signal zones in one view.',
-    link: '',
-    image: '/HeatMap.png',
-    icon: Map,
-    tags: ['Python', 'KQL', 'Azure', 'Pandas'],
-    screenshot: true,
-  },
-  {
-    title: 'Executive Reporting Pipeline',
-    description:
-      'KQL templates, Azure exports, chart generation, and repeatable decks for weekly stakeholder updates.',
-    link: '',
-    image: '/ReportingPipeline.png',
-    icon: FileSpreadsheet,
-    tags: ['Python', 'KQL', 'OpenPyXL', 'PowerPoint'],
-    screenshot: true,
-  },
-];
-
-const buildProjects = [
-  {
+    pos: 1,
     title: 'Cornell MEM Schedule Planner',
-    description:
-      'Won our Cornell M.Eng. residential hackathon. Built to stop MEM Distance Learning students from fighting spreadsheets and outdated degree requirements every semester.',
+    entryClass: 'Product',
+    lap: '2025 — LIVE',
+    bestSector: 'Won the Cornell M.Eng residential hackathon; now saving MEM students from spreadsheet hell every semester',
+    tyres: ['React', 'TypeScript', 'Vite', 'ExcelJS'],
     link: 'https://www.cornellmemscheduleplanner.com/',
     image: '/CornellSchedulePlanner.png',
-    icon: Calendar,
-    tags: ['React', 'TypeScript', 'Vite', 'ExcelJS'],
+    fastestLap: true,
   },
   {
-    title: 'SkinByKaylaa',
-    description:
-      'Client site for a Rockwall esthetician. SEO-tuned pages, online booking, and a service showcase built to drive local search and appointments.',
-    link: 'https://www.skinbykaylaa.vercel.app/',
-    image: '/SkinByKaylaa.png',
-    icon: Globe,
-    tags: ['React', 'SEO', 'Booking', 'Client Work'],
+    pos: 2,
+    title: 'Store Telemetry Heatmaps',
+    entryClass: 'Enterprise',
+    lap: '2026 — LIVE',
+    bestSector: 'Azure telemetry joined to Walmart floor plans — onboarding, RSSI, and weak-signal zones in one spatial view',
+    tyres: ['Python', 'KQL', 'Azure', 'Pandas'],
+    image: '/HeatMap.png',
   },
   {
+    pos: 3,
+    title: 'Executive Reporting Pipeline',
+    entryClass: 'Enterprise',
+    lap: '2026 — LIVE',
+    bestSector: 'KQL templates → Azure exports → charts → finished exec decks, fully automated every week',
+    tyres: ['Python', 'KQL', 'OpenPyXL', 'PowerPoint'],
+    image: '/ReportingPipeline.png',
+  },
+  {
+    pos: 4,
     title: 'FinTeach',
-    description:
-      'Award-winning financial planning tool for Texas teachers. React, Flask, OpenAI, and Plaid.',
+    entryClass: 'Hackathon',
+    lap: '2024',
+    bestSector: 'Award-winning financial planning tool for Texas teachers at HackUNT 2024',
+    tyres: ['React', 'Flask', 'OpenAI', 'Plaid'],
     link: 'https://devpost.com/software/hackunt2024',
     image: '/finteach2.jpg',
-    icon: Rocket,
-    tags: ['React', 'Flask', 'OpenAI', 'Plaid'],
+  },
+  {
+    pos: 5,
+    title: 'SkinByKaylaa',
+    entryClass: 'Client',
+    lap: '2024 — LIVE',
+    bestSector: 'SEO-tuned pages and online booking driving local search for a Rockwall esthetician',
+    tyres: ['React', 'SEO', 'Booking'],
+    link: 'https://www.skinbykaylaa.vercel.app/',
+    image: '/SkinByKaylaa.png',
   },
 ];
 
-const getProductGridClass = (count) => {
-  const base = 'grid gap-5 items-stretch';
-
-  if (count <= 1) return `${base} grid-cols-1`;
-  if (count === 2) return `${base} grid-cols-1 sm:grid-cols-2`;
-  if (count === 3) return `${base} grid-cols-1 sm:grid-cols-2 lg:grid-cols-3`;
-  if (count === 4) return `${base} grid-cols-1 sm:grid-cols-2`;
-  if (count % 4 === 0) return `${base} grid-cols-1 sm:grid-cols-2 xl:grid-cols-4`;
-  if (count % 3 === 0) return `${base} grid-cols-1 sm:grid-cols-2 lg:grid-cols-3`;
-
-  return `${base} grid-cols-1 sm:grid-cols-2`;
-};
-
-const ProjectCard = ({ project, index, isAMGMode, size = 'standard' }) => {
-  const Icon = project.icon;
-  const hoverTitle = isAMGMode ? 'group-hover:text-red-400' : 'group-hover:text-purple-400';
-  const isFeatured = size === 'featured';
-  const imageHeight = isFeatured ? 'h-52 md:h-64' : 'h-44 md:h-48';
-
-  return (
-    <motion.article
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-40px' }}
-      transition={{ delay: index * 0.05 }}
-      className={`group panel flex h-full flex-col overflow-hidden p-0 ${
-        isAMGMode ? 'panel-amg' : 'panel-base'
+const PosBadge = ({ entry }) => (
+  <div className="flex items-center gap-2">
+    <span
+      className={`font-display text-2xl leading-none md:text-3xl ${
+        entry.fastestLap ? 'text-caution' : 'text-white'
       }`}
     >
-      <div
-        className={`overflow-hidden relative shrink-0 ${
-          project.screenshot ? `bg-zinc-950 ${imageHeight}` : imageHeight
-        }`}
+      P{entry.pos}
+    </span>
+  </div>
+);
+
+const TitleCell = ({ entry }) => (
+  <div className="flex items-center gap-3">
+    <img
+      src={entry.image}
+      alt=""
+      loading="lazy"
+      className="hidden h-10 w-16 shrink-0 border border-white/10 object-cover sm:block"
+    />
+    <div>
+      <p className="font-semibold text-white">{entry.title}</p>
+      {entry.fastestLap && (
+        <p className="mt-0.5 font-tele text-[9px] uppercase tracking-[0.24em] text-caution">
+          ▸ Fastest lap — hackathon winner
+        </p>
+      )}
+    </div>
+  </div>
+);
+
+const StatusCell = ({ entry }) =>
+  entry.link ? (
+    <a
+      href={entry.link}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex items-center gap-1.5 font-tele text-[11px] uppercase tracking-[0.14em] text-race-red transition-colors hover:text-white"
+    >
+      View <ExternalLink className="h-3 w-3" />
+    </a>
+  ) : (
+    <span className="font-tele text-[10px] uppercase tracking-[0.14em] text-zinc-500">
+      Enterprise — internal
+    </span>
+  );
+
+const Projects = () => (
+  <section id="results" className="site-section">
+    <div className="site-container">
+      <SectorHeader
+        sector="07"
+        code="Official classification"
+        title="Race Results"
+        sub="Final classification — pilot analytics from VusionGroup plus product builds from school and side projects."
+      />
+
+      {/* desktop: literal timing screen */}
+      <motion.div
+        initial={{ opacity: 0, y: 18 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-60px' }}
+        className="readable hidden overflow-hidden border border-white/12 bg-black/70 backdrop-blur-sm md:block"
       >
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10" />
-        <img
-          src={project.image}
-          alt={project.title}
-          className={`w-full h-full transition-transform duration-500 ${
-            project.screenshot
-              ? 'object-contain p-3 group-hover:scale-[1.02]'
-              : 'object-cover group-hover:scale-105'
-          }`}
-        />
-        <div className="absolute top-3 left-3 z-20">
-          <span
-            className={`inline-flex h-8 w-8 items-center justify-center rounded-lg border backdrop-blur-md ${
-              isAMGMode
-                ? 'border-red-500/30 bg-red-500/15 text-red-200'
-                : 'border-purple-400/30 bg-purple-500/15 text-purple-200'
+        <div className="flex items-center justify-between border-b border-white/12 px-6 py-3">
+          <p className="font-tele text-[10px] uppercase tracking-[0.28em] text-zinc-400">
+            Dallas GP · Classification — Provisional
+          </p>
+          <p className="font-tele text-[10px] uppercase tracking-[0.28em] text-race-red">
+            Race Control
+          </p>
+        </div>
+        <table className="w-full text-left text-sm">
+          <thead>
+            <tr className="border-b border-white/12 font-tele text-[9px] uppercase tracking-[0.24em] text-zinc-500">
+              <th className="px-6 py-3 font-medium">Pos</th>
+              <th className="px-3 py-3 font-medium">Entry</th>
+              <th className="px-3 py-3 font-medium">Class</th>
+              <th className="px-3 py-3 font-medium">Lap Time</th>
+              <th className="px-3 py-3 font-medium">Best Sector</th>
+              <th className="px-6 py-3 text-right font-medium">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {entries.map((entry) => (
+              <tr
+                key={entry.title}
+                className={`border-b border-white/8 transition-colors last:border-b-0 hover:bg-white/[0.04] ${
+                  entry.fastestLap ? 'border-l-2 border-l-caution bg-caution/[0.045]' : ''
+                }`}
+              >
+                <td className="px-6 py-4 align-middle">
+                  <PosBadge entry={entry} />
+                </td>
+                <td className="px-3 py-4 align-middle">
+                  <TitleCell entry={entry} />
+                </td>
+                <td className="px-3 py-4 align-middle font-tele text-[11px] uppercase tracking-[0.14em] text-zinc-400">
+                  {entry.entryClass}
+                </td>
+                <td className="px-3 py-4 align-middle font-tele text-[13px] text-data-blue">
+                  {entry.lap}
+                </td>
+                <td className="max-w-xs px-3 py-4 align-middle text-[13px] leading-5 text-zinc-300">
+                  {entry.bestSector}
+                </td>
+                <td className="px-6 py-4 text-right align-middle">
+                  <StatusCell entry={entry} />
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <div className="flex flex-wrap gap-x-6 gap-y-1 border-t border-white/12 px-6 py-3 font-tele text-[9px] uppercase tracking-[0.2em] text-zinc-500">
+          <span>
+            <span className="text-caution">■</span> Fastest lap
+          </span>
+          <span>
+            <span className="text-data-blue">■</span> Timing data
+          </span>
+          <span>All entries classified — no DNFs</span>
+        </div>
+      </motion.div>
+
+      {/* mobile: stacked timing rows */}
+      <div className="readable space-y-4 md:hidden">
+        {entries.map((entry, index) => (
+          <motion.div
+            key={entry.title}
+            initial={{ opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-30px' }}
+            transition={{ delay: index * 0.04 }}
+            className={`border border-white/12 bg-black/70 p-4 ${
+              entry.fastestLap ? 'border-l-2 border-l-caution' : ''
             }`}
           >
-            <Icon className="w-4 h-4" />
-          </span>
-        </div>
+            <div className="flex items-start justify-between gap-3">
+              <PosBadge entry={entry} />
+              <span className="font-tele text-[11px] text-data-blue">{entry.lap}</span>
+            </div>
+            <div className="mt-2">
+              <TitleCell entry={entry} />
+            </div>
+            <p className="mt-2 text-[13px] leading-5 text-zinc-300">{entry.bestSector}</p>
+            <div className="mt-3 flex flex-wrap gap-1.5">
+              {entry.tyres.map((tag) => (
+                <span
+                  key={tag}
+                  className="border border-white/10 bg-black/40 px-2 py-0.5 font-tele text-[10px] text-zinc-400"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+            <div className="mt-3">
+              <StatusCell entry={entry} />
+            </div>
+          </motion.div>
+        ))}
       </div>
+    </div>
+  </section>
+);
 
-      <div className={`flex flex-col ${isFeatured ? 'p-5 md:p-6' : 'p-4 md:p-5'}`}>
-        <h3
-          className={`font-display font-bold mb-2 transition-colors ${hoverTitle} ${
-            isFeatured ? 'text-xl' : 'text-lg'
-          }`}
-        >
-          {project.title}
-        </h3>
-        <p
-          className={`text-zinc-400 mb-4 leading-6 ${
-            isFeatured ? 'text-sm md:text-base' : 'text-sm'
-          }`}
-        >
-          {project.description}
-        </p>
-
-        <div className="flex flex-wrap gap-1.5 mb-4 mt-auto">
-          {project.tags.map((tag) => (
-            <span
-              key={tag}
-              className="text-[11px] font-mono px-2 py-0.5 rounded-md bg-black/30 text-zinc-400 border border-white/10"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-
-        {project.link ? (
-          <a
-            href={project.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`inline-flex items-center gap-2 text-sm font-medium text-white transition-colors ${hoverTitle}`}
-          >
-            View Project <ExternalLink className="w-3.5 h-3.5" />
-          </a>
-        ) : (
-          <span className="text-[11px] uppercase tracking-[0.14em] text-zinc-500">
-            {project.screenshot ? 'Enterprise delivery' : 'Personal / academic'}
-          </span>
-        )}
-      </div>
-    </motion.article>
-  );
-};
-
-const Projects = ({ isAMGMode }) => {
-  return (
-    <section id="projects" className="site-section border-t border-white/5">
-      <div className="site-container">
-        <SectionHeader
-          eyebrow="Selected Works"
-          title="Projects"
-          description="Pilot analytics from VusionGroup and product builds from school and side projects."
-          isAMGMode={isAMGMode}
-          className="mb-5 md:mb-6"
-        />
-
-        <div className="mb-8">
-          <p className="text-xs uppercase tracking-[0.2em] text-zinc-500 mb-3">
-            Field & analytics
-          </p>
-          <div className="grid md:grid-cols-2 gap-5 items-start">
-            {fieldProjects.map((project, index) => (
-              <ProjectCard
-                key={project.title}
-                project={project}
-                index={index}
-                isAMGMode={isAMGMode}
-                size="featured"
-              />
-            ))}
-          </div>
-        </div>
-
-        <div>
-          <p className="text-xs uppercase tracking-[0.2em] text-zinc-500 mb-3">
-            Products
-          </p>
-          <div className={getProductGridClass(buildProjects.length)}>
-            {buildProjects.map((project, index) => (
-              <ProjectCard
-                key={project.title}
-                project={project}
-                index={index}
-                isAMGMode={isAMGMode}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-};
-
-export default Projects
+export default Projects;

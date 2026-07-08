@@ -7,15 +7,29 @@ Source: https://sketchfab.com/3d-models/2018-mercedes-amg-c63-amg-cabriolet-af17
 Title: 2018 Mercedes-AMG C63 AMG Cabriolet
 */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useGraph } from '@react-three/fiber';
 import { useGLTF } from '@react-three/drei';
 import { SkeletonUtils } from 'three-stdlib';
 
-export function Model(props) {
+const bindRearWheelRefs = (clone, wheelRefs) => {
+  if (!wheelRefs) return;
+
+  const left = clone.getObjectByName('3DWheel Rear L');
+  const right = clone.getObjectByName('3DWheel Rear R');
+
+  wheelRefs.current.left = left;
+  wheelRefs.current.right = right;
+};
+
+export function Model({ wheelRefs, ...props }) {
   const { scene } = useGLTF('/c63.glb');
   const clone = React.useMemo(() => SkeletonUtils.clone(scene), [scene]);
   const { nodes, materials } = useGraph(clone);
+
+  useEffect(() => {
+    bindRearWheelRefs(clone, wheelRefs);
+  }, [clone, wheelRefs]);
 
   return (
     <group {...props} dispose={null}>

@@ -4,6 +4,7 @@ import { Environment, Float, PresentationControls } from '@react-three/drei';
 import * as THREE from 'three';
 import { Model as C63 } from './C63';
 import { RearTireDriftEffects } from './RearTireDriftEffects';
+import { RearWheelSpin } from './RearWheelSpin';
 import { DriftMarks } from './DriftMarks';
 
 const getScrollRotation = () => {
@@ -22,6 +23,7 @@ const ScrollRotatingCar = ({ lowPowerMode }) => {
   const lastScrollYRef = useRef(typeof window !== 'undefined' ? window.scrollY : 0);
   const leftTireRef = useRef();
   const rightTireRef = useRef();
+  const wheelRefs = useRef({ left: null, right: null });
   const tireRefs = useMemo(() => [leftTireRef, rightTireRef], []);
 
   const updateDriftFromScroll = useCallback(() => {
@@ -128,7 +130,8 @@ const ScrollRotatingCar = ({ lowPowerMode }) => {
   return (
     <>
       <group ref={carRef}>
-        <C63 scale={carScale} position={[2, -1, -2]} />
+        <C63 scale={carScale} position={[2, -1, -2]} wheelRefs={wheelRefs} />
+        <RearWheelSpin wheelRefs={wheelRefs} lowPowerMode={lowPowerMode} />
         <RearTireDriftEffects
           carRef={carRef}
           tireRefs={tireRefs}
@@ -150,7 +153,7 @@ const CarCanvas = ({ isMobile, isLowPowerDesktop }) => {
   const lowPowerMode = isMobile || isLowPowerDesktop;
 
   return (
-    <div className="fixed inset-0 z-0 pointer-events-none">
+    <div className="fixed inset-0 z-[1] pointer-events-none car-layer">
       <Canvas
         camera={{ position: [0, 0, 8], fov: 45 }}
         frameloop={lowPowerMode ? 'demand' : 'always'}

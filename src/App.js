@@ -1,20 +1,24 @@
 import React, { Suspense, useEffect, useState } from 'react';
 
 import Navbar from './components/Navbar';
+import Hero from './components/Hero';
+import SeasonStats from './components/SeasonStats';
 import About from './components/About';
 import Experience from './components/Experience';
+import SetupSheet from './components/SetupSheet';
 import Research from './components/Research';
 import Projects from './components/Projects';
 import Trivia from './components/Trivia';
 import Contact from './components/Contact';
-import SystemStatus from './components/SystemStatus';
+import Hud from './components/Hud';
+import TrackMap from './components/TrackMap';
 import StatsPage from './components/StatsPage';
 import { trackVisitor } from './lib/visitorStats';
 
 const CarCanvas = React.lazy(() => import('./components/CarCanvas'));
 
 function App() {
-  const [isAMGMode, setIsAMGMode] = useState(true);
+  const [trackMode, setTrackMode] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [isLowPowerDesktop, setIsLowPowerDesktop] = useState(false);
   const [mountCanvas, setMountCanvas] = useState(false);
@@ -46,7 +50,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (!isAMGMode || isStatsPage) {
+    if (isStatsPage) {
       setMountCanvas(false);
       return undefined;
     }
@@ -72,16 +76,16 @@ function App() {
       window.clearTimeout(timeoutId);
       setMountCanvas(false);
     };
-  }, [isAMGMode, isStatsPage]);
+  }, [isStatsPage]);
 
   return (
-
     <div
       id="top"
-      className={`relative min-h-screen text-white selection:bg-red-500/20 transition-colors duration-500 ${isAMGMode ? 'amg-mode' : 'base-mode'
-        }`}
+      className={`relative min-h-screen text-white selection:bg-race-red/30 transition-colors duration-500 race-mode ${
+        trackMode ? 'track-mode' : ''
+      }`}
     >
-      {isAMGMode && !isStatsPage && mountCanvas && (
+      {!isStatsPage && mountCanvas && (
         <Suspense fallback={null}>
           <CarCanvas isMobile={isMobile} isLowPowerDesktop={isLowPowerDesktop} />
         </Suspense>
@@ -90,26 +94,33 @@ function App() {
 
       <div className="relative z-10">
         <Navbar
-          isAMGMode={isAMGMode}
-          setIsAMGMode={setIsAMGMode}
+          trackMode={trackMode}
+          setTrackMode={setTrackMode}
           isStatsPage={isStatsPage}
         />
         {isStatsPage ? (
-          <StatsPage isAMGMode={isAMGMode} />
+          <StatsPage isAMGMode />
         ) : (
-          <>
-            <main>
-              <About isAMGMode={isAMGMode} />
-              <Experience isAMGMode={isAMGMode} />
-              <Research isAMGMode={isAMGMode} />
-              <Projects isAMGMode={isAMGMode} />
-              <Trivia isAMGMode={isAMGMode} />
-              <Contact isAMGMode={isAMGMode} />
-            </main>
-            <SystemStatus isAMGMode={isAMGMode} />
-          </>
+          <main className="pb-10">
+            <Hero />
+            <SeasonStats />
+            <About />
+            <Experience />
+            <SetupSheet />
+            <Research />
+            <Projects />
+            <Trivia />
+            <Contact />
+          </main>
         )}
       </div>
+
+      {!isStatsPage && (
+        <>
+          <TrackMap />
+          <Hud trackMode={trackMode} />
+        </>
+      )}
     </div>
   );
 }

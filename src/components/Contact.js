@@ -1,79 +1,105 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Mail, Linkedin, Github, ArrowUpRight } from 'lucide-react';
-import SectionHeader from './ui/SectionHeader';
 
-const links = [
+const channels = [
   {
     icon: Mail,
-    label: 'Email',
+    label: 'Radio Ch. 1 — Email',
     value: 'arm393@cornell.edu',
     href: 'mailto:arm393@cornell.edu',
   },
   {
     icon: Linkedin,
-    label: 'LinkedIn',
+    label: 'Radio Ch. 2 — LinkedIn',
     value: 'adamrmoffat',
     href: 'https://www.linkedin.com/in/adamrmoffat/',
   },
   {
     icon: Github,
-    label: 'GitHub',
+    label: 'Radio Ch. 3 — GitHub',
     value: 'admft',
     href: 'https://github.com/admft',
   },
 ];
 
-const Contact = ({ isAMGMode }) => {
-  const hoverAccent = isAMGMode
-    ? 'hover:border-red-500/40 hover:text-red-300'
-    : 'hover:border-purple-500/40 hover:text-purple-300';
+const Contact = () => (
+  <section id="radio" className="relative">
+    <div className="site-section pb-28">
+      <div className="site-container max-w-4xl text-center">
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          className="readable font-tele text-[10px] uppercase tracking-[0.32em] text-race-red"
+        >
+          Sector 09 · Pit lane open — radio check
+        </motion.p>
 
-  return (
-    <section id="contact" className="site-section border-t border-white/5">
-      <div className="site-container max-w-4xl">
-        <SectionHeader
-          eyebrow="Contact"
-          title="Let's build something."
-          description="Open to Solutions Engineer, Forward Deployed Engineer, AI Engineer, and startup software roles. Cloud pipelines, RAG systems, pilot deployments, or a demo that needs someone who can debug below the UI."
-          isAMGMode={isAMGMode}
-          align="center"
-        />
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="headline-solid mt-5 font-display uppercase leading-[0.88]"
+          style={{ fontSize: 'clamp(3.4rem, 11vw, 8.5rem)' }}
+        >
+          Box, box,
+          <br />
+          <span className="headline-red">box.</span>
+        </motion.h2>
 
-        <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-3">
-          {links.map((link, index) => {
-            const Icon = link.icon;
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.1 }}
+          className="readable mx-auto mt-8 max-w-2xl border-l-2 border-data-blue bg-black/60 px-5 py-4 text-left"
+        >
+          <p className="font-tele text-[10px] uppercase tracking-[0.24em] text-data-blue">
+            Pit wall → Car 63
+          </p>
+          <p className="mt-2 text-sm leading-7 text-zinc-300 md:text-base">
+            "Open to Solutions Engineer, Forward Deployed Engineer, AI Engineer, and
+            startup software seats. Cloud pipelines, RAG systems, pilot deployments —
+            or a demo that needs someone who can debug below the UI. Copy that?"
+          </p>
+        </motion.div>
+
+        <div className="readable mt-10 flex flex-col flex-wrap justify-center gap-3 sm:flex-row">
+          {channels.map((channel, index) => {
+            const Icon = channel.icon;
             return (
               <motion.a
-                key={link.label}
-                href={link.href}
+                key={channel.label}
+                href={channel.href}
                 target="_blank"
                 rel="noopener noreferrer"
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.06 }}
-                className={`group panel flex items-center gap-3 px-5 py-3.5 ${
-                  isAMGMode ? 'panel-amg' : 'panel-base'
-                } ${hoverAccent}`}
+                className="group flex items-center gap-3 border border-white/12 bg-black/70 px-5 py-3.5 text-left transition-colors hover:border-race-red/60"
               >
-                <Icon className="w-4 h-4 text-zinc-400 group-hover:text-inherit transition-colors" />
-                <div className="text-left">
-                  <p className="text-sm font-medium text-white">{link.label}</p>
-                  <p className="text-xs text-zinc-500 group-hover:text-zinc-400">{link.value}</p>
+                <Icon className="h-4 w-4 text-zinc-400 transition-colors group-hover:text-race-red" />
+                <div>
+                  <p className="font-tele text-[10px] uppercase tracking-[0.2em] text-zinc-500">
+                    {channel.label}
+                  </p>
+                  <p className="text-sm font-medium text-white">{channel.value}</p>
                 </div>
-                <ArrowUpRight className="w-3.5 h-3.5 ml-1 text-zinc-600 group-hover:text-inherit transition-colors" />
+                <ArrowUpRight className="ml-2 h-3.5 w-3.5 text-zinc-600 transition-colors group-hover:text-race-red" />
               </motion.a>
             );
           })}
         </div>
 
-        <p className="mt-16 pt-8 border-t border-white/5 text-center text-zinc-600 text-sm">
-          © {new Date().getFullYear()} Adam Moffat
+        <p className="readable mt-16 font-tele text-[10px] uppercase tracking-[0.28em] text-zinc-500">
+          © {new Date().getFullYear()} Adam Moffat — Season 26 · Chequered flag
         </p>
       </div>
-    </section>
-  );
-};
+    </div>
+    <div className="checker" />
+  </section>
+);
 
 export default Contact;

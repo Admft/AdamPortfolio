@@ -3,12 +3,15 @@
 @import 'tailwindcss/utilities';
 
 :root {
-  --background: #050505;
-  --foreground: #f5f5f5;
-  --surface: rgba(255, 255, 255, 0.04);
-  --border: rgba(255, 255, 255, 0.08);
-  --accent: #ef4444;
-  --accent-soft: rgba(239, 68, 68, 0.12);
+  --carbon: #08080a;
+  --carbon-2: #0e0e11;
+  --race-red: #e10600;
+  --caution: #ffb800;
+  --data-blue: #3fc1ff;
+  --text-hi: #f4f4f7;
+  --text-mid: #cfcfd8;
+  --text-low: #9a9aa6;
+  --line: rgba(255, 255, 255, 0.1);
 }
 
 * {
@@ -16,35 +19,57 @@
 }
 
 html {
-  scroll-behavior: auto;
+  scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
-  background-color: var(--background);
-  color: var(--foreground);
+  background-color: var(--carbon);
+  color: var(--text-mid);
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
 }
 
-.font-display {
-  font-family: 'Syne', 'Inter', sans-serif;
-  letter-spacing: -0.02em;
-}
+/* ---------- layout ---------- */
 
 .site-section {
-  @apply relative px-6 py-10 md:py-12;
-}
-
-.site-section + .site-section {
-  @apply !pt-5 md:!pt-6;
+  @apply relative px-6 py-16 md:py-20;
 }
 
 .site-container {
   @apply mx-auto max-w-6xl;
 }
+
+/* Text-shadow inherited by section content so copy stays legible
+   when the white car passes underneath the transparent layers. */
+.readable {
+  text-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.85),
+    0 0 18px rgba(0, 0, 0, 0.55);
+}
+
+/* ---------- car layer (z-sandwich + edge mask only — car untouched) ---------- */
+
+.car-layer {
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 8%,
+    black 86%,
+    transparent 96%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 8%,
+    black 86%,
+    transparent 96%
+  );
+}
+
+/* ---------- backgrounds ---------- */
 
 .bg-noise {
   position: fixed;
@@ -55,172 +80,195 @@ body {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
-.panel {
-  @apply rounded-2xl border p-5 md:p-6 backdrop-blur-md transition-colors duration-300;
-  background: var(--surface);
-  border-color: var(--border);
+.race-mode {
+  background-color: #070708;
+  background-image:
+    radial-gradient(circle at 84% -8%, rgba(225, 6, 0, 0.06), transparent 38%),
+    radial-gradient(circle at -6% 108%, rgba(63, 193, 255, 0.05), transparent 40%),
+    linear-gradient(to bottom, #060607, #0a0a0d 45%, #070708);
 }
 
-.panel-amg {
-  background: rgba(0, 0, 0, 0.5);
-  border-color: rgba(255, 255, 255, 0.09);
+.track-mode {
+  background-image:
+    radial-gradient(circle at 50% -4%, rgba(225, 6, 0, 0.22), transparent 48%),
+    radial-gradient(circle at 84% 60%, rgba(225, 6, 0, 0.08), transparent 45%),
+    linear-gradient(to bottom, #0a0505, #0d0708 45%, #090506);
 }
 
-.panel-amg:hover {
-  border-color: rgba(239, 68, 68, 0.28);
-}
+/* ---------- racing motifs ---------- */
 
-.panel-base {
-  background: rgba(255, 255, 255, 0.04);
-  border-color: rgba(255, 255, 255, 0.1);
-}
-
-.panel-base:hover {
-  border-color: rgba(168, 85, 247, 0.35);
-}
-
-.panel-glow,
-.glow-card {
-  position: relative;
-}
-
-.panel-glow::before,
-.glow-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(
+.kerb {
+  height: 6px;
+  background: repeating-linear-gradient(
     135deg,
-    rgba(255, 255, 255, 0.12),
-    transparent 50%,
-    rgba(255, 255, 255, 0.04)
+    var(--race-red) 0 14px,
+    #e8e8e8 14px 28px
   );
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-  opacity: 0.65;
+  opacity: 0.85;
 }
 
-.amg-mode .panel-glow:hover::before,
-.amg-mode .glow-card:hover::before {
-  background: linear-gradient(
-    135deg,
-    rgba(239, 68, 68, 0.45),
-    transparent 55%,
-    rgba(239, 68, 68, 0.12)
-  );
-  opacity: 1;
+.checker {
+  height: 12px;
+  background-image:
+    linear-gradient(45deg, #d8d8d8 25%, transparent 25%, transparent 75%, #d8d8d8 75%),
+    linear-gradient(45deg, #d8d8d8 25%, #0a0a0a 25%, #0a0a0a 75%, #d8d8d8 75%);
+  background-size: 12px 12px;
+  background-position: 0 0, 6px 6px;
+  opacity: 0.75;
 }
 
-.chip {
-  @apply inline-flex items-center rounded-full border px-3 py-1 text-xs;
+.ghost-outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.12);
 }
 
-.chip-amg {
-  background: var(--accent-soft);
-  border-color: rgba(239, 68, 68, 0.22);
-  color: #fecaca;
+.headline-solid {
+  color: var(--text-hi);
+  text-shadow:
+    0 2px 0 rgba(0, 0, 0, 0.6),
+    0 0 28px rgba(0, 0, 0, 0.65),
+    0 14px 60px rgba(0, 0, 0, 0.55);
 }
 
-.chip-base {
-  background: rgba(168, 85, 247, 0.1);
-  border-color: rgba(168, 85, 247, 0.22);
-  color: #e9d5ff;
+.headline-red {
+  color: var(--race-red);
+  text-shadow:
+    0 2px 0 rgba(0, 0, 0, 0.55),
+    0 0 28px rgba(0, 0, 0, 0.6);
 }
 
-.stat-strip {
-  @apply flex flex-wrap gap-x-6 gap-y-3;
+/* dotted leaders for the setup sheet */
+.leader {
+  flex: 1;
+  min-width: 2rem;
+  margin: 0 0.65rem;
+  border-bottom: 1px dotted rgba(255, 255, 255, 0.25);
+  transform: translateY(-4px);
 }
 
-.stat-strip > div {
-  @apply flex items-baseline gap-2;
+.stamp {
+  display: inline-block;
+  border: 2px solid var(--caution);
+  color: var(--caution);
+  padding: 0.3rem 0.8rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  transform: rotate(-5deg);
+  border-radius: 2px;
 }
 
-.stat-strip strong {
-  @apply font-display text-lg text-white;
+/* ---------- HUD ---------- */
+
+.hud-bar {
+  background: rgba(6, 6, 8, 0.92);
+  backdrop-filter: blur(14px);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
 }
 
-.stat-strip span {
-  @apply text-sm text-zinc-500;
+.rpm-track {
+  background:
+    repeating-linear-gradient(
+      to right,
+      transparent 0 9px,
+      rgba(0, 0, 0, 0.85) 9px 11px
+    ),
+    linear-gradient(to right, #3fc1ff 0%, #3fc1ff 55%, #ffb800 55%, #ffb800 80%, #e10600 80%, #e10600 100%);
 }
+
+@keyframes redline-flicker {
+  0%, 100% { opacity: 1; }
+  45% { opacity: 0.35; }
+  55% { opacity: 0.9; }
+  70% { opacity: 0.5; }
+}
+
+.track-mode .redline-flicker {
+  animation: redline-flicker 0.9s steps(3) infinite;
+}
+
+@keyframes lamp-pulse {
+  0%, 100% { box-shadow: 0 0 6px 1px rgba(225, 6, 0, 0.9); }
+  50% { box-shadow: 0 0 14px 4px rgba(225, 6, 0, 0.55); }
+}
+
+.lamp-on {
+  animation: lamp-pulse 1.2s ease-in-out infinite;
+}
+
+/* ---------- marquee ---------- */
+
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+
+.marquee-track {
+  display: inline-flex;
+  white-space: nowrap;
+  animation: marquee 26s linear infinite;
+}
+
+/* ---------- start lights ---------- */
+
+.start-light {
+  transition: background-color 120ms linear, box-shadow 120ms linear;
+}
+
+.start-light.lit {
+  background-color: var(--race-red);
+  box-shadow: 0 0 12px 2px rgba(225, 6, 0, 0.8);
+}
+
+/* ---------- buttons ---------- */
+
+.btn-primary {
+  @apply bg-race-red text-white border-race-red;
+}
+
+.btn-primary:hover {
+  background-color: #ff1e00;
+  border-color: #ff1e00;
+}
+
+/* ---------- global contrast floor ---------- */
+/* Body copy was too dim — clamp the grays up. */
+
+.race-mode .text-zinc-500 { color: #9a9aa6 !important; }
+.race-mode .text-zinc-400 { color: #b6b6c1 !important; }
+.race-mode .text-zinc-300 { color: #d8d8e0 !important; }
+.race-mode .text-gray-400 { color: #b6b6c1 !important; }
+.race-mode .text-gray-300 { color: #d8d8e0 !important; }
+
+/* ---------- scrollbar ---------- */
 
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #090909;
+  background: #0a0a0c;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #2a2a2a;
+  background: #33333a;
   border-radius: 999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #404040;
+  background: var(--race-red);
 }
 
-.base-mode {
-  background:
-    radial-gradient(circle at top, rgba(255, 255, 255, 0.04), transparent 35%),
-    linear-gradient(to bottom, #050505, #090909 50%, #050505);
-}
+/* ---------- reduced motion ---------- */
 
-.amg-mode {
-  background-color: #070707;
-  background-image:
-    linear-gradient(45deg, rgba(255, 255, 255, 0.02) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.02) 75%, rgba(255, 255, 255, 0.02)),
-    linear-gradient(45deg, rgba(255, 255, 255, 0.02) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.02) 75%, rgba(255, 255, 255, 0.02)),
-    radial-gradient(circle at 85% 0%, rgba(220, 38, 38, 0.08), transparent 32%),
-    linear-gradient(to bottom, #040404, #090909 45%, #050505);
-  background-position: 0 0, 10px 10px, top right, center;
-  background-size: 20px 20px, 20px 20px, auto, auto;
-}
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 
-.amg-mode .text-gray-300 {
-  color: #d4d4d8 !important;
-}
-
-.amg-mode .text-gray-400 {
-  color: #b4b4bc !important;
-}
-
-.amg-mode .text-gray-500,
-.amg-mode .text-gray-600 {
-  color: #8f8f98 !important;
-}
-
-.amg-mode .text-purple-400,
-.amg-mode .text-blue-400,
-.amg-mode .text-green-400,
-.amg-mode .text-orange-400 {
-  color: #ef4444 !important;
-}
-
-.amg-mode .bg-purple-500\/20,
-.amg-mode .bg-blue-500\/20,
-.amg-mode .bg-green-500\/10,
-.amg-mode .bg-orange-500\/20 {
-  background-color: rgba(239, 68, 68, 0.12) !important;
-}
-
-.amg-mode .btn-primary {
-  @apply bg-red-500 text-white border-red-400 hover:bg-red-400;
-}
-
-.base-mode .btn-primary {
-  @apply bg-white text-black border-white hover:bg-zinc-200;
-}
-
-.amg-mode .accent-gradient {
-  @apply bg-gradient-to-r from-zinc-600 via-red-500 to-red-300;
-}
-
-.base-mode .accent-gradient {
-  @apply bg-gradient-to-r from-purple-400 to-blue-500;
+  .marquee-track,
+  .track-mode .redline-flicker,
+  .lamp-on {
+    animation: none;
+  }
 }
