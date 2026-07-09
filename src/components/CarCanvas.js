@@ -45,7 +45,7 @@ const getScrollCarOpacity = () => {
   return MIDDLE_OPACITY;
 };
 
-const ScrollRotatingCar = ({ lowPowerMode }) => {
+const ScrollRotatingCar = ({ lowPowerMode, isMobile }) => {
   const carRef = useRef();
   const { invalidate } = useThree();
   const targetRotationRef = useRef(0);
@@ -158,11 +158,12 @@ const ScrollRotatingCar = ({ lowPowerMode }) => {
   }, [lowPowerMode, invalidate, updateDriftFromScroll]);
 
   const carScale = lowPowerMode ? 90 : 100;
+  const carPosition = isMobile ? [0.4, -1, -2] : [2, -1, -2];
 
   return (
     <>
       <group ref={carRef}>
-        <C63 scale={carScale} position={[2, -1, -2]} wheelRefs={wheelRefs} />
+        <C63 scale={carScale} position={carPosition} wheelRefs={wheelRefs} />
         <RearWheelSpin wheelRefs={wheelRefs} lowPowerMode={lowPowerMode} />
         <RearTireDriftEffects
           carRef={carRef}
@@ -206,12 +207,15 @@ const CarCanvas = ({ isMobile, isLowPowerDesktop }) => {
       className="fixed inset-0 z-[1] pointer-events-none car-layer"
     >
       <Canvas
-        camera={{ position: [0, 0, 8], fov: 45 }}
+        camera={{
+          position: isMobile ? [1.1, 0, 8] : [0, 0, 8],
+          fov: isMobile ? 42 : 45,
+        }}
         frameloop={lowPowerMode ? 'demand' : 'always'}
-        dpr={isMobile ? [0.85, 1.25] : isLowPowerDesktop ? [0.8, 1.1] : [1, 1.4]}
+        dpr={isMobile ? [1, 1.5] : isLowPowerDesktop ? [0.8, 1.1] : [1, 1.4]}
         gl={{
-          antialias: !lowPowerMode,
-          powerPreference: lowPowerMode ? 'low-power' : 'high-performance',
+          antialias: isMobile || !isLowPowerDesktop,
+          powerPreference: isMobile ? 'default' : lowPowerMode ? 'low-power' : 'high-performance',
           alpha: true,
           stencil: false,
         }}      >
@@ -225,14 +229,14 @@ const CarCanvas = ({ isMobile, isLowPowerDesktop }) => {
         />
         <Environment
           files="/potsdamer_platz_1k.hdr"
-          resolution={lowPowerMode ? 64 : 128}
+          resolution={isMobile ? 96 : lowPowerMode ? 64 : 128}
           background={false}
         />
 
         <Suspense fallback={null}>
           {lowPowerMode ? (
             <group rotation={[0, -Math.PI / 4, 0]}>
-              <ScrollRotatingCar lowPowerMode />
+              <ScrollRotatingCar lowPowerMode isMobile={isMobile} />
             </group>
           ) : (
             <PresentationControls
@@ -244,7 +248,7 @@ const CarCanvas = ({ isMobile, isLowPowerDesktop }) => {
               azimuth={[-Math.PI / 1.4, Math.PI / 2]}
             >
               <Float speed={1} rotationIntensity={0.1} floatIntensity={0.2}>
-                <ScrollRotatingCar lowPowerMode={false} />
+                <ScrollRotatingCar lowPowerMode={false} isMobile={isMobile} />
               </Float>
             </PresentationControls>          )}
         </Suspense>
