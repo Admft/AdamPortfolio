@@ -171,6 +171,7 @@ const ScrollRotatingCar = ({ lowPowerMode, isMobile }) => {
           intensityRef={driftIntensityRef}
           lowPowerMode={lowPowerMode}
           carScale={carScale}
+          carPosition={carPosition}
         />
       </group>
       <DriftMarks

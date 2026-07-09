@@ -4,7 +4,7 @@ import * as THREE from 'three';
 
 const TRAIL_LIFETIME = 3.5;
 const MIN_SAMPLE_DISTANCE = 0.035;
-const MARK_WIDTH = 0.15;
+const MARK_WIDTH = 0.13;
 const MAX_TRAIL_POINTS = 140;
 
 const MARK_VERTEX = /* glsl */ `
@@ -138,9 +138,6 @@ function TireDriftMark({ trailsRef, index }) {
         depthTest: true,
         side: THREE.DoubleSide,
         blending: THREE.NormalBlending,
-        polygonOffset: true,
-        polygonOffsetFactor: -1,
-        polygonOffsetUnits: -1,
       }),
     []
   );
@@ -192,6 +189,7 @@ export function DriftMarks({ tireRefs, intensityRef, lowPowerMode }) {
       tireRefs.forEach((tireRef, index) => {
         if (!tireRef.current) return;
         tireRef.current.getWorldPosition(samplePosition);
+
         if (addTrailPoint(trailsRef.current[index], samplePosition, now)) {
           updated = true;
         }

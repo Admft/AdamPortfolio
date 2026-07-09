@@ -35,7 +35,14 @@ const findRearWheel = (root, side) => {
   return found;
 };
 
-export function RearTireDriftEffects({ carRef, tireRefs, intensityRef, lowPowerMode, carScale }) {
+export function RearTireDriftEffects({
+  carRef,
+  tireRefs,
+  intensityRef,
+  lowPowerMode,
+  carScale,
+  carPosition,
+}) {
   const effectsInnerRef = useRef();
   const bonesRef = useRef({ left: null, right: null });
 
@@ -65,7 +72,7 @@ export function RearTireDriftEffects({ carRef, tireRefs, intensityRef, lowPowerM
   });
 
   return (
-    <group position={[2, -1, -2]} scale={carScale}>
+    <group position={carPosition} scale={carScale}>
       <group ref={effectsInnerRef} scale={0.01}>
         {FALLBACK_TIRE_POSITIONS.map((position, index) => (
           <group key={index}>
@@ -80,4 +87,4 @@ export function RearTireDriftEffects({ carRef, tireRefs, intensityRef, lowPowerM
       </group>
     </group>
   );
-};
+}
