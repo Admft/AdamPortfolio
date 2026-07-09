@@ -4,7 +4,7 @@ import * as THREE from 'three';
 
 const TRAIL_LIFETIME = 3.5;
 const MIN_SAMPLE_DISTANCE = 0.035;
-const MARK_WIDTH = 0.13;
+const MARK_WIDTH = 0.15;
 const MAX_TRAIL_POINTS = 140;
 
 const MARK_VERTEX = /* glsl */ `
@@ -73,7 +73,7 @@ const buildRibbonGeometry = (trail, now) => {
   for (let i = 0; i < active.length; i += 1) {
     const point = active[i];
     const age = (now - point.time) / TRAIL_LIFETIME;
-    const alpha = Math.pow(1 - age, 1.4) * 0.62;
+    const alpha = Math.pow(1 - age, 1.2) * 0.85;
 
     let dx;
     let dz;
@@ -104,9 +104,9 @@ const buildRibbonGeometry = (trail, now) => {
     positions[right * 3 + 2] = point.z - offsetZ;
 
     for (const vertex of [left, right]) {
-      colors[vertex * 4] = 0.1;
-      colors[vertex * 4 + 1] = 0.1;
-      colors[vertex * 4 + 2] = 0.11;
+      colors[vertex * 4] = 0.58;
+      colors[vertex * 4 + 1] = 0.57;
+      colors[vertex * 4 + 2] = 0.54;
       colors[vertex * 4 + 3] = alpha;
     }
 
@@ -138,6 +138,9 @@ function TireDriftMark({ trailsRef, index }) {
         depthTest: true,
         side: THREE.DoubleSide,
         blending: THREE.NormalBlending,
+        polygonOffset: true,
+        polygonOffsetFactor: -1,
+        polygonOffsetUnits: -1,
       }),
     []
   );
