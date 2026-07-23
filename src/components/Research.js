@@ -3,35 +3,6 @@ import { motion } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
 import SectorHeader from './ui/SectorHeader';
 
-const appendices = [
-  {
-    ref: 'APPENDIX A',
-    title: 'HouseFax',
-    subtitle: 'AI-powered residential due diligence · active development',
-    description:
-      'A "Carfax for houses" — an underwriting copilot built on the principle that LLMs explain, databases ground, deterministic tools calculate, and robust evals police. Next.js/TypeScript frontend, Dockerized FastAPI on AWS (EC2/ECS, RDS, S3), Redis caching, and Postgres with PostGIS + pgvector.',
-    highlights: [
-      'Agentic orchestration with hand-rolled tool-calling for cap rates, cash flow, and mortgage math',
-      'LlamaIndex multi-document RAG for HOA/inspection disclosure synthesis',
-      'GitHub Actions eval harness blocking deploys on math errors, hallucinations, and fair-housing violations',
-      'Integrates RentCast, ATTOM, Census, FRED, and FEMA APIs',
-    ],
-    tags: ['FastAPI', 'Next.js', 'pgvector', 'LlamaIndex', 'AWS', 'Eval Harness'],
-  },
-  {
-    ref: 'APPENDIX B',
-    title: 'ML Network Intrusion Detection',
-    subtitle: 'UT Dallas research · 2024–2025',
-    description:
-      'Built ML models to detect "smokescreen" attacks — DDoS noise masking covert data exfiltration — using Netflow data, Isolation Forest, and One-Class SVM with Splunk log analysis.',
-    highlights: [
-      'Focused on reducing false positives by tuning contamination hyperparameters',
-      'Visualized decision boundaries with Matplotlib; classified DDoS vs Probe vs exfiltration patterns',
-    ],
-    tags: ['Python', 'Scikit-learn', 'Splunk', 'Netflow', 'Anomaly Detection'],
-  },
-];
-
 const Research = () => (
   <section id="research" className="site-section">
     <div className="site-container">
@@ -39,10 +10,10 @@ const Research = () => (
         sector="06"
         code="R&D — technical directives"
         title="Technical Directive"
-        sub="RAG evaluation research, agentic AI products, and security ML — the work that sits behind the solutions engineering."
+        sub="Published RAG evaluation research and security ML — the work that sits behind the solutions engineering."
       />
 
-      {/* the paper, filed as an FIA-style document */}
+      {/* ACL submission */}
       <motion.article
         initial={{ opacity: 0, y: 18 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -112,45 +83,40 @@ const Research = () => (
         </div>
       </motion.article>
 
-      {/* appendices — borderless with left rules */}
-      <div className="readable mt-12 grid grid-cols-1 gap-10 lg:grid-cols-2">
-        {appendices.map((item, index) => (
-          <motion.div
-            key={item.title}
-            initial={{ opacity: 0, y: 14 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-40px' }}
-            transition={{ delay: index * 0.06 }}
-            className="border-l-2 border-white/15 pl-6 transition-colors hover:border-race-red"
-          >
-            <p className="font-tele text-[10px] uppercase tracking-[0.3em] text-race-red">
-              {item.ref}
-            </p>
-            <h4 className="mt-2 font-display text-2xl uppercase text-white">{item.title}</h4>
-            <p className="mt-1 font-tele text-[11px] uppercase tracking-[0.14em] text-zinc-500">
-              {item.subtitle}
-            </p>
-            <p className="mt-3 text-sm leading-6 text-zinc-300">{item.description}</p>
-            <ul className="mt-3 space-y-1.5">
-              {item.highlights.map((h) => (
-                <li key={h.slice(0, 35)} className="text-xs leading-5 text-zinc-400">
-                  — {h}
-                </li>
-              ))}
-            </ul>
-            <div className="mt-4 flex flex-wrap gap-1.5">
-              {item.tags.map((tag) => (
-                <span
-                  key={tag}
-                  className="border border-white/10 bg-black/40 px-2 py-0.5 font-tele text-[10px] text-zinc-400"
-                >
-                  {tag}
-                </span>
-              ))}
-            </div>
-          </motion.div>
-        ))}
-      </div>
+      {/* ML Network Intrusion Detection */}
+      <motion.article
+        initial={{ opacity: 0, y: 18 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-60px' }}
+        className="readable mt-8 border-l-2 border-white/15 pl-6 transition-colors hover:border-race-red md:mt-10 md:pl-8"
+      >
+        <p className="font-tele text-[10px] uppercase tracking-[0.3em] text-race-red">
+          UT Dallas Research · 2024–2025
+        </p>
+        <h3 className="mt-2 font-display text-2xl uppercase text-white md:text-3xl">
+          ML Network Intrusion Detection
+        </h3>
+        <p className="mt-1 font-tele text-[11px] uppercase tracking-[0.14em] text-zinc-500">
+          Anomaly detection for smokescreen attacks
+        </p>
+        <p className="mt-4 max-w-3xl text-sm leading-7 text-zinc-300">
+          Built ML models to detect &ldquo;smokescreen&rdquo; attacks — DDoS noise masking
+          covert data exfiltration — using Netflow data, Isolation Forest, and
+          One-Class SVM with Splunk log analysis. Tuned contamination hyperparameters
+          to cut false positives, visualized decision boundaries with Matplotlib, and
+          classified DDoS vs Probe vs exfiltration patterns.
+        </p>
+        <div className="mt-5 flex flex-wrap gap-1.5">
+          {['Python', 'Scikit-learn', 'Splunk', 'Netflow', 'Anomaly Detection'].map((tag) => (
+            <span
+              key={tag}
+              className="border border-white/10 bg-black/40 px-2 py-0.5 font-tele text-[10px] text-zinc-400"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      </motion.article>
     </div>
   </section>
 );

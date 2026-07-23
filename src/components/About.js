@@ -191,9 +191,10 @@ const About = () => (
         className="readable mt-12 flex flex-wrap items-center gap-4 border-t border-white/10 pt-8"
       >
         <p className="mr-auto max-w-xl text-sm leading-6 text-zinc-400">
-          Cornell MEM on nights and weekends, HouseFax on the side, published RAG
-          evaluation research. Same standard everywhere: source-grounded outputs,
-          reproducible pipelines, results you can defend in a room full of engineers.
+          Cornell MEM on nights and weekends, founding engineer at Causey, HouseFax
+          on the side, published RAG evaluation research. Same standard everywhere:
+          source-grounded outputs, reproducible pipelines, results you can defend
+          in a room full of engineers.
         </p>
         <a
           href="/Resume.pdf"

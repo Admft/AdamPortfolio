@@ -1,4 +1,4 @@
-import { useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 
@@ -6,6 +6,8 @@ const TRAIL_LIFETIME = 3.5;
 const MIN_SAMPLE_DISTANCE = 0.035;
 const MARK_WIDTH = 0.13;
 const MAX_TRAIL_POINTS = 140;
+const MAX_VERTICES = MAX_TRAIL_POINTS * 2;
+const MAX_INDICES = (MAX_TRAIL_POINTS - 1) * 6;
 
 const MARK_VERTEX = /* glsl */ `
   attribute vec4 trailColor;
@@ -56,19 +58,26 @@ const addTrailPoint = (trail, position, time) => {
 };
 
 const pruneTrail = (trail, now) => {
-  trail.points = trail.points.filter((point) => now - point.time < TRAIL_LIFETIME);
+  const points = trail.points;
+  let write = 0;
+  for (let i = 0; i < points.length; i += 1) {
+    if (now - points[i].time < TRAIL_LIFETIME) {
+      points[write] = points[i];
+      write += 1;
+    }
+  }
+  points.length = write;
 };
 
-const buildRibbonGeometry = (trail, now) => {
+const updateRibbonGeometry = (geometry, buffers, trail, now) => {
   const active = trail.points;
   if (active.length < 2) {
-    return null;
+    geometry.setDrawRange(0, 0);
+    return false;
   }
 
-  const vertexCount = active.length * 2;
-  const positions = new Float32Array(vertexCount * 3);
-  const colors = new Float32Array(vertexCount * 4);
-  const indices = [];
+  const { positions, colors, indices } = buffers;
+  let indexCount = 0;
 
   for (let i = 0; i < active.length; i += 1) {
     const point = active[i];
@@ -112,21 +121,43 @@ const buildRibbonGeometry = (trail, now) => {
 
     if (i > 0) {
       const base = (i - 1) * 2;
-      indices.push(base, base + 1, base + 2);
-      indices.push(base + 1, base + 3, base + 2);
+      indices[indexCount] = base;
+      indices[indexCount + 1] = base + 1;
+      indices[indexCount + 2] = base + 2;
+      indices[indexCount + 3] = base + 1;
+      indices[indexCount + 4] = base + 3;
+      indices[indexCount + 5] = base + 2;
+      indexCount += 6;
     }
   }
 
-  const geometry = new THREE.BufferGeometry();
-  geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-  geometry.setAttribute('trailColor', new THREE.BufferAttribute(colors, 4));
-  geometry.setIndex(indices);
-  return geometry;
+  geometry.attributes.position.needsUpdate = true;
+  geometry.attributes.trailColor.needsUpdate = true;
+  geometry.index.needsUpdate = true;
+  geometry.setDrawRange(0, indexCount);
+  return true;
 };
 
 function TireDriftMark({ trailsRef, index }) {
   const meshRef = useRef();
-  const geometryRef = useRef(null);
+
+  const buffers = useMemo(
+    () => ({
+      positions: new Float32Array(MAX_VERTICES * 3),
+      colors: new Float32Array(MAX_VERTICES * 4),
+      indices: new Uint16Array(MAX_INDICES),
+    }),
+    []
+  );
+
+  const geometry = useMemo(() => {
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(buffers.positions, 3));
+    geo.setAttribute('trailColor', new THREE.BufferAttribute(buffers.colors, 4));
+    geo.setIndex(new THREE.BufferAttribute(buffers.indices, 1));
+    geo.setDrawRange(0, 0);
+    return geo;
+  }, [buffers]);
 
   const material = useMemo(
     () =>
@@ -142,30 +173,27 @@ function TireDriftMark({ trailsRef, index }) {
     []
   );
 
+  useEffect(
+    () => () => {
+      geometry.dispose();
+      material.dispose();
+    },
+    [geometry, material]
+  );
+
   useFrame(({ clock }) => {
     const mesh = meshRef.current;
     if (!mesh) return;
 
-    const now = clock.elapsedTime;
     const trail = trailsRef.current[index];
-    const nextGeometry = buildRibbonGeometry(trail, now);
-
-    if (!nextGeometry) {
-      mesh.visible = false;
-      return;
-    }
-
-    mesh.visible = true;
-    if (geometryRef.current) {
-      geometryRef.current.dispose();
-    }
-    geometryRef.current = nextGeometry;
-    mesh.geometry = nextGeometry;
+    const visible = updateRibbonGeometry(geometry, buffers, trail, clock.elapsedTime);
+    mesh.visible = visible;
   });
 
   return (
     <mesh
       ref={meshRef}
+      geometry={geometry}
       material={material}
       frustumCulled={false}
       renderOrder={1}
@@ -198,6 +226,7 @@ export function DriftMarks({ tireRefs, intensityRef, lowPowerMode }) {
 
     const alive = trailsRef.current.some((trail) => trail.points.length >= 2);
 
+    // Same invalidate rules as before — only low-power demand mode needs them.
     if (lowPowerMode && (updated || alive || intensity > 0.01)) {
       invalidate();
     }
@@ -209,4 +238,4 @@ export function DriftMarks({ tireRefs, intensityRef, lowPowerMode }) {
       <TireDriftMark trailsRef={trailsRef} index={1} />
     </>
   );
-};
+}

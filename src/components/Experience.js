@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { ExternalLink } from 'lucide-react';
 import SectorHeader from './ui/SectorHeader';
 
 const stops = [
@@ -25,6 +26,29 @@ const stops = [
   },
   {
     stop: '02',
+    company: 'Causey',
+    title: 'Founding Software Engineer',
+    boxIn: '2026',
+    boxOut: 'RUNNING',
+    location: 'Remote · Cornell-born startup',
+    live: true,
+    summary:
+      'Founding engineer building Causey — a platform so students can discover competitions that match their talent, not just the ones their school already knows about. Lead software architecture and core product engineering across the waitlist site and early product preview.',
+    crewNotes: [
+      'Own end-to-end product engineering: architecture, core features, and shipping the early build students can actually use',
+      'Chess competition search is live — indexing US Chess (TLA) and Continental Chess, with state affiliates and FIDE on the roadmap',
+      'Discover → match → compete flow: browse by category, deadline, and level; surface eligibility and cost before students commit',
+      'Building toward STEM, debate, arts, and writing — same problem, broader talent surface',
+    ],
+    tyres: ['Next.js', 'TypeScript', 'Product', 'Architecture'],
+    image: '/Causey.png',
+    links: [
+      { href: 'https://causey.dev', label: 'Waitlist' },
+      { href: 'https://app.causey.dev/', label: 'Try the app' },
+    ],
+  },
+  {
+    stop: '03',
     company: 'ASSET InterTech',
     title: 'Field Application Engineer',
     boxIn: 'JAN 2025',
@@ -41,7 +65,7 @@ const stops = [
     tyres: ['JTAG', 'ScanWorks', 'Technical Sales', 'Documentation', 'QA'],
   },
   {
-    stop: '03',
+    stop: '04',
     company: 'CaringGuide',
     title: 'Software Engineer Intern',
     boxIn: 'APR 2023',
@@ -64,7 +88,7 @@ const Experience = () => (
         sector="04"
         code="Pit stop log — career stints"
         title="Pit Wall"
-        sub="Every stint on the timing sheet. Cloud, AI, and software engineering in production — with IoT field work as the deployment context, not the career center."
+        sub="Every stint on the timing sheet. Cloud, AI, and software engineering in production — including founding startup work — with IoT field work as the deployment context, not the career center."
       />
 
       <div className="readable relative border-l-2 border-white/10 pl-6 md:pl-10">
@@ -119,6 +143,15 @@ const Experience = () => (
               {stop.summary}
             </p>
 
+            {stop.image && (
+              <img
+                src={stop.image}
+                alt={`${stop.company} product`}
+                loading="lazy"
+                className="mt-5 w-full max-w-3xl border border-white/10 object-cover object-top"
+              />
+            )}
+
             <p className="mt-5 font-tele text-[10px] uppercase tracking-[0.28em] text-zinc-500">
               Crew notes
             </p>
@@ -144,6 +177,18 @@ const Experience = () => (
                 >
                   {tag}
                 </span>
+              ))}
+              {stop.links?.map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="ml-1 inline-flex items-center gap-1.5 border border-race-red/50 bg-race-red/10 px-2.5 py-0.5 font-tele text-[10px] uppercase tracking-[0.14em] text-white transition-colors hover:bg-race-red/25"
+                >
+                  {item.label}
+                  <ExternalLink className="h-3 w-3" />
+                </a>
               ))}
             </div>
           </motion.article>

@@ -1,4 +1,4 @@
-import React, { Suspense, useCallback, useEffect, useMemo, useRef } from 'react';
+import React, { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { Environment, Float, PresentationControls } from '@react-three/drei';
 import * as THREE from 'three';
@@ -186,10 +186,19 @@ const ScrollRotatingCar = ({ lowPowerMode, isMobile }) => {
 const CarCanvas = ({ isMobile, isLowPowerDesktop }) => {
   const lowPowerMode = isMobile || isLowPowerDesktop;
   const layerRef = useRef(null);
+  // Only pause the GPU when the car is fully faded — looks identical while visible.
+  const [carLive, setCarLive] = useState(true);
+  const carLiveRef = useRef(true);
 
   const updateCarOpacity = useCallback(() => {
     if (!layerRef.current) return;
-    layerRef.current.style.opacity = String(getScrollCarOpacity());
+    const opacity = getScrollCarOpacity();
+    layerRef.current.style.opacity = String(opacity);
+    const live = opacity > 0.01;
+    if (live !== carLiveRef.current) {
+      carLiveRef.current = live;
+      setCarLive(live);
+    }
   }, []);
 
   useEffect(() => {
@@ -202,6 +211,8 @@ const CarCanvas = ({ isMobile, isLowPowerDesktop }) => {
     };
   }, [updateCarOpacity]);
 
+  const frameloop = !carLive ? 'never' : lowPowerMode ? 'demand' : 'always';
+
   return (
     <div
       ref={layerRef}
@@ -212,14 +223,15 @@ const CarCanvas = ({ isMobile, isLowPowerDesktop }) => {
           position: isMobile ? [1.1, 0, 8] : [0, 0, 8],
           fov: isMobile ? 42 : 45,
         }}
-        frameloop={lowPowerMode ? 'demand' : 'always'}
+        frameloop={frameloop}
         dpr={isMobile ? [1, 1.5] : isLowPowerDesktop ? [0.8, 1.1] : [1, 1.4]}
         gl={{
           antialias: isMobile || !isLowPowerDesktop,
           powerPreference: isMobile ? 'default' : lowPowerMode ? 'low-power' : 'high-performance',
           alpha: true,
           stencil: false,
-        }}      >
+        }}
+      >
         <ambientLight intensity={0.45} />
         <spotLight
           position={[10, 15, 10]}
@@ -251,7 +263,8 @@ const CarCanvas = ({ isMobile, isLowPowerDesktop }) => {
               <Float speed={1} rotationIntensity={0.1} floatIntensity={0.2}>
                 <ScrollRotatingCar lowPowerMode={false} isMobile={isMobile} />
               </Float>
-            </PresentationControls>          )}
+            </PresentationControls>
+          )}
         </Suspense>
       </Canvas>
     </div>

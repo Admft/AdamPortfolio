@@ -196,8 +196,15 @@ export function DriftParticles({
     [lowPowerMode]
   );
 
+  const activeRef = useRef(false);
+
   useFrame((_, delta) => {
     const intensity = Math.max(0, intensityRef?.current ?? 0);
+
+    // Skip work when nothing is alive — same visuals, less main-thread cost.
+    if (intensity <= 0.01 && !activeRef.current) {
+      return;
+    }
 
     if (markerRef?.current) {
       const { x, y, z } = markerRef.current.position;
@@ -220,6 +227,7 @@ export function DriftParticles({
 
     const dustAlive = updatePool(dustPoolRef.current, delta, intensity, false);
     const cloudsAlive = updatePool(cloudPoolRef.current, delta, intensity, true);
+    activeRef.current = dustAlive || cloudsAlive || intensity > 0.01;
 
     dustGeometry.attributes.position.needsUpdate = true;
     dustGeometry.attributes.alpha.needsUpdate = true;
@@ -227,7 +235,7 @@ export function DriftParticles({
     cloudGeometry.attributes.alpha.needsUpdate = true;
     cloudGeometry.attributes.puffScale.needsUpdate = true;
 
-    if (lowPowerMode && (dustAlive || cloudsAlive || intensity > 0.01)) {
+    if (lowPowerMode && activeRef.current) {
       invalidate();
     }
   });
