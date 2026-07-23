@@ -33,7 +33,7 @@ const SetupSheet = () => (
         sector="05"
         code="Garage — car 63 setup"
         title="Setup Sheet"
-        sub="The stack, filed the way a race engineer would file it. Every value scrutineered in production."
+        sub="The tools behind the forward-deployed loop — from telemetry and APIs to production software, AI evaluation, and customer-ready delivery."
       />
 
       <motion.div

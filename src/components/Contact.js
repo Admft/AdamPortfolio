@@ -59,9 +59,10 @@ const Contact = () => (
             Pit wall → Car 63
           </p>
           <p className="mt-2 text-sm leading-7 text-zinc-300 md:text-base">
-            "Open to Solutions Engineer, Forward Deployed Engineer, AI Engineer, and
-            startup software seats. Cloud pipelines, RAG systems, pilot deployments —
-            or a demo that needs someone who can debug below the UI. Copy that?"
+            "Looking for a Forward Deployed Engineer seat where I can work directly
+            with customers, build through ambiguity, deploy into real workflows, and
+            turn production evidence into a better product. If the problem crosses
+            software, data, AI, and the field, put me on it. Copy that?"
           </p>
         </motion.div>
 

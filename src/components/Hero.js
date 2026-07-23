@@ -5,10 +5,10 @@ import { ChevronDown } from 'lucide-react';
 const LIGHT_INTERVAL = 520;
 
 const specs = [
-  { label: 'TEAM', value: 'VUSIONGROUP' },
+  { label: 'TARGET ROLE', value: 'FORWARD DEPLOYED ENGINEER' },
   { label: 'BASE', value: 'DALLAS, TX' },
   { label: 'LICENCE', value: 'AZURE AZ-900' },
-  { label: 'DISCIPLINES', value: 'CLOUD · AI · SOFTWARE' },
+  { label: 'OPERATING LOOP', value: 'DISCOVER · BUILD · DEPLOY' },
 ];
 
 const Hero = () => {
@@ -71,9 +71,10 @@ const Hero = () => {
           transition={{ delay: 0.35 }}
           className="readable mt-6 max-w-xl font-tele text-xs md:text-sm uppercase tracking-[0.22em] leading-6 text-zinc-200"
         >
-          Solutions Engineer <span className="text-caution">{'//'}</span> Azure pipelines,
-          RAG systems, full-stack tools <span className="text-caution">{'//'}</span> deployed
-          in the field, defensible in the data.
+          Forward Deployed Engineer <span className="text-caution">{'//'}</span> turning
+          ambiguous customer problems into deployed software{' '}
+          <span className="text-caution">{'//'}</span> from discovery and prototyping to
+          production debugging and product feedback.
         </motion.p>
 
         {/* start lights */}

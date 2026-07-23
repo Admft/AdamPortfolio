@@ -5,31 +5,31 @@ import SectorHeader from './ui/SectorHeader';
 const focusAreas = [
   {
     index: '01',
-    title: 'Cloud & Data',
-    body: 'Azure Log Analytics, KQL pipelines, Python automation, and executive reporting that turns telemetry into decisions stakeholders can act on.',
+    title: 'Discover',
+    body: 'Work directly with users, operators, and engineers to turn unclear symptoms into concrete requirements — using logs, workflows, demos, and field evidence to find the real constraint.',
   },
   {
     index: '02',
-    title: 'AI Systems',
-    body: 'RAG evaluation research, agentic orchestration, LLM tool-calling, eval harnesses, and grounding strategies for production AI workflows.',
+    title: 'Build',
+    body: 'Ship the missing layer: Azure/KQL pipelines, Python automation, React and TypeScript products, FastAPI services, API integrations, and grounded AI workflows.',
   },
   {
     index: '03',
-    title: 'Software',
-    body: 'Full-stack delivery with React, TypeScript, Node, and FastAPI — from internal automation tools to client-facing products and demo apps.',
+    title: 'Deploy',
+    body: 'Own the last mile through pilot execution, onsite validation, demo readiness, production debugging, documentation, training, and measurable handoff.',
   },
   {
     index: '04',
-    title: 'Forward Deployed',
-    body: 'Onsite pilot execution, demo readiness, API debugging, and translating messy field findings into clear technical narratives for R&D and customers.',
+    title: 'Close the Loop',
+    body: 'Translate what happens in the field into reproducible evidence for product and R&D — then turn fixes, patterns, and customer feedback into systems that scale.',
   },
 ];
 
 const targetRoles = [
-  'Solutions Engineer',
   'Forward Deployed Engineer',
-  'AI Engineer',
-  'Startup Generalist',
+  'Forward Deployed Software Engineer',
+  'AI Solutions Engineer',
+  'Solutions Engineer',
 ];
 
 const About = () => (
@@ -39,7 +39,7 @@ const About = () => (
         sector="03"
         code="Driver profile — Car 63"
         title="The Driver"
-        sub="Solutions engineer who ships — Azure pipelines, RAG systems, full-stack tools, and field deployments. I debug hard problems, automate the reporting around them, and make the results legible to engineering and business stakeholders."
+        sub="I work where customer context meets engineering execution: discover the real problem, build the missing software, deploy it with users, and carry production evidence back into the product."
       />
 
       <div className="mb-16 grid grid-cols-1 gap-10 lg:grid-cols-12">
@@ -127,15 +127,15 @@ const About = () => (
           </p>
           <div className="mt-4 space-y-3 text-sm leading-7 text-zinc-300 md:text-base">
             <p>
-              Technical bridge between North American operations and global R&D.
-              Building Azure/KQL reporting pipelines, Python automation for executive
-              decks, API integrations, and AI vision pilot support for enterprise
-              retail deployments.
+              My title is Field Application Engineer; the operating model is already
+              forward deployed. I sit between North American operators, enterprise
+              customers, and global R&amp;D, then build the analytics, automation, and
+              integrations needed to move deployments forward.
             </p>
             <p className="text-zinc-400">
-              IoT and BLE field work (ESL, AP migrations, RSSI analysis) supports the
-              cloud and software story — not the headline. The through-line is
-              telemetry → insight → action.
+              That means moving from a store-floor symptom or blocked demo to KQL
+              evidence, a reproducible root cause, a working tool, and a clear product
+              handoff. The loop is customer → code → deployment → product.
             </p>
           </div>
         </motion.div>
@@ -191,10 +191,10 @@ const About = () => (
         className="readable mt-12 flex flex-wrap items-center gap-4 border-t border-white/10 pt-8"
       >
         <p className="mr-auto max-w-xl text-sm leading-6 text-zinc-400">
-          Cornell MEM on nights and weekends, founding engineer at Causey, HouseFax
-          on the side, published RAG evaluation research. Same standard everywhere:
-          source-grounded outputs, reproducible pipelines, results you can defend
-          in a room full of engineers.
+          The proof spans enterprise retail pilots at VusionGroup, technical ownership
+          for aerospace and defense customers at ASSET, founding product work at
+          Causey, and source-grounded AI systems in HouseFax and my ACL submission.
+          Different domains; the same forward-deployed loop.
         </p>
         <a
           href="/Resume.pdf"
@@ -202,7 +202,7 @@ const About = () => (
           rel="noreferrer"
           className="btn-primary inline-flex items-center gap-2 border px-6 py-3 font-tele text-xs uppercase tracking-[0.2em] transition-colors"
         >
-          Media kit / Resume
+          Resume
         </a>
         <a
           href="#research"

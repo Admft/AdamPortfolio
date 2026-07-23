@@ -13,7 +13,7 @@ const stops = [
     location: 'Coppell, TX',
     live: true,
     summary:
-      'Primary technical liaison between North American operations and global R&D. Cloud analytics, Python automation, API integrations, and enterprise pilot execution for Walmart, Kroger, and international rollouts.',
+      'Embedded between North American operations, enterprise customers, and global R&D. I investigate deployment blockers, build the analytics and automation the field needs, validate fixes onsite, and turn production evidence into clear product feedback.',
     crewNotes: [
       'Built modular Azure/KQL reporting pipeline — query templating, CLI auth, chart plugins, and automated PowerPoint generation for weekly executive updates',
       'Designed Store Telemetry Heatmaps: joined Azure Log Analytics telemetry with Walmart floor-plan APIs for spatial onboarding and RSSI visualization',
@@ -33,7 +33,7 @@ const stops = [
     location: 'Remote · Cornell-born startup',
     live: true,
     summary:
-      'Founding engineer building Causey — a platform so students can discover competitions that match their talent, not just the ones their school already knows about. Lead software architecture and core product engineering across the waitlist site and early product preview.',
+      'Founding engineer building Causey directly alongside the founding team and early users. I own software architecture and core product delivery across the public site and competition-discovery app, turning an underserved user journey into shipped product.',
     crewNotes: [
       'Own end-to-end product engineering: architecture, core features, and shipping the early build students can actually use',
       'Chess competition search is live — indexing US Chess (TLA) and Continental Chess, with state affiliates and FIDE on the roadmap',
@@ -55,7 +55,7 @@ const stops = [
     boxOut: 'JAN 2026',
     location: 'Dallas, TX · Hybrid',
     summary:
-      'Pre- and post-sales technical ownership for aerospace and defense accounts. JTAG boundary-scan, ScanWorks enablement, and complex hardware validation — strong foundation in reading schematics, netlists, and debugging at the pin level.',
+      'Owned pre- and post-sales technical outcomes for aerospace and defense customers. Scoped problems, reproduced failures, built customized JTAG test solutions, trained engineers onsite, and stayed accountable through validation and handoff.',
     crewNotes: [
       'Managed 100+ support cases with 95% satisfaction; led 4+ end-to-end test projects from SOW to customized JTAG suites',
       'Delivered 5+ week-long onsite trainings for 40–50+ engineers at RTX, GE Aviation, BAE, and Tinker AFB',
@@ -72,7 +72,7 @@ const stops = [
     boxOut: 'DEC 2023',
     location: 'Richardson, TX · Remote',
     summary:
-      'Full-stack product work on a healthcare growth platform — React, Node, PostgreSQL, AWS Elastic Beanstalk, and Python lead-generation automation.',
+      'Delivered full-stack product work for a healthcare growth platform, moving between user-facing React features, Node/PostgreSQL services, AWS deployment, and Python data automation.',
     crewNotes: [
       'Built React/Node/Tailwind web app with containerized CI/CD on AWS Elastic Beanstalk',
       'Wrote Python scraper processing 1,000+ lead sources per run into PostgreSQL',
@@ -88,7 +88,7 @@ const Experience = () => (
         sector="04"
         code="Pit stop log — career stints"
         title="Pit Wall"
-        sub="Every stint on the timing sheet. Cloud, AI, and software engineering in production — including founding startup work — with IoT field work as the deployment context, not the career center."
+        sub="A track record of owning outcomes at the customer–engineering boundary: scope the problem, build what is missing, deploy it, and stay through validation."
       />
 
       <div className="readable relative border-l-2 border-white/10 pl-6 md:pl-10">
@@ -203,13 +203,13 @@ const Experience = () => (
         className="readable mt-12 border-l-2 border-caution bg-caution/5 py-4 pl-6 pr-4"
       >
         <p className="font-tele text-[10px] uppercase tracking-[0.28em] text-caution">
-          Pit wall note — IoT &amp; field context
+          Why forward deployed
         </p>
         <p className="mt-2 max-w-3xl text-sm leading-6 text-zinc-300">
-          BLE/RSSI analysis, ESL hardware investigations, power profiler root-cause
-          work, and onsite retail deployments give me credibility in the room — but the
-          systems I care most about building are cloud pipelines, AI workflows, and
-          software that scales beyond a single store visit.
+          I am strongest when the requirements are incomplete, the problem is already
+          live, and solving it requires both engineering depth and customer context.
+          Field debugging gives me the evidence; software, data, and AI systems turn
+          that evidence into a durable solution.
         </p>
       </motion.div>
     </div>

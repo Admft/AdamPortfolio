@@ -10,7 +10,7 @@ const Research = () => (
         sector="06"
         code="R&D — technical directives"
         title="Technical Directive"
-        sub="Published RAG evaluation research and security ML — the work that sits behind the solutions engineering."
+        sub="Research for systems that must survive contact with production: grounded AI evaluation, reproducible failure analysis, and security anomaly detection."
       />
 
       {/* ACL submission */}

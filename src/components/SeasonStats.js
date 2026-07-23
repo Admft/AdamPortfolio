@@ -2,10 +2,10 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 const stats = [
-  { value: '100+', label: 'Support cases closed', sub: '95% satisfaction · ASSET InterTech' },
-  { value: '50+', label: 'Engineers trained onsite', sub: 'RTX · GE Aviation · BAE · Tinker AFB' },
+  { value: '8+', label: 'Store deployments validated', sub: 'Mist → Rigado · KQL monitored' },
+  { value: '100+', label: 'Customer issues resolved', sub: '95% satisfaction · ASSET InterTech' },
+  { value: '50+', label: 'Engineers enabled onsite', sub: 'RTX · GE Aviation · BAE · Tinker AFB' },
   { value: '66', label: 'RAG ablation runs', sub: 'ACL submission · 2026' },
-  { value: '8+', label: 'Store migrations validated', sub: 'Mist → Rigado · KQL monitored' },
   { value: '4.0', label: 'Cornell GPA', sub: 'M.Eng Engineering Management' },
   { value: 'AZ-900', label: 'Superlicence', sub: 'AI-102 · AZ-104 · AZ-305 in progress', caution: true },
 ];

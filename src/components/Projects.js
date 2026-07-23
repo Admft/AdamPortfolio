@@ -9,7 +9,7 @@ const housefax = {
   lap: '2026 — ACTIVE',
   blurb: 'Know the house before you buy it.',
   description:
-    'A "Carfax for houses" — an AI underwriting copilot built on the principle that LLMs explain, databases ground, deterministic tools calculate, and robust evals police. Next.js/TypeScript frontend with PDF generation, Dockerized FastAPI on AWS (EC2/ECS, RDS, S3), Redis caching for rate-limited property APIs, and Postgres with PostGIS + pgvector for geospatial comps and RAG embeddings.',
+    'An end-to-end response to a high-stakes user problem: residential buyers need a defensible view of risk, not another generic chatbot. HouseFax combines a Next.js/TypeScript product, Dockerized FastAPI services on AWS, property-data integrations, deterministic financial tools, and grounded AI into a source-cited due-diligence workflow.',
   highlights: [
     'Agentic tool-calling for cap rates, cash flow, and mortgage math — the model never freelances the numbers',
     'LlamaIndex multi-document RAG for HOA and inspection disclosure synthesis into a structured verdict',
@@ -26,7 +26,7 @@ const entries = [
     entryClass: 'Product',
     lap: '2025 — LIVE',
     description:
-      'Won the Cornell M.Eng residential hackathon. Parses the MEM course catalog and builds conflict-free semester schedules so students stop fighting Excel every registration cycle. Live and used by the cohort.',
+      'Started with a direct user pain point: MEM students were building schedules manually in spreadsheets. I turned the catalog and program constraints into a conflict-aware planner, shipped it during Cornell’s residential intensive, and kept it live for the cohort.',
     highlights: [
       'Hackathon winner — shipped during the residential intensive',
       'TypeScript + Vite frontend with ExcelJS export for advisors and students',
@@ -41,7 +41,7 @@ const entries = [
     entryClass: 'Enterprise',
     lap: '2026 — LIVE',
     description:
-      'Azure device telemetry joined to Walmart floor plans — onboarding status, RSSI, and weak-signal zones rendered as a spatial view for pilot stores. Built so field and HQ teams see the same picture without digging through raw KQL.',
+      'Built after field and HQ teams needed a shared way to diagnose store-level deployment health. The tool joins Azure telemetry to Walmart floor plans so onboarding failures, RSSI, and weak-signal zones become an actionable spatial view instead of raw KQL.',
     highlights: [
       'Spatial overlay of ping health and onboarding failures on store layouts',
       'KQL + Pandas pipeline from Azure into heatmap-ready datasets',
@@ -55,7 +55,7 @@ const entries = [
     entryClass: 'Enterprise',
     lap: '2026 — LIVE',
     description:
-      'Fully automated weekly exec decks: KQL templates pull live Azure metrics, Python builds charts with Matplotlib/Pandas, and OpenPyXL + PowerPoint assemble editable slides — no pasted images, no manual pivot tables.',
+      'Replaced a recurring manual reporting workflow with a deployable pipeline: KQL templates pull live Azure metrics, Python transforms the data, and editable charts land in finished PowerPoint decks for weekly operational decisions.',
     highlights: [
       'End-to-end: query → CSV → charts → finished PowerPoint',
       'Covers device health, battery, onboardings, and ping KPIs',
@@ -69,7 +69,7 @@ const entries = [
     entryClass: 'Hackathon',
     lap: '2024',
     description:
-      'Award-winning financial planning tool for Texas teachers at HackUNT 2024. Combines OpenAI guidance with Plaid-connected accounts so educators can model budgets and goals without a spreadsheet degree.',
+      'Built around a specific underserved user: Texas teachers navigating financial planning. The HackUNT 2024 project combined Plaid-connected context with OpenAI-assisted guidance in a React and Flask product, earning hackathon recognition.',
     highlights: [
       'Recognized at HackUNT 2024',
       'React frontend with Flask API and OpenAI-assisted planning flows',
@@ -84,7 +84,7 @@ const entries = [
     entryClass: 'Client',
     lap: '2024 — LIVE',
     description:
-      'Client site for a Rockwall esthetician — SEO-tuned service pages and online booking so local search converts into appointments instead of cold DMs.',
+      'A client deployment, not a template exercise: translated a local esthetician’s acquisition workflow into SEO-focused service pages and online booking so search traffic could convert directly into appointments.',
     highlights: [
       'Local SEO structure for Rockwall beauty search',
       'Online booking wired into the service catalog',
@@ -148,7 +148,7 @@ const Projects = () => (
         sector="07"
         code="Official classification"
         title="Race Results"
-        sub="Flagship build plus pilot analytics from VusionGroup and product work from school and clients."
+        sub="Proof of the operating model: start with a real user or deployment constraint, build the missing system, and ship an outcome people can use."
       />
 
       {/* HouseFax — pole position / main highlight */}
