@@ -8,8 +8,8 @@ const stops = [
     stop: '01',
     company: 'VusionGroup',
     title: 'Associate Field Application Engineer',
-    boxIn: 'JAN 2026',
-    boxOut: 'RUNNING',
+    boxIn: 'Jan 2026',
+    boxOut: 'Present',
     location: 'Coppell, TX',
     live: true,
     summary:
@@ -29,7 +29,7 @@ const stops = [
     company: 'Causey',
     title: 'Founding Software Engineer',
     boxIn: '2026',
-    boxOut: 'RUNNING',
+    boxOut: 'Present',
     location: 'Remote · Cornell-born startup',
     live: true,
     summary:
@@ -51,8 +51,8 @@ const stops = [
     stop: '03',
     company: 'ASSET InterTech',
     title: 'Field Application Engineer',
-    boxIn: 'JAN 2025',
-    boxOut: 'JAN 2026',
+    boxIn: 'Jan 2025',
+    boxOut: 'Jan 2026',
     location: 'Dallas, TX · Hybrid',
     summary:
       'Owned pre- and post-sales technical outcomes for aerospace and defense customers. Scoped problems, reproduced failures, built customized JTAG test solutions, trained engineers onsite, and stayed accountable through validation and handoff.',
@@ -68,8 +68,8 @@ const stops = [
     stop: '04',
     company: 'CaringGuide',
     title: 'Software Engineer Intern',
-    boxIn: 'APR 2023',
-    boxOut: 'DEC 2023',
+    boxIn: 'Apr 2023',
+    boxOut: 'Dec 2023',
     location: 'Richardson, TX · Remote',
     summary:
       'Delivered full-stack product work for a healthcare growth platform, moving between user-facing React features, Node/PostgreSQL services, AWS deployment, and Python data automation.',
@@ -82,12 +82,11 @@ const stops = [
 ];
 
 const Experience = () => (
-  <section id="pitwall" className="site-section">
+  <section id="experience" className="site-section">
     <div className="site-container">
       <SectorHeader
-        sector="04"
-        code="Pit stop log — career stints"
-        title="Pit Wall"
+        label="Experience"
+        title="Work history"
         sub="A track record of owning outcomes at the customer–engineering boundary: scope the problem, build what is missing, deploy it, and stay through validation."
       />
 
@@ -123,19 +122,15 @@ const Experience = () => (
                 </p>
               </div>
               <div className="ml-auto flex items-center gap-3 font-tele text-[10px] uppercase tracking-[0.2em]">
-                <span className="border border-caution/50 bg-caution/10 px-2.5 py-1 text-caution">
-                  Box in · {stop.boxIn}
+                <span className="border border-white/15 bg-black/40 px-2.5 py-1 text-zinc-300">
+                  {stop.boxIn}
+                  {stop.boxOut ? ` — ${stop.boxOut}` : ''}
                 </span>
-                <span
-                  className={`border px-2.5 py-1 ${
-                    stop.live
-                      ? 'border-race-red/60 bg-race-red/10 text-race-red'
-                      : 'border-white/15 bg-black/40 text-zinc-400'
-                  }`}
-                >
-                  {stop.live ? '● ' : ''}
-                  {stop.boxOut}
-                </span>
+                {stop.live && (
+                  <span className="border border-race-red/60 bg-race-red/10 px-2.5 py-1 text-race-red">
+                    Current
+                  </span>
+                )}
               </div>
             </div>
 
@@ -153,7 +148,7 @@ const Experience = () => (
             )}
 
             <p className="mt-5 font-tele text-[10px] uppercase tracking-[0.28em] text-zinc-500">
-              Crew notes
+              Highlights
             </p>
             <ul className="mt-2 max-w-3xl space-y-2">
               {stop.crewNotes.map((note) => (
@@ -168,7 +163,7 @@ const Experience = () => (
 
             <div className="mt-5 flex flex-wrap items-center gap-2">
               <span className="font-tele text-[9px] uppercase tracking-[0.28em] text-zinc-500">
-                Tyres fitted
+                Stack
               </span>
               {stop.tyres.map((tag) => (
                 <span
@@ -203,7 +198,7 @@ const Experience = () => (
         className="readable mt-12 border-l-2 border-caution bg-caution/5 py-4 pl-6 pr-4"
       >
         <p className="font-tele text-[10px] uppercase tracking-[0.28em] text-caution">
-          Why forward deployed
+          Why this fits Forward Deployed
         </p>
         <p className="mt-2 max-w-3xl text-sm leading-6 text-zinc-300">
           I am strongest when the requirements are incomplete, the problem is already

@@ -7,10 +7,9 @@ const Research = () => (
   <section id="research" className="site-section">
     <div className="site-container">
       <SectorHeader
-        sector="06"
-        code="R&D — technical directives"
-        title="Technical Directive"
-        sub="Research for systems that must survive contact with production: grounded AI evaluation, reproducible failure analysis, and security anomaly detection."
+        label="Research"
+        title="Technical research"
+        sub="Work for systems that must survive contact with production: grounded AI evaluation, reproducible failure analysis, and security anomaly detection."
       />
 
       {/* ACL submission */}
@@ -22,9 +21,9 @@ const Research = () => (
       >
         <div className="flex flex-wrap items-center gap-x-6 gap-y-3 border-b border-white/12 px-5 py-4 md:px-8">
           <p className="font-tele text-[10px] uppercase tracking-[0.28em] text-zinc-400">
-            Document 066-2026 · From: Race Control (Eval) · To: All Teams
+            ACL submission · 2026
           </p>
-          <span className="stamp ml-auto shrink-0">ACL Submission · 2026</span>
+          <span className="stamp ml-auto shrink-0">Paper</span>
         </div>
 
         <div className="relative overflow-hidden px-5 py-6 md:px-8 md:py-8">

@@ -33,12 +33,11 @@ const targetRoles = [
 ];
 
 const About = () => (
-  <section id="driver" className="site-section">
+  <section id="about" className="site-section">
     <div className="site-container">
       <SectorHeader
-        sector="03"
-        code="Driver profile — Car 63"
-        title="The Driver"
+        label="About"
+        title="Who I am"
         sub="I work where customer context meets engineering execution: discover the real problem, build the missing software, deploy it with users, and carry production evidence back into the product."
       />
 
@@ -117,7 +116,7 @@ const About = () => (
           className="border-l-2 border-race-red pl-6"
         >
           <p className="font-tele text-[10px] uppercase tracking-[0.3em] text-race-red">
-            Current seat
+            Current role
           </p>
           <h3 className="mt-2 font-display text-2xl uppercase text-white md:text-3xl">
             Associate Field Application Engineer
@@ -148,7 +147,7 @@ const About = () => (
           className="border-l-2 border-data-blue pl-6"
         >
           <p className="font-tele text-[10px] uppercase tracking-[0.3em] text-data-blue">
-            Superlicence
+            Background
           </p>
           <div className="mt-4 space-y-6">
             <div>

@@ -142,16 +142,15 @@ const StatusLink = ({ entry }) => {
 };
 
 const Projects = () => (
-  <section id="results" className="site-section">
+  <section id="projects" className="site-section">
     <div className="site-container">
       <SectorHeader
-        sector="07"
-        code="Official classification"
-        title="Race Results"
+        label="Projects"
+        title="Selected work"
         sub="Proof of the operating model: start with a real user or deployment constraint, build the missing system, and ship an outcome people can use."
       />
 
-      {/* HouseFax — pole position / main highlight */}
+      {/* HouseFax — main highlight */}
       <motion.article
         initial={{ opacity: 0, y: 18 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -160,7 +159,7 @@ const Projects = () => (
       >
         <div className="flex flex-wrap items-center gap-x-6 gap-y-2 border-b border-white/12 px-5 py-3 md:px-8">
           <p className="font-tele text-[10px] uppercase tracking-[0.28em] text-caution">
-            ▸ P1 — Pole position · Flagship entry
+            Featured project
           </p>
           <p className="ml-auto font-tele text-[10px] uppercase tracking-[0.24em] text-data-blue">
             {housefax.lap}
@@ -225,7 +224,7 @@ const Projects = () => (
               <div className="px-5 py-5 md:px-7 md:py-6">
                 <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
                   <p className="font-tele text-[10px] uppercase tracking-[0.24em] text-zinc-500">
-                    P{index + 2} · {entry.entryClass}
+                    {entry.entryClass}
                   </p>
                   <p className="font-tele text-[11px] text-data-blue">{entry.lap}</p>
                 </div>

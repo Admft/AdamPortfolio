@@ -13,13 +13,12 @@ const Navbar = ({ trackMode, onTrackModeToggle, isStatsPage = false }) => {
 
   const prefix = isStatsPage ? '/' : '';
   const navLinks = [
-    { name: 'Driver', href: `${prefix}#driver` },
-    { name: 'Pit Wall', href: `${prefix}#pitwall` },
-    { name: 'Garage', href: `${prefix}#garage` },
-    { name: 'R&D', href: `${prefix}#research` },
-    { name: 'Results', href: `${prefix}#results` },
-    { name: 'Quali', href: `${prefix}#quali` },
-    { name: 'Radio', href: `${prefix}#radio` },
+    { name: 'About', href: `${prefix}#about` },
+    { name: 'Experience', href: `${prefix}#experience` },
+    { name: 'Skills', href: `${prefix}#skills` },
+    { name: 'Research', href: `${prefix}#research` },
+    { name: 'Projects', href: `${prefix}#projects` },
+    { name: 'Contact', href: `${prefix}#contact` },
   ];
 
   return (
@@ -29,7 +28,7 @@ const Navbar = ({ trackMode, onTrackModeToggle, isStatsPage = false }) => {
         animate={{ y: 0 }}
         className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
           scrolled
-            ? 'bg-black/75 backdrop-blur-xl border-b border-white/10'
+            ? 'bg-black/80 backdrop-blur-xl border-b border-white/10'
             : 'bg-transparent'
         }`}
       >
@@ -48,7 +47,7 @@ const Navbar = ({ trackMode, onTrackModeToggle, isStatsPage = false }) => {
               <a
                 key={link.name}
                 href={link.href}
-                className="font-tele text-[11px] uppercase tracking-[0.18em] text-zinc-400 transition-colors hover:text-white"
+                className="text-[13px] font-medium tracking-wide text-zinc-400 transition-colors hover:text-white"
               >
                 {link.name}
               </a>
@@ -56,7 +55,7 @@ const Navbar = ({ trackMode, onTrackModeToggle, isStatsPage = false }) => {
 
             <button
               onClick={onTrackModeToggle}
-              className={`flex items-center gap-2 border px-3.5 py-1.5 font-tele text-[10px] uppercase tracking-[0.2em] transition-all ${
+              className={`ml-1 flex items-center gap-2 border px-3.5 py-1.5 font-tele text-[10px] uppercase tracking-[0.2em] transition-all ${
                 trackMode
                   ? 'border-race-red bg-race-red/90 text-white'
                   : 'border-white/15 bg-black/40 text-zinc-300 hover:border-race-red/60 hover:text-white'
@@ -74,7 +73,7 @@ const Navbar = ({ trackMode, onTrackModeToggle, isStatsPage = false }) => {
 
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="border border-white/10 px-3 py-1.5 font-tele text-[11px] uppercase tracking-[0.16em] text-zinc-300 md:hidden"
+            className="border border-white/10 px-3 py-1.5 text-[13px] text-zinc-300 md:hidden"
           >
             {isOpen ? 'Close' : 'Menu'}
           </button>

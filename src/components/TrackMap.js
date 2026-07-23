@@ -1,15 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 const SECTIONS = [
-  { id: 'grid', label: 'GRID' },
+  { id: 'grid', label: 'HOME' },
   { id: 'stats', label: 'STATS' },
-  { id: 'driver', label: 'DRIVER' },
-  { id: 'pitwall', label: 'PIT WALL' },
-  { id: 'garage', label: 'GARAGE' },
+  { id: 'about', label: 'ABOUT' },
+  { id: 'experience', label: 'EXP' },
+  { id: 'skills', label: 'SKILLS' },
   { id: 'research', label: 'R&D' },
-  { id: 'results', label: 'RESULTS' },
-  { id: 'quali', label: 'QUALI' },
-  { id: 'radio', label: 'RADIO' },
+  { id: 'projects', label: 'WORK' },
+  { id: 'contact', label: 'CONTACT' },
 ];
 
 // A wiggly vertical racing line — start/finish at the top, flag at the bottom.

@@ -8,7 +8,6 @@ import Experience from './components/Experience';
 import SetupSheet from './components/SetupSheet';
 import Research from './components/Research';
 import Projects from './components/Projects';
-import Trivia from './components/Trivia';
 import Contact from './components/Contact';
 import Hud from './components/Hud';
 import TrackMap from './components/TrackMap';
@@ -20,7 +19,8 @@ const CarCanvas = React.lazy(() => import('./components/CarCanvas'));
 
 function App() {
   const [trackMode, setTrackMode] = useState(false);
-  const { enabled: soundOn, toggle: toggleSound, setSoundEnabled, setRpm, tick } = useEngineAudio();
+  const { enabled: soundOn, toggle: toggleSound, setSoundEnabled, setRpm, tick } =
+    useEngineAudio();
   const [isMobile, setIsMobile] = useState(false);
   const [isLowPowerDesktop, setIsLowPowerDesktop] = useState(false);
   const [mountCanvas, setMountCanvas] = useState(false);
@@ -83,14 +83,15 @@ function App() {
   const handleTrackModeToggle = () => {
     const next = !trackMode;
     setTrackMode(next);
-    setSoundEnabled(next);
+    // Leaving track mode should also quiet the engine.
+    if (!next) setSoundEnabled(false);
   };
 
   return (
     <div
       id="top"
-      className={`relative min-h-screen text-white selection:bg-race-red/30 transition-colors duration-500 race-mode ${
-        trackMode ? 'track-mode' : ''
+      className={`relative min-h-screen text-white selection:bg-race-red/30 transition-colors duration-500 ${
+        trackMode ? 'track-mode race-mode' : ''
       }`}
     >
       {!isStatsPage && mountCanvas && (
@@ -98,7 +99,11 @@ function App() {
           <CarCanvas isMobile={isMobile} isLowPowerDesktop={isLowPowerDesktop} />
         </Suspense>
       )}
-      <div className="fixed inset-0 z-0 pointer-events-none bg-noise opacity-20" />
+      <div
+        className={`fixed inset-0 z-0 pointer-events-none bg-noise ${
+          trackMode ? 'opacity-20' : 'opacity-10'
+        }`}
+      />
 
       <div className="relative z-10">
         <Navbar
@@ -109,21 +114,20 @@ function App() {
         {isStatsPage ? (
           <StatsPage isAMGMode />
         ) : (
-          <main className="pb-10">
-            <Hero />
-            <SeasonStats />
+          <main className={trackMode ? 'pb-14' : 'pb-10'}>
+            <Hero trackMode={trackMode} />
+            <SeasonStats trackMode={trackMode} />
             <About />
             <Experience />
             <SetupSheet />
             <Research />
             <Projects />
-            <Trivia />
-            <Contact />
+            <Contact trackMode={trackMode} />
           </main>
         )}
       </div>
 
-      {!isStatsPage && (
+      {!isStatsPage && trackMode && (
         <>
           <TrackMap />
           <Hud

@@ -2,15 +2,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 
 const SECTORS = [
-  { id: 'grid', label: 'S1 · GRID' },
-  { id: 'stats', label: 'S2 · SEASON STATS' },
-  { id: 'driver', label: 'S3 · DRIVER' },
-  { id: 'pitwall', label: 'S4 · PIT WALL' },
-  { id: 'garage', label: 'S5 · GARAGE' },
-  { id: 'research', label: 'S6 · R&D' },
-  { id: 'results', label: 'S7 · RESULTS' },
-  { id: 'quali', label: 'S8 · QUALIFYING' },
-  { id: 'radio', label: 'S9 · RADIO' },
+  { id: 'grid', label: 'HOME' },
+  { id: 'stats', label: 'HIGHLIGHTS' },
+  { id: 'about', label: 'ABOUT' },
+  { id: 'experience', label: 'EXPERIENCE' },
+  { id: 'skills', label: 'SKILLS' },
+  { id: 'research', label: 'RESEARCH' },
+  { id: 'projects', label: 'PROJECTS' },
+  { id: 'contact', label: 'CONTACT' },
 ];
 
 const SYSTEMS = [
@@ -35,9 +34,11 @@ const Hud = ({ trackMode, soundOn, toggleSound, setRpm, tick }) => {
   const tickRef = useRef(tick);
   tickRef.current = tick;
 
-  const showSystems = trackMode || systemsOpen;
+  // Telemetry stays optional in track mode — same as normal.
+  useEffect(() => {
+    if (!trackMode) setSystemsOpen(false);
+  }, [trackMode]);
 
-  // Live gauges written straight to the DOM — no per-frame re-renders.
   useEffect(() => {
     let frameId;
 
@@ -51,12 +52,9 @@ const Hud = ({ trackMode, soundOn, toggleSound, setRpm, tick }) => {
 
       const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
       const progress = maxScroll > 0 ? scrollY / maxScroll : 0;
-
-      // idle rpm floor so the needle never fully dies
       const rpm = Math.max(0.06, rpmRef.current);
 
       if (rpmFillRef.current) {
-        // the ref is a dark mask over the gradient — pull its left edge to reveal rpm
         rpmFillRef.current.style.left = `${rpm * 100}%`;
       }
       if (gearRef.current) {
@@ -74,7 +72,6 @@ const Hud = ({ trackMode, soundOn, toggleSound, setRpm, tick }) => {
     return () => cancelAnimationFrame(frameId);
   }, [setRpm]);
 
-  // Sector detection + shift tick on change
   useEffect(() => {
     const observer = new IntersectionObserver(
       (observedEntries) => {
@@ -106,9 +103,8 @@ const Hud = ({ trackMode, soundOn, toggleSound, setRpm, tick }) => {
 
   return (
     <>
-      {/* expanded telemetry panel — forced open in track mode */}
       <AnimatePresence>
-        {showSystems && (
+        {systemsOpen && (
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
@@ -118,7 +114,7 @@ const Hud = ({ trackMode, soundOn, toggleSound, setRpm, tick }) => {
           >
             <div className="mx-auto flex max-w-6xl flex-wrap items-center gap-x-7 gap-y-1.5 px-4 py-2">
               <span className="font-tele text-[9px] uppercase tracking-[0.28em] text-zinc-500">
-                {trackMode ? 'Track mode — telemetry forced open' : 'System telemetry'}
+                System telemetry
               </span>
               {SYSTEMS.map((system) => (
                 <span
@@ -138,25 +134,21 @@ const Hud = ({ trackMode, soundOn, toggleSound, setRpm, tick }) => {
         )}
       </AnimatePresence>
 
-      {/* the instrument cluster bar */}
       <div className="hud-bar fixed inset-x-0 bottom-0 z-50 h-10">
         {trackMode && (
           <div className="redline-flicker absolute inset-x-0 top-0 h-[2px] bg-race-red" />
         )}
         <div className="mx-auto flex h-full max-w-6xl items-center gap-3 px-4 font-tele md:gap-5">
-          {/* mode lamp */}
           <span
             className={`h-2 w-2 shrink-0 rounded-full ${
               trackMode ? 'bg-race-red lamp-on' : 'bg-green-500'
             }`}
           />
 
-          {/* current sector */}
           <span className="min-w-0 shrink truncate text-[10px] uppercase tracking-[0.2em] text-white">
             {sectorLabel}
           </span>
 
-          {/* gear */}
           <span className="hidden items-center gap-1.5 text-[10px] uppercase tracking-[0.16em] text-zinc-500 sm:flex">
             Gear
             <span ref={gearRef} className="font-display text-base leading-none text-caution">
@@ -164,7 +156,6 @@ const Hud = ({ trackMode, soundOn, toggleSound, setRpm, tick }) => {
             </span>
           </span>
 
-          {/* rpm bar */}
           <div className="flex min-w-0 flex-1 items-center gap-2">
             <span className="hidden text-[9px] uppercase tracking-[0.2em] text-zinc-500 md:inline">
               RPM
@@ -179,7 +170,6 @@ const Hud = ({ trackMode, soundOn, toggleSound, setRpm, tick }) => {
             </div>
           </div>
 
-          {/* speed */}
           <span className="hidden items-baseline gap-1 text-[10px] uppercase tracking-[0.16em] text-zinc-500 sm:flex">
             <span ref={speedRef} className="text-sm text-data-blue">
               000
@@ -187,22 +177,18 @@ const Hud = ({ trackMode, soundOn, toggleSound, setRpm, tick }) => {
             km/h
           </span>
 
-          {/* systems toggle (hidden in track mode — it's forced open) */}
-          {!trackMode && (
-            <button
-              type="button"
-              onClick={() => setSystemsOpen((v) => !v)}
-              className={`hidden shrink-0 border px-2 py-1 text-[9px] uppercase tracking-[0.2em] transition-colors md:inline-flex ${
-                systemsOpen
-                  ? 'border-green-500/50 text-green-400'
-                  : 'border-white/15 text-zinc-400 hover:text-white'
-              }`}
-            >
-              SYS
-            </button>
-          )}
+          <button
+            type="button"
+            onClick={() => setSystemsOpen((v) => !v)}
+            className={`hidden shrink-0 border px-2 py-1 text-[9px] uppercase tracking-[0.2em] transition-colors md:inline-flex ${
+              systemsOpen
+                ? 'border-green-500/50 text-green-400'
+                : 'border-white/15 text-zinc-400 hover:text-white'
+            }`}
+          >
+            SYS
+          </button>
 
-          {/* sound toggle */}
           <button
             type="button"
             onClick={toggleSound}
