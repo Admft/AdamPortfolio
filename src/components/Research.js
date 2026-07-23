@@ -27,39 +27,55 @@ const Research = () => (
           <span className="stamp ml-auto shrink-0">ACL Submission · 2026</span>
         </div>
 
-        <div className="px-5 py-6 md:px-8 md:py-8">
-          <h3 className="font-display text-3xl uppercase leading-tight text-white md:text-4xl">
-            When the LLM Judge Silently Fails
-          </h3>
-          <p className="mt-2 font-tele text-xs uppercase tracking-[0.18em] text-data-blue">
-            A context-overflow failure mode in faithful RAG evaluation
-          </p>
-
-          <p className="mt-5 max-w-3xl text-sm leading-7 text-zinc-300 md:text-base">
-            Found a silent failure mode where an LLM-as-judge returns schema-valid JSON
-            with all-zero scores when input context exceeds ~2,500 tokens — producing
-            apparent pipeline collapses that are evaluation artifacts, not generation
-            failures. After capping judge context and re-scoring, real regressions were
-            far smaller than the artifact suggested.
-          </p>
-
-          <div className="mt-6 grid grid-cols-1 gap-x-10 gap-y-2 md:grid-cols-2">
-            {[
-              '66 ablation runs over 60 hand-written questions on 12 RAG papers (3 replications per condition)',
-              'Fully local pipeline: Qdrant, Ollama, consumer GPU — hybrid BM25+dense retrieval with BGE reranker',
-              'Documented post-reranking filter failure (−12.9 pts) and passage-level recall masking at chunk boundaries',
-              'Released pre- and post-fix judge traces with anonymized supplementary archive',
-            ].map((item) => (
-              <p
-                key={item.slice(0, 40)}
-                className="relative pl-5 text-sm leading-6 text-zinc-300 before:absolute before:left-0 before:top-[0.55rem] before:h-[2px] before:w-2.5 before:bg-data-blue"
-              >
-                {item}
-              </p>
-            ))}
+        <div className="relative overflow-hidden px-5 py-6 md:px-8 md:py-8">
+          {/* faded first-page peek */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute -right-6 top-4 hidden w-[140px] rotate-3 opacity-[0.18] sm:block md:right-6 md:top-6 md:w-[170px] md:opacity-[0.22] lg:w-[190px]"
+          >
+            <img
+              src="/LLMJudgePaper.png"
+              alt=""
+              loading="lazy"
+              className="w-full border border-white/20 shadow-[0_12px_40px_rgba(0,0,0,0.55)]"
+            />
+            <div className="absolute inset-0 bg-gradient-to-l from-transparent via-black/20 to-black/70" />
           </div>
 
-          <div className="mt-7 flex flex-wrap items-center gap-3 border-t border-white/10 pt-5">
+          <div className="relative max-w-3xl lg:max-w-[calc(100%-13rem)]">
+            <h3 className="font-display text-3xl uppercase leading-tight text-white md:text-4xl">
+              When the LLM Judge Silently Fails
+            </h3>
+            <p className="mt-2 font-tele text-xs uppercase tracking-[0.18em] text-data-blue">
+              A context-overflow failure mode in faithful RAG evaluation
+            </p>
+
+            <p className="mt-5 text-sm leading-7 text-zinc-300 md:text-base">
+              Found a silent failure mode where an LLM-as-judge returns schema-valid JSON
+              with all-zero scores when input context exceeds ~2,500 tokens — producing
+              apparent pipeline collapses that are evaluation artifacts, not generation
+              failures. After capping judge context and re-scoring, real regressions were
+              far smaller than the artifact suggested.
+            </p>
+
+            <div className="mt-6 grid grid-cols-1 gap-x-10 gap-y-2 md:grid-cols-2">
+              {[
+                '66 ablation runs over 60 hand-written questions on 12 RAG papers (3 replications per condition)',
+                'Fully local pipeline: Qdrant, Ollama, consumer GPU — hybrid BM25+dense retrieval with BGE reranker',
+                'Documented post-reranking filter failure (−12.9 pts) and passage-level recall masking at chunk boundaries',
+                'Released pre- and post-fix judge traces with anonymized supplementary archive',
+              ].map((item) => (
+                <p
+                  key={item.slice(0, 40)}
+                  className="relative pl-5 text-sm leading-6 text-zinc-300 before:absolute before:left-0 before:top-[0.55rem] before:h-[2px] before:w-2.5 before:bg-data-blue"
+                >
+                  {item}
+                </p>
+              ))}
+            </div>
+          </div>
+
+          <div className="relative mt-7 flex flex-wrap items-center gap-3 border-t border-white/10 pt-5">
             <div className="flex flex-wrap gap-2">
               {['RAG', 'LLM Evaluation', 'Qdrant', 'Ollama', 'Ablation Study'].map((tag) => (
                 <span
