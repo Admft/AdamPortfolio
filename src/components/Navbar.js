@@ -19,6 +19,7 @@ const Navbar = ({ trackMode, onTrackModeToggle, isStatsPage = false }) => {
     { name: 'Research', href: `${prefix}#research` },
     { name: 'Projects', href: `${prefix}#projects` },
     { name: 'Contact', href: `${prefix}#contact` },
+    { name: 'Causey decisions', href: '/causey-decisions' },
   ];
 
   return (

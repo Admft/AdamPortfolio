@@ -1,3 +1,8 @@
 {
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+  "rewrites": [
+    { "source": "/causey-decisions", "destination": "/causey-decisions.html" },
+    { "source": "/causey-decisions/", "destination": "/causey-decisions.html" },
+    { "source": "/causey-decisions.html", "destination": "/causey-decisions.html" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
 }

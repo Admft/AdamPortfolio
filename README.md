@@ -65,3 +65,15 @@ Project dependencies are in `package.json`. After cloning, run `npm install` onc
 
 - [Create React App](https://github.com/facebook/create-react-app)
 - [React](https://reactjs.org/)
+
+## Causey decision questionnaire
+
+Share `/causey-decisions` on the deployed site (or `/causey-decisions.html` locally). The portfolio navigation also links to it. The standalone page preserves all 90 supplied questions and works without a backend.
+
+1. Start with the launch-critical questions. Choose Agree, Change, or Unsure.
+2. For Change, explain the replacement rule. Check the scope, then press Next.
+3. Use Overview to revisit answers, or Review & copy answers to finish at any time.
+4. Press **Copy answers**, paste into a message to Adam or an email to **arm393@cornell.edu**, and send. Nothing is submitted automatically.
+5. If copying is blocked, manually copy the preview or download the `.txt` file and send it.
+
+Progress is saved in localStorage on the same browser/device when available. Private browsing or clearing browser data can remove it. Exported responses include question numbers, decisions, scopes, notes, and unanswered question numbers. Draft rules are proposals, not published Causey policy.

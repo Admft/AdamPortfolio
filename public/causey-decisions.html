@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Causey launch decisions | Adam Moffat</title>
+<meta name="description" content="Review 90 proposed Causey product decisions, choose your answers, then copy and send your feedback to Adam.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F3F5F9; --surface:#FFFFFF; --ink:#18203A; --muted:#5D6680; --line:#DCE1EC;
+  --accent:#2F4BE0; --accent-soft:#E6EAFD;
+  --agree:#16794F; --agree-soft:#E2F3EA;
+  --change:#B4430E; --change-soft:#FBEAE0;
+  --unsure:#6B6F80; --unsure-soft:#ECEDF2;
+  --radius-lg:18px; --radius-sm:10px;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#10141F; --surface:#181E2D; --ink:#E8EBF4; --muted:#9AA3BA; --line:#2A3246;
+    --accent:#8C9DFF; --accent-soft:#232C4E;
+    --agree:#5CCB94; --agree-soft:#17352A;
+    --change:#F29A66; --change-soft:#3A2419;
+    --unsure:#A9ADBD; --unsure-soft:#262B38;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#10141F; --surface:#181E2D; --ink:#E8EBF4; --muted:#9AA3BA; --line:#2A3246;
+  --accent:#8C9DFF; --accent-soft:#232C4E;
+  --agree:#5CCB94; --agree-soft:#17352A;
+  --change:#F29A66; --change-soft:#3A2419;
+  --unsure:#A9ADBD; --unsure-soft:#262B38;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:"Atkinson Hyperlegible",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased}
+h1,h2,.display{font-family:"Bricolage Grotesque","Atkinson Hyperlegible",system-ui,sans-serif}
+button,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.wrap{max-width:640px;margin:0 auto;padding:16px 18px 120px}
+
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding:12px 0 10px;margin:0 -18px;padding-left:18px;padding-right:18px}
+.toprow{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:700;font-size:18px;letter-spacing:-.01em}
+.sync{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:6px;text-align:right}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--unsure);flex:none}
+.dot.on{background:var(--agree)}
+.bar{height:6px;background:var(--line);border-radius:6px;margin-top:10px;overflow:hidden}
+.bar>i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s ease}
+.tabs{display:flex;gap:6px;margin-top:10px;overflow-x:auto}
+.tab{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:14px;white-space:nowrap}
+.tab[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+
+/* intro */
+.intro h1{font-size:clamp(30px,7vw,44px);line-height:1.05;letter-spacing:-.02em;margin:18px 0 12px;font-weight:700}
+.intro p{color:var(--muted);margin:0 0 12px;max-width:34em}
+.how{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius-lg);padding:16px 18px;margin:18px 0}
+.how div{display:flex;gap:12px;align-items:baseline;padding:6px 0}
+.how b{min-width:72px}
+.instructions{padding-left:22px}
+.instructions li{margin:10px 0}
+a{color:var(--accent)}
+.utility{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-top:12px;font-size:14px}
+.utility button{border:0;background:transparent;color:var(--accent);padding:6px 0}
+#answerPreview{min-height:220px}
+button:disabled{opacity:.5;cursor:default}
+.cta{display:block;width:100%;border:0;background:var(--accent);color:#fff;border-radius:14px;padding:16px;font-weight:700;font-size:17px;margin-top:8px}
+:root[data-theme="dark"] .cta{color:#10141F}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .cta{color:#10141F}}
+.ghost{display:block;width:100%;background:transparent;border:1px solid var(--line);border-radius:14px;padding:14px;margin-top:10px;font-weight:700}
+
+/* card */
+.meta{display:flex;justify-content:space-between;align-items:center;font-size:14px;color:var(--muted);margin:18px 0 8px}
+.crit{background:var(--accent-soft);color:var(--accent);border-radius:999px;padding:2px 10px;font-size:13px;font-weight:700}
+.ctx{color:var(--muted);margin:-8px 0 16px;font-size:16px}
+.q{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-size:clamp(22px,5.4vw,28px);line-height:1.2;letter-spacing:-.01em;font-weight:500;margin:0 0 16px}
+.proposal{background:var(--surface);border:1px solid var(--line);border-left:5px solid var(--accent);border-radius:var(--radius-sm);padding:14px 16px;margin-bottom:18px}
+.proposal small{display:block;color:var(--muted);font-size:13px;margin-bottom:4px}
+.proposal p{margin:0;font-size:18px}
+.proposal .sc{margin-top:8px;font-size:14px;color:var(--muted)}
+.label{font-size:14px;color:var(--muted);margin:14px 0 6px}
+.choices{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.choice{border:2px solid var(--line);background:var(--surface);border-radius:14px;padding:14px 6px;font-weight:700;font-size:16px;transition:background .15s,border-color .15s}
+.choice[data-v="agree"][aria-pressed="true"]{background:var(--agree-soft);border-color:var(--agree);color:var(--agree)}
+.choice[data-v="change"][aria-pressed="true"]{background:var(--change-soft);border-color:var(--change);color:var(--change)}
+.choice[data-v="unsure"][aria-pressed="true"]{background:var(--unsure-soft);border-color:var(--unsure);color:var(--unsure)}
+.scopes{display:flex;gap:8px}
+.scope{flex:1;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:10px 4px;font-size:15px}
+.scope[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+textarea{width:100%;min-height:92px;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:12px;resize:vertical;font-size:16px}
+.hint{font-size:13px;color:var(--muted);margin-top:4px}
+.navbar{position:fixed;left:0;right:0;bottom:0;background:var(--bg);border-top:1px solid var(--line);padding:10px 18px calc(10px + env(safe-area-inset-bottom,0px));z-index:5}
+.navin{max-width:640px;margin:0 auto;display:flex;gap:10px}
+.navin button{flex:1;border-radius:12px;padding:14px;font-weight:700;border:1px solid var(--line);background:var(--surface)}
+.navin .next{background:var(--ink);color:var(--bg);border-color:var(--ink);flex:2}
+
+/* list */
+.list{list-style:none;padding:0;margin:14px 0 0}
+.list li button{display:flex;gap:12px;width:100%;text-align:left;background:transparent;border:0;border-bottom:1px solid var(--line);padding:12px 2px;align-items:flex-start}
+.list .n{color:var(--muted);min-width:28px;font-size:14px;padding-top:2px}
+.list .t{flex:1;font-size:15px}
+.pill{font-size:12px;font-weight:700;border-radius:999px;padding:2px 8px;white-space:nowrap;background:var(--line);color:var(--muted)}
+.pill.agree{background:var(--agree-soft);color:var(--agree)}
+.pill.change{background:var(--change-soft);color:var(--change)}
+.pill.unsure{background:var(--unsure-soft);color:var(--unsure)}
+.sec{font-family:"Bricolage Grotesque",system-ui,sans-serif;font-weight:700;font-size:16px;margin:22px 0 2px}
+
+.done h1{font-size:clamp(28px,6vw,40px);line-height:1.1;margin:22px 0 10px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:16px 0}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px;text-align:center}
+.stat b{display:block;font-family:"Bricolage Grotesque",system-ui,sans-serif;font-size:28px}
+.toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:15px;opacity:0;pointer-events:none;transition:opacity .2s}
+.toast.show{opacity:1}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="toprow">
+      <div class="brand">Causey decisions</div>
+      <div class="sync"><span class="dot" id="dot"></span><span id="syncText">Saved on this device</span></div>
+    </div>
+    <div class="bar" aria-hidden="true"><i id="bar"></i></div>
+    <div class="tabs" role="group" aria-label="Filter">
+      <button class="tab" data-f="crit" aria-pressed="true">Launch-critical</button>
+      <button class="tab" data-f="rest" aria-pressed="false">Everything else</button>
+      <button class="tab" data-f="list" aria-pressed="false">Overview</button>
+    </div>
+    <div class="utility"><a href="/">← Adam’s portfolio</a><button id="review">Review &amp; copy answers</button></div>
+  </header>
+
+  <main id="main"></main>
+</div>
+<nav class="navbar" id="navbar" hidden>
+  <div class="navin">
+    <button id="prev">Back</button>
+    <button id="next" class="next">Next</button>
+  </div>
+</nav>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* [id, section, question, proposed rule, suggested scope, launch-critical] */
+const S={a:"Accounts and access",o:"Organizations and ownership",s:"Student-run events",r:"Staff permissions",c:"Creating and publishing",d:"Finding and entering",f:"Fees, messages, event day",p:"Privacy, support, launch"};
+const OLDSCOPE={Launch:"At launch",Never:"Not allowed"};
+const split=q=>{const i=q.indexOf("? ");return i<0?[q,""]:[q.slice(0,i+1),q.slice(i+2)]};
+const Q=[
+[1, "a", "Can a student host a competition? For example, a high school student wants to organize a chess tournament. Can they run it themselves, or must an adult be in charge?", "Students can host. Hosts under 18 need a named, verified adult sponsor.", "At launch", 1],
+[2, "a", "Does the student’s age change the answer? Should a 12-year-old, a 17-year-old, and a 20-year-old college student have different hosting options?", "Yes. Under 13: cannot host. 13 to 17: can host with an adult sponsor. 18 and over: host independently.", "At launch", 1],
+[3, "a", "What should a student at a school or district do first? Do they ask a teacher or coach to create the competition, or can they create a draft and send it to an adult for approval?", "The student can create a draft. A teacher or coach approves it before submission.", "At launch", 0],
+[4, "a", "What should a student without a school or club connection do? Can they start hosting on their own, ask a parent to help, or request permission from Causey?", "Verify email, confirm age, invite an adult sponsor if under 18, then create a draft in their personal workspace.", "At launch", 0],
+[5, "a", "Can one account have more than one purpose? For example, can someone enter competitions as a student and also host their own competitions using the same email?", "Yes. One account, one email, multiple roles.", "At launch", 1],
+[6, "a", "How does an existing user become a host? Should they click “Start hosting,” change their account type, or request approval? They need a clear path that explains whether another account is necessary.", "They add a Host role in settings, which triggers verification. Nobody ever needs to delete an account or use another email.", "At launch", 1],
+[7, "a", "What happens to their existing information when they become a host? Should they keep their saved events, entries, school memberships, and family connections?", "Yes. Roles are additive, so nothing is lost.", "At launch", 0],
+[8, "a", "Can a parent host from their parent account? For example, a parent wants to organize a math competition while still managing entries for their children.", "Yes.", "At launch", 0],
+[9, "a", "Can an adult with a student account host independently? For example, does a college student need to change their account type before organizing an event?", "Yes, once they have confirmed they are 18 or older.", "At launch", 0],
+[10, "a", "What must Causey verify before allowing someone to host? Is a confirmed email enough, or do we also need to confirm their age, identity, or connection to an organization?", "A verified email and an age confirmation. Organization approval is required only when hosting under an organization's name.", "At launch", 1],
+[11, "a", "What if someone chooses the wrong account type? Can they fix it in settings, or must they contact support?", "Yes, self-serve. Changing a stated age goes through support so sponsor rules can't be bypassed.", "At launch", 0],
+[12, "a", "Where should new users land after signing up? A person who signed up to host should be able to find “Create a competition” easily. What should students, parents, and hosts each see first?", "Students land on discovery. Parents are prompted to add children, then land on discovery. Everyone gets a \"Host a competition\" entry point in the main navigation.", "At launch", 0],
+[13, "o", "Does every host need a workspace? A workspace is the shared area containing an organization’s events, staff, and settings. Does a person hosting one small event need to create one?", "Every competition belongs to a workspace. Each user gets a personal workspace automatically.", "At launch", 1],
+[14, "o", "How should someone choose between an organizer workspace, club, team, school, or district? What simple explanation should help them choose correctly?", "Use an organizer workspace for independent or business-run events. Use a school, district, or club when the event runs under that institution.", "At launch", 0],
+[15, "o", "Should hosts identify what kind of organizer they are? For example: individual, tournament director, venue, business, or nonprofit. Would that answer change anything, or is it just information?", "Make it optional. It changes only the display label.", "Later", 0],
+[16, "o", "Can someone work with several organizations using one account? For example, a coach runs events for two schools and also hosts independently.", "Yes.", "At launch", 0],
+[17, "o", "Can a student host independently while belonging to a school? If they aren’t using the school’s name or resources, do they still need school permission?", "Yes, as an independent event. They cannot use the school's name or logo.", "At launch", 1],
+[18, "o", "Who approves use of a school’s name or logo? How will participants know whether an event is officially school-run or simply organized by a student who attends that school?", "The organization's admin approves it. Only approved events show \"Hosted by [School]\" with a verified mark.", "At launch", 0],
+[19, "o", "Can two organizations host the same event together? If two clubs run a tournament, who controls the listing, entries, and staff permissions?", "Not at launch. One organization owns the event, and co-hosts can be named in the description.", "Later", 0],
+[20, "o", "Can an event move to a different organization? For example, a student starts independently, then their school agrees to take over. Can the existing event move without losing entries?", "Yes, with approval from the destination organization's admin.", "Later", 0],
+[21, "o", "Can a workspace change its type later? For example, an independent organizer becomes a club. Can they change the workspace, and what happens to its staff and events?", "Not self-serve at launch. Changes go through support, and members and events are unaffected.", "Later", 0],
+[22, "o", "How does someone hand over ownership? Can the owner choose another adult, and must that person accept before becoming responsible?", "Yes. The owner picks another admin who is 18 or older, and that person must accept before ownership transfers.", "At launch", 0],
+[23, "o", "What happens if the owner disappears or deletes their account? Who can keep an upcoming event running and answer participants’ questions?", "Ownership passes to another admin, who can keep the event running. If there is none, events stay visible but frozen until Causey support reassigns them.", "At launch", 0],
+[24, "o", "Can an organization remove a host but keep their events? For example, a coach leaves a school. Does the school retain the competitions they created?", "Yes. Competitions belong to the organization, not to the individual.", "At launch", 0],
+[25, "s", "Does a student-run event need an adult sponsor? If so, can that adult be a parent, teacher, coach, or another approved adult?", "Yes. Any verified adult 18 or older (parent, teacher, coach, or other) who accepts an email invite.", "At launch", 1],
+[26, "s", "How does a student find a sponsor? Must they arrange this themselves, or should Causey provide a way to ask a known adult to sponsor the event?", "They arrange it themselves at launch by inviting someone via email.", "Later", 0],
+[27, "s", "What can the student do before a sponsor agrees? Can they write a draft, choose dates, and create divisions? Can they invite participants yet?", "They can write a draft, set dates, and create divisions. They cannot submit, publish, invite participants, or take entries.", "At launch", 1],
+[28, "s", "What can the student do after a sponsor agrees? Can they edit the event, manage entries, check people in, and post results—or do some actions require adult approval?", "Everything, including editing, entries, check-in, and results. Fees, cancellation, and final publish need the sponsor's confirmation.", "At launch", 0],
+[29, "s", "Can several students organize together? Can they all help manage the event under one adult sponsor?", "Yes. Multiple student co-hosts share one adult sponsor per event.", "At launch", 0],
+[30, "s", "Who is responsible when something goes wrong? Who handles complaints, safety concerns, cancellations, and refunds: the student, adult sponsor, or organization?", "The adult sponsor, or the organization owner for organization events. Causey handles platform-level reports only.", "At launch", 1],
+[31, "s", "Whose information appears on the public event page? Should it show the student’s name, the adult sponsor’s name, the organization, or some combination? Which contact details should be visible?", "The event name, the organization if any, and the adult sponsor's name. The student's name appears only if they opt in. Contact goes through a Causey message button, never a personal email or phone.", "At launch", 0],
+[32, "s", "What happens if the adult sponsor withdraws? Does the event pause until another adult accepts responsibility, or is it cancelled?", "The event is paused and entries close. A new sponsor must accept within 7 days or the event is cancelled.", "At launch", 0],
+[33, "s", "What happens when the student graduates or changes schools? Can they still manage an event they created, or does control stay with the original school?", "They keep managing events they created independently. Control of school events stays with the school.", "Later", 0],
+[34, "r", "What can each staff role do? Explain the difference between owner, administrator, coach, assistant coach, and someone helping with just one event.", "Owner: everything, including transfer and delete. Admin: everything except ownership. Coach: their roster and assigned events. Assistant coach: same as coach, but cannot invite staff or publish results. Helper: check-in for one event.", "At launch", 1],
+[35, "r", "Should coaches and assistant coaches have the same event tools? If not, what specific actions should assistants be unable to perform?", "No. Assistant coaches cannot invite staff or publish results.", "At launch", 0],
+[36, "r", "Who can give or remove staff access? For example, can a coach invite another coach, or must an owner or administrator do it?", "Owners and admins can invite and remove staff. Coaches cannot. Only the owner can grant admin or transfer ownership.", "At launch", 0],
+[37, "r", "Can a student receive a staff role? If yes, what information and actions should remain restricted to adults?", "Yes, as an event helper only. They see no contact details and cannot export.", "At launch", 0],
+[38, "r", "Can someone help with one event without joining the whole organization? For example, a volunteer needs to check participants in on Saturday but should not see other events.", "Yes, through the event-only helper role.", "At launch", 0],
+[39, "r", "Can helpers receive limited access? Could one volunteer handle check-in while another manages results, without either being able to change the event or invite staff?", "Not at launch. There is one helper role, which covers check-in only.", "Later", 0],
+[40, "r", "What participant information can each staff role see or download? For example, should a check-in volunteer see names only, while the responsible adult can see contact details?", "Owner and admin: the full list plus export. Coach: their own roster. Helper: names and check-in status, with no export.", "At launch", 1],
+[41, "r", "Do school and district administrators automatically control events within their organization? Can they edit, cancel, or take over an event created by a coach?", "Yes. School and district admins can view, edit, cancel, or take over any event under their organization, and the event's creator is notified.", "At launch", 0],
+[42, "r", "What happens when an invited person already has an account? For example, a parent receives a coach invitation. Can they accept using their existing account while keeping parent features?", "Yes. They accept with their existing account, the new role is added, and they keep their parent features.", "At launch", 0],
+[43, "r", "How should invitation problems be handled? What can the sender do if they entered the wrong email, the link expired, or the invitation never arrived?", "Invitations expire after 14 days. The host can resend, or revoke and reissue to the correct email.", "At launch", 0],
+[44, "c", "What information is required at each step? What can be left blank in a draft, what must be filled in before review, and what must be ready before people can enter?", "Draft: title only. Submit: title, date, location or online, discipline, audience, host contact, and eligibility. Publish: approval plus an entry method or \"Entries opening soon.\"", "At launch", 1],
+[45, "c", "Can one competition include several disciplines? For example, a school festival includes chess, debate, and writing. Is that one event with several categories or several separate events?", "One event with a category per discipline. It shows up under each discipline in search.", "At launch", 0],
+[46, "c", "Can an event be published before registration is ready? Should it show “Entries opening soon,” or must the host provide a registration method first?", "They can publish an informational listing with \"Entries opening soon.\"", "At launch", 0],
+[47, "c", "What happens if the event saves but registration setup fails? Should submission stop, or should the host be taken to a page explaining what still needs fixing?", "The event saves as a draft, and the host lands on a page listing what still needs fixing. Nothing goes public half-configured.", "At launch", 0],
+[48, "c", "Which events require Causey approval? All events, only public events, or only events from new or unverified hosts?", "All public events and all student-hosted events. Private events from verified organizations skip review.", "At launch", 1],
+[49, "c", "Does a school event need two approvals? Must a school administrator approve it before Causey reviews it? Who should the host ask?", "Yes, the organization's admin approves first, and Causey reviews second.", "At launch", 0],
+[50, "c", "What happens immediately after approval? Does the event become public automatically, or does the host receive an “Approved—publish when ready” option?", "It publishes on approval by default, and the host can switch that off to schedule go-live.", "At launch", 0],
+[51, "c", "Who can see an event before it is approved? Can a host send a private preview link to a teacher, sponsor, venue, or parent for feedback?", "Staff and the sponsor can preview. Preview links are shareable, unlisted, and marked \"Preview.\"", "Later", 0],
+[52, "c", "What happens when Causey asks for changes? Who receives the explanation, where do they make corrections, and how do they submit the event again?", "The host and sponsor are notified in-app and by email. The reviewer must give a reason, and the host edits and resubmits in one step.", "At launch", 0],
+[53, "c", "Which edits require another approval? For example, should changing the venue, date, organizer, age limits, or fee send the event back for review?", "Changes to the date, venue, organizer, age limits, audience, or fee. Wording edits don't.", "At launch", 0],
+[54, "c", "Can a host reuse an old event? For a monthly tournament, can they copy the previous listing? Which details should reset, such as dates, entries, staff, and fees?", "Yes, they can duplicate an event. Dates, entries, and approval reset, while staff, fees, and divisions copy over. Recurring series come later.", "Later", 0],
+[55, "c", "What does “Approved by Causey” mean? Does it mean the listing was checked, the organizer’s identity was verified, or something more? What should participants reasonably understand from that label?", "\"Reviewed by Causey\" means the listing was checked for accuracy and safety. It is not an endorsement or identity verification.", "At launch", 1],
+[56, "d", "Who can a host invite to an event? Should they be able to choose everyone, one organization, one school, one district, or individually invited people?", "Public, organization-only, or invitation-only. School-only and district-only count as organization-only.", "At launch", 1],
+[57, "d", "Can someone outside that group ask to join? For example, can a student from another school request entry to a school-only tournament?", "Yes. The host or an admin approves each request.", "Later", 0],
+[58, "d", "Can independent students find and enter public events? Should a student need any club or school membership to participate in a public competition?", "Yes.", "At launch", 1],
+[59, "d", "When is an account required? Can people browse event details without signing in? Must they sign in to save, RSVP, or enter?", "Yes, anyone can browse. An account is required to save, RSVP, or enter.", "At launch", 1],
+[60, "d", "What does each participant action mean? Define “Save,” “RSVP,” “Enter,” and “Register on the organizer’s website” so users know which actions actually reserve a place.", "Save: a private bookmark. RSVP: plan to attend, which the host sees as a count. Enter: official registration through Causey. External: registered elsewhere, as reported by the participant.", "At launch", 1],
+[61, "d", "How should RSVP and entry work together? Can someone say “Going” without entering? Should a confirmed entry automatically mark them as going?", "Yes. A confirmed entry sets the RSVP to \"Going\" automatically.", "At launch", 0],
+[62, "d", "Who can submit an entry for a student? The student, a parent, a coach, or all three? Does this depend on age or school policy?", "Students 13 and older can enter themselves. Under 13, a parent must enter them. Coaches can enter rostered students who have parent consent on file.", "At launch", 1],
+[63, "d", "Can someone enter several participants at once? For example, can a parent enter two children or a coach enter a team of 20 students?", "Parents can enter multiple children. Coach bulk entry comes later.", "At launch", 0],
+[64, "d", "Does every participant need their own account? Could a parent enter a young child, or a coach enter a student, without creating a separate login for that participant?", "Every participant has a profile. Children under 13 are managed profiles under a parent's account, with no login of their own.", "At launch", 1],
+[65, "d", "Does entering an event ever join the host’s organization? Or should becoming a club or workspace member always require a separate, clearly explained action?", "Never. Joining an organization is always a separate choice.", "At launch", 0],
+[66, "d", "How do we check whether someone qualifies? For age, grade, rating, or residency requirements, do we trust the participant’s answer, use account information, or require proof? Can the host make exceptions?", "Participants self-attest when they enter. Hosts can request proof and approve exceptions manually.", "At launch", 0],
+[67, "d", "When is an entry confirmed? Immediately after submission, only after host approval, or whichever option the host chooses?", "Configurable per event, with auto-confirm as the default.", "At launch", 0],
+[68, "d", "What happens when registration is full or closed? Should there be a waitlist, late-entry requests, and a way to withdraw? What happens to a vacated place?", "At launch: capacity cap, deadline, and self-withdrawal, and a withdrawn place simply reopens. Waitlists and late-entry requests come later.", "At launch", 0],
+[69, "d", "Can an event use Causey registration and an external website at the same time? If both collect entries, which list determines who actually has a place?", "Yes. The host picks one list as authoritative, with Causey as the default.", "Later", 0],
+[70, "d", "How does Causey know someone registered externally? Does the participant simply mark “I registered,” does the host confirm it, or does Causey receive confirmation from the external service?", "The participant marks \"I registered,\" and the host can confirm it. Causey does not connect to external services at launch.", "At launch", 0],
+[71, "f", "Will Causey collect money, or send paid events to another website? If Causey collects payments, who receives the money and handles refunds and disputes?", "At launch: free events, or a listed fee paid outside Causey. Causey collects no payments, and the host handles refunds and disputes.", "At launch", 1],
+[72, "f", "How should fees be shown? What should users see when the fee is unknown, the event is free, or different divisions charge different amounts?", "An unknown fee shows as \"Fee not listed,\" a free event shows \"Free,\" and each division shows its own fee.", "At launch", 0],
+[73, "f", "Can a host change fees or eligibility after people enter? If the price increases or the age limit changes, what happens to people already registered?", "Yes, and entrants are notified. Existing entries keep their original terms unless the entrant withdraws.", "At launch", 0],
+[74, "f", "Who should receive each event update? For approvals, new entries, waitlist openings, schedule changes, and cancellations, should messages go to the creator, all staff, students, parents, or coaches?", "Creator and sponsor: approvals and new entries. Entrants, plus the parent for minors (or the coach for coach-entered students): waitlist openings, schedule changes, and cancellations.", "At launch", 1],
+[75, "f", "How should those messages arrive? Which belong in Causey, which need email, and which should users be allowed to turn off?", "Everything appears in-app. Review status, entry confirmation, schedule changes, and cancellation are also emailed, and those four can't be turned off.", "At launch", 0],
+[76, "f", "Can hosts message students directly? For minors, should a parent or responsible adult receive a copy or handle the conversation?", "Yes, through in-app messaging. Every message to a minor also goes to their parent.", "At launch", 1],
+[77, "f", "What must hosts be able to do on event day? For example: view participants, check them in, move them between divisions, record attendance, enter results, and download lists. Which tools are required first?", "At launch: participant list, check-in, and export. Divisions, results, and awards come later.", "At launch", 0],
+[78, "f", "Who can publish or change results? If a participant says their result is wrong, where do they report it and who resolves it?", "Hosts and admins publish results. Participants dispute them by reporting to the host.", "Later", 0],
+[79, "f", "What happens when an event is postponed or cancelled? Who is notified, do existing entries carry over, and what instructions are given about refunds or external registration?", "Postponed: entries stay, everyone is notified, and anyone can withdraw. Cancelled: entries close, everyone is notified, and external registrants are told to check with the host.", "At launch", 1],
+[80, "f", "How should “Add to calendar” work? Should it support Google Calendar, Apple Calendar, and downloadable files? How should people learn that the date or location changed afterward?", "Calendar files and Google/Apple links at launch. Auto-updating calendar feeds come later.", "At launch", 0],
+[81, "p", "Who can see participant information? Which names, ages, schools, contact details, entries, and results are public, and which are visible only to authorized staff?", "Public: event details and the host's display name. Staff: entrant names, age or grade, and parent contact. Schools and districts: entrants of their own events only.", "At launch", 1],
+[82, "p", "Can a school see a student’s activity outside school? For example, should district staff see competitions the student enters or hosts independently?", "No.", "At launch", 0],
+[83, "p", "What requires permission from a parent or participant? Consider entering an event, sharing contact details, using photos, and publishing names or results.", "A parent's consent for any participant under 18, which COPPA requires for under-13s. Photos and public results each need a separate opt-in.", "At launch", 1],
+[84, "p", "How long should Causey keep event records? What happens to entries and results when an event ends or a participant deletes their account?", "Records are kept while the account is active. Entries and results are deleted within 30 days of account deletion, and past events keep only anonymized results.", "At launch", 0],
+[85, "p", "How can someone report a problem? Where do they report a fake listing, unsafe event, inappropriate message, or organizer misconduct—and who investigates?", "A Report button on listings, messages, profiles, and results. Causey's team investigates every report at launch.", "At launch", 1],
+[86, "p", "What happens if a host is suspended while they have an upcoming event? Should another adult take over, should registration pause, and what should participants be told?", "Their events are paused and entrants are notified. The sponsor or an admin can take over.", "At launch", 0],
+[87, "p", "Who handles account and ownership problems? For example, an owner loses access, two people claim ownership, or someone accidentally removes the wrong staff member. What can support restore?", "Causey support, by email, at launch. Support can restore access, resolve ownership disputes, and reinstate removed staff.", "At launch", 0],
+[88, "p", "Which tasks must work on both the website and mobile app? Can hosts create and manage events on mobile, or will some tasks initially require the website?", "Hosting is web-only at launch. Mobile covers discovery, entry, RSVP, and notifications.", "At launch", 1],
+[89, "p", "Which answers describe the first release, and which describe future plans? Mark each feature as “Available at launch,” “Not allowed,” or “Later” so the team does not build around assumptions.", "Set by the scope you pick on each question in this form: At launch, Later, or Not allowed.", "At launch", 1],
+[90, "p", "What complete journeys must work before launch? For example: an independent adult creates an event; a student gets a sponsor; a school approves an event; a student enters; and a parent enters a child. What counts as success for each journey?", "All five journeys pass end to end on web. Success means each person finishes without contacting support, and the host sees the correct entries.", "At launch", 1]
+].map(([id,sec,q,rule,scope,crit])=>({id,sec,q,rule,scope,crit:!!crit}));
+
+const KEY="causey-decisions-v1";
+let A={}, localSaved=true;
+try{
+  const stored=JSON.parse(localStorage.getItem(KEY)||"{}");
+  if(stored && typeof stored==="object" && !Array.isArray(stored)){
+    for(const q of Q){
+      const a=stored[q.id];
+      if(!a || typeof a!=="object") continue;
+      const scope=OLDSCOPE[a.scope]||a.scope;
+      A[q.id]={
+        decision:["agree","change","unsure"].includes(a.decision)?a.decision:"",
+        scope:["At launch","Later","Not allowed"].includes(scope)?scope:q.scope,
+        note:typeof a.note==="string"?a.note:""
+      };
+    }
+  }
+}catch(e){localSaved=false}
+let view="intro", filter="crit", idx=0;
+const $=s=>document.querySelector(s);
+const main=$("#main");
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+function listFor(f){return f==="crit"?Q.filter(x=>x.crit):f==="rest"?Q.filter(x=>!x.crit):Q}
+function ans(id){return A[id]||{}}
+function answeredCount(list){return list.filter(x=>ans(x.id).decision).length}
+
+function saveLocal(){
+  try{localStorage.setItem(KEY,JSON.stringify(A));localSaved=true}
+  catch(e){localSaved=false}
+  setSync();
+}
+function persist(id){saveLocal();progress()}
+function setAns(id,patch){A[id]=Object.assign({},A[id],patch,{t:Date.now()});persist(id)}
+
+function progress(){
+  const n=answeredCount(Q);
+  $("#bar").style.width=(n/Q.length*100)+"%";
+}
+function setSync(){
+  $("#dot").classList.toggle("on",localSaved);
+  $("#syncText").textContent=localSaved?"Saved only in this browser":"Not saved — copy before leaving";
+}
+function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");clearTimeout(toast._t);toast._t=setTimeout(()=>t.classList.remove("show"),2000)}
+
+function setTabs(){document.querySelectorAll(".tab").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.f===(view==="list"?"list":filter)&&view!=="intro"&&view!=="done")))}
+
+function render(){
+  setTabs(); progress();
+  $("#navbar").hidden=view!=="card";
+  if(view==="intro") return renderIntro();
+  if(view==="list") return renderList();
+  if(view==="done") return renderDone();
+  renderCard();
+}
+
+function renderIntro(){
+  const crit=Q.filter(x=>x.crit).length, n=answeredCount(Q);
+  main.innerHTML=`<section class="intro">
+    <h1>${Q.length} product decisions, pre-drafted.</h1>
+    <p>Each question has a proposed rule. Tap Agree if it's right. Tap Change and write one line if it isn't. Answers save in this browser when storage is available. Return using the same browser and device to continue. Clearing browser data or closing a private session can erase them.</p>
+    <div class="how">
+      <div><b style="color:var(--agree)">Agree</b><span>The proposed rule stands.</span></div>
+      <div><b style="color:var(--change)">Change</b><span>Write what the rule should be instead.</span></div>
+      <div><b style="color:var(--unsure)">Unsure</b><span>Flag it to discuss live.</span></div>
+      <div><b>Scope</b><span>At launch, Later, or Not allowed. Pre-set to a suggestion; tap to change.</span></div>
+    </div>
+    <div class="how">
+      <h2>How to complete and send</h2>
+      <ol class="instructions">
+        <li>Read each proposed rule and choose Agree, Change, or Unsure. For Change, explain your replacement rule.</li>
+        <li>Check the scope before pressing Next: At launch, Later, or Not allowed.</li>
+        <li>Use Overview to revisit questions. You can skip a question and return later.</li>
+        <li>At the end, press <strong>Copy answers</strong>, then paste the full text into your conversation with Adam or email <a href="mailto:arm393@cornell.edu">arm393@cornell.edu</a>.</li>
+      </ol>
+      <p><strong>Nothing is sent automatically.</strong> You must copy and send your answers. Download answers saves a backup.</p>
+      <p>These are proposals for review, not confirmed Causey features or policies.</p>
+    </div>
+    <p>Start with the ${crit} launch-critical questions. They block v1. The rest can wait.</p>
+    <button class="cta" id="start">${n?"Continue":"Start with launch-critical"}</button>
+    ${n?`<button class="ghost" id="finish">Review and copy answers (${n} of ${Q.length})</button>`:""}
+  </section>`;
+  $("#start").onclick=()=>{filter="crit";const l=listFor("crit");const i=l.findIndex(x=>!ans(x.id).decision);idx=i<0?0:i;view="card";render();window.scrollTo(0,0)};
+  const f=$("#finish"); if(f) f.onclick=()=>{view="done";render()};
+}
+
+function renderCard(){
+  const l=listFor(filter); if(idx>=l.length) idx=l.length-1; if(idx<0) idx=0;
+  const q=l[idx], a=ans(q.id), scope=a.scope||q.scope;
+  main.innerHTML=`<div class="meta"><span>${esc(S[q.sec])} · ${idx+1} of ${l.length}</span>${q.crit?'<span class="crit">Blocks v1</span>':""}</div>
+    <h2 class="q">${q.id}. ${esc(split(q.q)[0])}</h2>${split(q.q)[1]?`<p class="ctx">${esc(split(q.q)[1])}</p>`:""}
+    <div class="proposal"><small>Proposed rule</small><p>${esc(q.rule)}</p></div>
+    <div class="choices" role="group" aria-label="Decision">
+      ${["agree","change","unsure"].map(v=>`<button class="choice" data-v="${v}" aria-pressed="${a.decision===v}">${v[0].toUpperCase()+v.slice(1)}</button>`).join("")}
+    </div>
+    <div class="label">Scope</div>
+    <div class="scopes" role="group" aria-label="Scope">
+      ${["At launch","Later","Not allowed"].map(v=>`<button class="scope" data-s="${v}" aria-pressed="${scope===v}">${v}</button>`).join("")}
+    </div>
+    <div id="noteWrap" ${a.decision==="change"||a.decision==="unsure"||a.note?"":"hidden"}>
+      <label class="label" style="display:block" id="noteLabel" for="note">${a.decision==="unsure"?"What's the open question?":"What should the rule be?"}</label>
+      <textarea id="note" placeholder="One line is enough">${esc(a.note||"")}</textarea>
+    </div>`;
+  document.querySelectorAll(".choice").forEach(b=>b.onclick=()=>{
+    const v=b.dataset.v; setAns(q.id,{decision:v,scope:scope});
+    if(v==="agree"){ renderCard() }
+    else { renderCard(); const t=$("#note"); t&&t.focus() }
+  });
+  document.querySelectorAll(".scope").forEach(b=>b.onclick=()=>{setAns(q.id,{scope:b.dataset.s});renderCard()});
+  const t=$("#note"); if(t) t.oninput=()=>setAns(q.id,{note:t.value});
+  $("#prev").disabled=idx===0;
+  $("#next").textContent=idx===l.length-1?(filter==="crit"?"Finish launch-critical":"Finish"):"Next";
+}
+
+function next(){
+  const l=listFor(filter);
+  if(idx<l.length-1){idx++;renderCard();window.scrollTo(0,0)}
+  else{view="done";render();window.scrollTo(0,0)}
+}
+$("#next").onclick=next;
+$("#prev").onclick=()=>{if(idx>0){idx--;renderCard();window.scrollTo(0,0)}};
+
+function renderList(){
+  let html="", last="";
+  for(const q of Q){
+    if(q.sec!==last){html+=`<li class="sec">${esc(S[q.sec])}</li>`;last=q.sec}
+    const d=ans(q.id).decision;
+    html+=`<li><button data-id="${q.id}"><span class="n">${q.id}</span><span class="t">${esc(split(q.q)[0])}</span><span class="pill ${d||""}">${d?d[0].toUpperCase()+d.slice(1):(q.crit?"Blocks v1":"Open")}</span></button></li>`;
+  }
+  main.innerHTML=`<ul class="list">${html}</ul>`;
+  main.querySelectorAll("[data-id]").forEach(b=>b.onclick=()=>{
+    const id=+b.dataset.id, q=Q.find(x=>x.id===id);
+    filter=q.crit?"crit":"rest"; idx=listFor(filter).findIndex(x=>x.id===id); view="card"; render(); window.scrollTo(0,0);
+  });
+}
+
+function exportText(){
+  const lines=["# Causey product decisions","",`Answered ${answeredCount(Q)} of ${Q.length}`,`Unanswered questions: ${Q.filter(q=>!ans(q.id).decision).map(q=>q.id).join(", ")||"None"}`,""];
+  let last="";
+  for(const q of Q){
+    const a=ans(q.id); if(!a.decision) continue;
+    if(q.sec!==last){lines.push("## "+S[q.sec],"");last=q.sec}
+    lines.push(`${q.id}. ${q.q}`);
+    lines.push(`   Decision: ${a.decision.toUpperCase()} | Scope: ${a.scope||q.scope}`);
+    if(a.decision==="agree") lines.push(`   Rule: ${q.rule}`);
+    else lines.push(`   Proposed: ${q.rule}`);
+    if(a.note) lines.push(`   Note: ${a.note}`);
+    else if(a.decision==="change") lines.push("   Note: Replacement rule still needed.");
+    lines.push("");
+  }
+  return lines.join("\n");
+}
+
+function renderDone(){
+  const c={agree:0,change:0,unsure:0}; Q.forEach(q=>{const d=ans(q.id).decision;if(d)c[d]++});
+  const critLeft=Q.filter(q=>q.crit&&!ans(q.id).decision).length;
+  const restLeft=Q.filter(q=>!q.crit&&!ans(q.id).decision).length;
+  const n=answeredCount(Q);
+  const missingNotes=Q.filter(q=>ans(q.id).decision==="change"&&!String(ans(q.id).note||"").trim()).length;
+  main.innerHTML=`<section class="done">
+    <h1>${critLeft?`${critLeft} launch-critical questions left.`:"Launch-critical is done."}</h1>
+    <p style="color:var(--muted)">${n} of ${Q.length} answered. You can send a partial response and come back for the rest.</p>
+    <div class="stats">
+      <div class="stat"><b style="color:var(--agree)">${c.agree}</b>Agree</div>
+      <div class="stat"><b style="color:var(--change)">${c.change}</b>Change</div>
+      <div class="stat"><b style="color:var(--unsure)">${c.unsure}</b>Unsure</div>
+    </div>
+    <div class="how">
+      <h2>Final step: copy and send</h2>
+      <ol class="instructions">
+        <li>Press <strong>Copy answers</strong> below.</li>
+        <li>Open your conversation with Adam, or email <a href="mailto:arm393@cornell.edu?subject=Causey%20product%20decisions">arm393@cornell.edu</a>.</li>
+        <li><strong>Paste the answers and send the message.</strong> Copying alone does not send anything.</li>
+      </ol>
+      <p>Your answers are only stored in this browser. Adam receives them after you send them.</p>
+      ${missingNotes?`<p>${missingNotes} Change answer(s) still need a replacement rule. Use Overview to add your notes.</p>`:""}
+    </div>
+    <button class="cta" id="copy" ${n?"":"disabled"}>Copy answers</button>
+    <button class="ghost" id="dl" ${n?"":"disabled"}>Download answers (.txt)</button>
+    <p class="hint" id="copyStatus" role="status" aria-live="polite"></p>
+    <details><summary>Preview or manually copy answers</summary>
+      <p class="hint">Select the text below and copy it if your browser blocks the Copy button.</p>
+      <textarea id="answerPreview" aria-label="Your answers to copy" readonly>${esc(exportText())}</textarea>
+    </details>
+    ${critLeft?`<button class="ghost" id="goCrit">Finish launch-critical</button>`:""}
+    ${restLeft?`<button class="ghost" id="goRest">Continue with the other ${restLeft}</button>`:""}
+  </section>`;
+  $("#copy").onclick=async()=>{
+    const txt=exportText();
+    let copied=false;
+    try{await navigator.clipboard.writeText(txt);copied=true}
+    catch(e){
+      const ta=$("#answerPreview");
+      ta.closest("details").open=true;
+      ta.focus();ta.select();ta.setSelectionRange(0,ta.value.length);
+      try{copied=document.execCommand("copy")}catch(_){}
+    }
+    const message=copied?"Copied! Now paste the answers into your message to Adam and send it.":"Copy was blocked. Select and copy the preview text, or download your answers.";
+    $("#copyStatus").textContent=message;
+    toast(copied?"Copied — paste and send to Adam":"Use the preview or download");
+  };
+  $("#dl").onclick=()=>{
+    const url=URL.createObjectURL(new Blob([exportText()],{type:"text/plain;charset=utf-8"}));
+    const link=document.createElement("a");link.href=url;link.download="causey-decisions.txt";
+    document.body.appendChild(link);link.click();link.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),1000);
+    $("#copyStatus").textContent="Backup downloaded. Attach this file or paste its contents into your message to Adam.";
+  };
+  const gc=$("#goCrit"); if(gc) gc.onclick=()=>{filter="crit";const l=listFor("crit");idx=Math.max(0,l.findIndex(x=>!ans(x.id).decision));view="card";render()};
+  const gr=$("#goRest"); if(gr) gr.onclick=()=>{filter="rest";const l=listFor("rest");idx=Math.max(0,l.findIndex(x=>!ans(x.id).decision));view="card";render()};
+}
+
+document.querySelectorAll(".tab").forEach(b=>b.onclick=()=>{
+  const f=b.dataset.f;
+  if(f==="list"){view="list"}else{filter=f;const l=listFor(f);idx=Math.max(0,l.findIndex(x=>!ans(x.id).decision));view="card"}
+  render();window.scrollTo(0,0);
+});
+
+document.addEventListener("keydown",e=>{
+  if(view!=="card"||e.target.tagName==="TEXTAREA") return;
+  const map={"1":"agree","2":"change","3":"unsure"};
+  if(map[e.key]){const b=document.querySelector(`.choice[data-v="${map[e.key]}"]`);b&&b.click()}
+  else if(e.key==="ArrowRight") next();
+  else if(e.key==="ArrowLeft") $("#prev").click();
+});
+
+$("#review").onclick=()=>{view="done";render();window.scrollTo(0,0)};
+render(); saveLocal();
+
+</script>
+</body>
+</html>
