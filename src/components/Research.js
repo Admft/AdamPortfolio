@@ -9,7 +9,7 @@ const Research = () => (
       <SectorHeader
         label="Research"
         title="Technical research"
-        sub="Work for systems that must survive contact with production: grounded AI evaluation, reproducible failure analysis, and security anomaly detection."
+        sub="Work aimed at systems that have to hold up in production: grounded AI evaluation, failure analysis you can reproduce, and security anomaly detection."
       />
 
       {/* ACL submission */}
@@ -51,18 +51,18 @@ const Research = () => (
 
             <p className="mt-5 text-sm leading-7 text-zinc-300 md:text-base">
               Found a silent failure mode where an LLM-as-judge returns schema-valid JSON
-              with all-zero scores when input context exceeds ~2,500 tokens — producing
-              apparent pipeline collapses that are evaluation artifacts, not generation
-              failures. After capping judge context and re-scoring, real regressions were
-              far smaller than the artifact suggested.
+              with all-zero scores once input context crosses about 2,500 tokens. That
+              looks like a pipeline collapse, but it is an evaluation artifact, not a
+              generation failure. After capping judge context and re-scoring, the real
+              regressions were much smaller than the artifact suggested.
             </p>
 
             <div className="mt-6 grid grid-cols-1 gap-x-10 gap-y-2 md:grid-cols-2">
               {[
                 '66 ablation runs over 60 hand-written questions on 12 RAG papers (3 replications per condition)',
-                'Fully local pipeline: Qdrant, Ollama, consumer GPU — hybrid BM25+dense retrieval with BGE reranker',
-                'Documented post-reranking filter failure (−12.9 pts) and passage-level recall masking at chunk boundaries',
-                'Released pre- and post-fix judge traces with anonymized supplementary archive',
+                'Fully local pipeline on Qdrant, Ollama, and a consumer GPU with hybrid BM25+dense retrieval and a BGE reranker',
+                'Documented post-reranking filter failure (-12.9 pts) and passage-level recall masking at chunk boundaries',
+                'Released pre- and post-fix judge traces with an anonymized supplementary archive',
               ].map((item) => (
                 <p
                   key={item.slice(0, 40)}
@@ -106,7 +106,7 @@ const Research = () => (
         className="readable mt-8 border-l-2 border-white/15 pl-6 transition-colors hover:border-race-red md:mt-10 md:pl-8"
       >
         <p className="font-tele text-[10px] uppercase tracking-[0.3em] text-race-red">
-          UT Dallas Research · 2024–2025
+          UT Dallas Research · 2024-2025
         </p>
         <h3 className="mt-2 font-display text-2xl uppercase text-white md:text-3xl">
           ML Network Intrusion Detection
@@ -115,11 +115,11 @@ const Research = () => (
           Anomaly detection for smokescreen attacks
         </p>
         <p className="mt-4 max-w-3xl text-sm leading-7 text-zinc-300">
-          Built ML models to detect &ldquo;smokescreen&rdquo; attacks — DDoS noise masking
-          covert data exfiltration — using Netflow data, Isolation Forest, and
-          One-Class SVM with Splunk log analysis. Tuned contamination hyperparameters
-          to cut false positives, visualized decision boundaries with Matplotlib, and
-          classified DDoS vs Probe vs exfiltration patterns.
+          Built ML models to catch smokescreen attacks, where DDoS noise hides covert
+          data exfiltration. Used Netflow data with Isolation Forest and One-Class SVM,
+          plus Splunk log analysis. Tuned contamination hyperparameters to cut false
+          positives, visualized decision boundaries with Matplotlib, and classified DDoS
+          vs Probe vs exfiltration patterns.
         </p>
         <div className="mt-5 flex flex-wrap gap-1.5">
           {['Python', 'Scikit-learn', 'Splunk', 'Netflow', 'Anomaly Detection'].map((tag) => (

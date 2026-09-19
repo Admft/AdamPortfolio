@@ -27,7 +27,7 @@ const SetupSheet = () => (
       <SectorHeader
         label="Skills"
         title="What I build with"
-        sub="Cloud analytics, full-stack product work, grounded AI systems, and the tools needed to ship them with customers."
+        sub="Cloud analytics, full-stack product work, grounded AI systems, and the tools I use to ship with customers."
       />
 
       <div className="readable grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">

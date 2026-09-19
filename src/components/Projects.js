@@ -6,15 +6,15 @@ import SectorHeader from './ui/SectorHeader';
 const housefax = {
   title: 'HouseFax',
   entryClass: 'Flagship',
-  lap: '2026 — ACTIVE',
+  lap: '2026 · ACTIVE',
   blurb: 'Know the house before you buy it.',
   description:
-    'An end-to-end response to a high-stakes user problem: residential buyers need a defensible view of risk, not another generic chatbot. HouseFax combines a Next.js/TypeScript product, Dockerized FastAPI services on AWS, property-data integrations, deterministic financial tools, and grounded AI into a source-cited due-diligence workflow.',
+    'Buyers need a defensible view of risk, not another generic chatbot. HouseFax is a Next.js/TypeScript product on Dockerized FastAPI services with property data integrations, deterministic financial tools, and grounded AI for source-cited residential due diligence.',
   highlights: [
-    'Agentic tool-calling for cap rates, cash flow, and mortgage math — the model never freelances the numbers',
-    'LlamaIndex multi-document RAG for HOA and inspection disclosure synthesis into a structured verdict',
-    'GitHub Actions eval harness blocking deploys on math errors, hallucinations, and fair-housing violations',
-    'Integrates RentCast, ATTOM, Census, FRED, and FEMA for source-cited residential due diligence',
+    'Tool calling for cap rates, cash flow, and mortgage math so the model does not invent the numbers',
+    'LlamaIndex multi-document RAG for HOA and inspection disclosures into a structured verdict',
+    'GitHub Actions eval harness that blocks deploys on math errors, hallucinations, and fair-housing violations',
+    'Integrates RentCast, ATTOM, Census, FRED, and FEMA for source-cited due diligence',
   ],
   tyres: ['FastAPI', 'Next.js', 'pgvector', 'LlamaIndex', 'AWS', 'Eval Harness'],
   image: '/HouseFax.png',
@@ -24,11 +24,11 @@ const entries = [
   {
     title: 'Cornell MEM Schedule Planner',
     entryClass: 'Product',
-    lap: '2025 — LIVE',
+    lap: '2025 · LIVE',
     description:
-      'Started with a direct user pain point: MEM students were building schedules manually in spreadsheets. I turned the catalog and program constraints into a conflict-aware planner, shipped it during Cornell’s residential intensive, and kept it live for the cohort.',
+      'MEM students were building schedules by hand in spreadsheets. I turned the catalog and program constraints into a conflict-aware planner, shipped it during Cornell\'s residential intensive, and kept it live for the cohort.',
     highlights: [
-      'Hackathon winner — shipped during the residential intensive',
+      'Hackathon winner, shipped during the residential intensive',
       'TypeScript + Vite frontend with ExcelJS export for advisors and students',
       'Constraint-aware scheduling across required and elective tracks',
     ],
@@ -39,9 +39,9 @@ const entries = [
   {
     title: 'Store Telemetry Heatmaps',
     entryClass: 'Enterprise',
-    lap: '2026 — LIVE',
+    lap: '2026 · LIVE',
     description:
-      'Built after field and HQ teams needed a shared way to diagnose store-level deployment health. The tool joins Azure telemetry to Walmart floor plans so onboarding failures, RSSI, and weak-signal zones become an actionable spatial view instead of raw KQL.',
+      'Field and HQ teams needed one shared view of store deployment health. This joins Azure telemetry to Walmart floor plans so onboarding failures, RSSI, and weak-signal zones show up spatially instead of as raw KQL.',
     highlights: [
       'Spatial overlay of ping health and onboarding failures on store layouts',
       'KQL + Pandas pipeline from Azure into heatmap-ready datasets',
@@ -53,11 +53,11 @@ const entries = [
   {
     title: 'Executive Reporting Pipeline',
     entryClass: 'Enterprise',
-    lap: '2026 — LIVE',
+    lap: '2026 · LIVE',
     description:
-      'Replaced a recurring manual reporting workflow with a deployable pipeline: KQL templates pull live Azure metrics, Python transforms the data, and editable charts land in finished PowerPoint decks for weekly operational decisions.',
+      'Replaced a weekly manual reporting grind. KQL templates pull live Azure metrics, Python transforms the data, and editable charts land in finished PowerPoint decks.',
     highlights: [
-      'End-to-end: query → CSV → charts → finished PowerPoint',
+      'Full path from query to CSV to charts to finished PowerPoint',
       'Covers device health, battery, onboardings, and ping KPIs',
       'Charts stay editable in the deck for leadership follow-ups',
     ],
@@ -69,7 +69,7 @@ const entries = [
     entryClass: 'Hackathon',
     lap: '2024',
     description:
-      'Built around a specific underserved user: Texas teachers navigating financial planning. The HackUNT 2024 project combined Plaid-connected context with OpenAI-assisted guidance in a React and Flask product, earning hackathon recognition.',
+      'Built for Texas teachers who needed clearer financial planning. HackUNT 2024 project combining Plaid account context with OpenAI-assisted guidance in a React and Flask app.',
     highlights: [
       'Recognized at HackUNT 2024',
       'React frontend with Flask API and OpenAI-assisted planning flows',
@@ -82,9 +82,9 @@ const entries = [
   {
     title: 'SkinByKaylaa',
     entryClass: 'Client',
-    lap: '2024 — LIVE',
+    lap: '2024 · LIVE',
     description:
-      'A client deployment, not a template exercise: translated a local esthetician’s acquisition workflow into SEO-focused service pages and online booking so search traffic could convert directly into appointments.',
+      'Client site for a Rockwall esthetician. SEO service pages and online booking so local search traffic can convert into appointments instead of DMs.',
     highlights: [
       'Local SEO structure for Rockwall beauty search',
       'Online booking wired into the service catalog',
@@ -119,7 +119,7 @@ const StatusLink = ({ entry }) => {
   if (!links) {
     return (
       <span className="font-tele text-[10px] uppercase tracking-[0.14em] text-zinc-500">
-        Enterprise — internal
+        Enterprise · internal
       </span>
     );
   }
@@ -147,10 +147,10 @@ const Projects = () => (
       <SectorHeader
         label="Projects"
         title="Selected work"
-        sub="Proof of the operating model: start with a real user or deployment constraint, build the missing system, and ship an outcome people can use."
+        sub="Real user problems and deployment constraints turned into systems people can actually use."
       />
 
-      {/* HouseFax — main highlight */}
+      {/* HouseFax featured project */}
       <motion.article
         initial={{ opacity: 0, y: 18 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -240,7 +240,7 @@ const Projects = () => (
                 <ul className="mt-4 space-y-1.5">
                   {entry.highlights.map((h) => (
                     <li key={h.slice(0, 35)} className="text-xs leading-5 text-zinc-400">
-                      — {h}
+                      · {h}
                     </li>
                   ))}
                 </ul>

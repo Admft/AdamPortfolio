@@ -3,6 +3,7 @@ import React, { Suspense, useEffect, useState } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import SeasonStats from './components/SeasonStats';
+import GithubContributions from './components/GithubContributions';
 import About from './components/About';
 import Experience from './components/Experience';
 import SetupSheet from './components/SetupSheet';
@@ -117,6 +118,7 @@ function App() {
           <main className={trackMode ? 'pb-14' : 'pb-10'}>
             <Hero trackMode={trackMode} />
             <SeasonStats trackMode={trackMode} />
+            <GithubContributions />
             <About />
             <Experience />
             <SetupSheet />

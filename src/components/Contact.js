@@ -69,10 +69,10 @@ const Contact = ({ trackMode = false }) => (
             Open to
           </p>
           <p className="mt-2 text-sm leading-7 text-zinc-300 md:text-base">
-            Forward Deployed Engineer roles where I can work directly with customers,
-            build through ambiguity, deploy into real workflows, and turn production
-            evidence into a better product. If the problem crosses software, data, AI,
-            and the field — put me on it.
+            Looking for Forward Deployed Engineer roles where I can work with customers
+            directly, build through incomplete requirements, deploy into real workflows,
+            and turn production evidence into a better product. If the problem crosses
+            software, data, AI, and the field, put me on it.
           </p>
         </motion.div>
 

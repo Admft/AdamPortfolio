@@ -13,6 +13,7 @@
     "clsx": "^2.1.1",
     "codex": "^0.2.3",
     "framer-motion": "^12.23.24",
+    "gsap": "^3.15.0",
     "lucide-react": "^0.456.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -25,6 +26,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "fetch-contributions": "node scripts/fetch-github-contributions.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
