@@ -163,10 +163,23 @@ function Car({ progress, mobile, reduced }) {
       2.4,
       step,
     );
-    if (group.current)
+    if (group.current) {
+      const heroOffset = mobile
+        ? 0
+        : 1 - THREE.MathUtils.smoothstep(p, 0.09, 0.3);
+      const workOffset = mobile
+        ? 0
+        : THREE.MathUtils.smoothstep(p, 0.43, 0.62) *
+          (1 - THREE.MathUtils.smoothstep(p, 0.73, 0.93));
+      group.current.position.set(
+        2.8 * heroOffset + 1.7 * workOffset,
+        -0.25 * workOffset,
+        -2.54 * heroOffset - 1 * workOffset,
+      );
       group.current.rotation.y = reduced
         ? -0.45
         : -0.45 + Math.sin(state.clock.elapsedTime * 0.12) * 0.06;
+    }
   });
   return (
     <group ref={group}>
