@@ -13,14 +13,14 @@ const stops = [
     location: 'Coppell, TX',
     live: true,
     summary:
-      'Embedded between North American operations, enterprise customers, and global R&D. I investigate deployment blockers, build the analytics and automation the field needs, validate fixes onsite, and turn production evidence into clear product feedback.',
+      'I sit between North American operations, enterprise customers, and global R&D. When a deployment gets stuck, I dig into the blocker, build the analytics or automation the field needs, validate it onsite, and send clear evidence back to product.',
     crewNotes: [
-      'Built modular Azure/KQL reporting pipeline — query templating, CLI auth, chart plugins, and automated PowerPoint generation for weekly executive updates',
-      'Designed Store Telemetry Heatmaps: joined Azure Log Analytics telemetry with Walmart floor-plan APIs for spatial onboarding and RSSI visualization',
-      'Led Mist→Rigado AP migration validation with Ellisys RF analysis, Confluence runbooks, and post-deployment KQL monitoring across 8+ stores',
-      'Debugged production blockers via Azure Log Analytics (e.g. isolated "Label type not supported" root cause in wmd2 with cross-workspace KQL)',
-      'Kroger CEC demo support: Android regression, BlueDot/Pointr navigation, Jira triage, and 4-hour end-to-end demo validation',
-      'Shipped internal tools: TopStock Playwright automation, store aisle navigator, PyInstaller heatmap GUI, and Power BI dashboard prototypes',
+      'Built a modular Azure/KQL reporting pipeline with query templates, CLI auth, chart plugins, and automated PowerPoint decks for weekly exec updates',
+      'Designed Store Telemetry Heatmaps by joining Azure Log Analytics telemetry with Walmart floor-plan APIs for onboarding and RSSI views',
+      'Led Mist to Rigado AP migration validation with Ellisys RF analysis, Confluence runbooks, and post-deployment KQL monitoring across 8+ stores',
+      'Debugged production blockers in Azure Log Analytics, including a "Label type not supported" root cause in wmd2 using cross-workspace KQL',
+      'Supported a Kroger CEC demo with Android regression, BlueDot/Pointr navigation, Jira triage, and a 4-hour end-to-end validation pass',
+      'Shipped internal tools: TopStock Playwright automation, a store aisle navigator, a PyInstaller heatmap GUI, and Power BI dashboard prototypes',
     ],
     tyres: ['Azure', 'KQL', 'Python', 'REST APIs', 'Power BI', 'Playwright', 'Android'],
   },
@@ -33,12 +33,12 @@ const stops = [
     location: 'Remote · Cornell-born startup',
     live: true,
     summary:
-      'Founding engineer building Causey directly alongside the founding team and early users. I own software architecture and core product delivery across the public site and competition-discovery app, turning an underserved user journey into shipped product.',
+      'Founding engineer at Causey. I own architecture and core product work across the waitlist site and competition discovery app, and ship with the founding team and early users.',
     crewNotes: [
-      'Own end-to-end product engineering: architecture, core features, and shipping the early build students can actually use',
-      'Chess competition search is live — indexing US Chess (TLA) and Continental Chess, with state affiliates and FIDE on the roadmap',
-      'Discover → match → compete flow: browse by category, deadline, and level; surface eligibility and cost before students commit',
-      'Building toward STEM, debate, arts, and writing — same problem, broader talent surface',
+      'Own product engineering end to end: architecture, core features, and getting an early build into students hands',
+      'Chess competition search is live, indexing US Chess (TLA) and Continental Chess, with state affiliates and FIDE still on the roadmap',
+      'Built a discover, match, compete flow so students can browse by category, deadline, and level, then see eligibility and cost before they commit',
+      'Expanding next into STEM, debate, arts, and writing with the same discovery problem in mind',
     ],
     tyres: ['Next.js', 'TypeScript', 'Product', 'Architecture'],
     image: '/Causey.png',
@@ -55,12 +55,12 @@ const stops = [
     boxOut: 'Jan 2026',
     location: 'Dallas, TX · Hybrid',
     summary:
-      'Owned pre- and post-sales technical outcomes for aerospace and defense customers. Scoped problems, reproduced failures, built customized JTAG test solutions, trained engineers onsite, and stayed accountable through validation and handoff.',
+      'Owned pre- and post-sales technical work for aerospace and defense customers. Scoped problems, reproduced failures, built custom JTAG test solutions, trained engineers onsite, and stayed through validation and handoff.',
     crewNotes: [
-      'Managed 100+ support cases with 95% satisfaction; led 4+ end-to-end test projects from SOW to customized JTAG suites',
-      'Delivered 5+ week-long onsite trainings for 40–50+ engineers at RTX, GE Aviation, BAE, and Tinker AFB',
+      'Managed 100+ support cases with 95% satisfaction and led 4+ end-to-end test projects from SOW to customized JTAG suites',
+      'Delivered 5+ week-long onsite trainings for 40 to 50+ engineers at RTX, GE Aviation, BAE, and Tinker AFB',
       'Published technical articles on flash programming, pin-level diagnostics, and in-house testing ROI',
-      'Alpha/beta tested CT mode; diagnosed false-positive loopback failures for Thales/DRT secure boards',
+      'Alpha and beta tested CT mode, and diagnosed false-positive loopback failures for Thales/DRT secure boards',
     ],
     tyres: ['JTAG', 'ScanWorks', 'Technical Sales', 'Documentation', 'QA'],
   },
@@ -72,10 +72,10 @@ const stops = [
     boxOut: 'Dec 2023',
     location: 'Richardson, TX · Remote',
     summary:
-      'Delivered full-stack product work for a healthcare growth platform, moving between user-facing React features, Node/PostgreSQL services, AWS deployment, and Python data automation.',
+      'Full-stack work on a healthcare growth platform. Moved between React features, Node and PostgreSQL services, AWS deployment, and Python data automation.',
     crewNotes: [
-      'Built React/Node/Tailwind web app with containerized CI/CD on AWS Elastic Beanstalk',
-      'Wrote Python scraper processing 1,000+ lead sources per run into PostgreSQL',
+      'Built a React/Node/Tailwind web app with containerized CI/CD on AWS Elastic Beanstalk',
+      'Wrote a Python scraper that processed 1,000+ lead sources per run into PostgreSQL',
     ],
     tyres: ['React', 'Node.js', 'PostgreSQL', 'AWS', 'Python'],
   },
@@ -87,7 +87,7 @@ const Experience = () => (
       <SectorHeader
         label="Experience"
         title="Work history"
-        sub="A track record of owning outcomes at the customer–engineering boundary: scope the problem, build what is missing, deploy it, and stay through validation."
+        sub="I take ownership at the line between customers and engineering. Scope the problem, build what is missing, deploy it, and stay through validation."
       />
 
       <div className="readable relative border-l-2 border-white/10 pl-6 md:pl-10">
@@ -124,7 +124,7 @@ const Experience = () => (
               <div className="ml-auto flex items-center gap-3 font-tele text-[10px] uppercase tracking-[0.2em]">
                 <span className="border border-white/15 bg-black/40 px-2.5 py-1 text-zinc-300">
                   {stop.boxIn}
-                  {stop.boxOut ? ` — ${stop.boxOut}` : ''}
+                  {stop.boxOut ? ` to ${stop.boxOut}` : ''}
                 </span>
                 {stop.live && (
                   <span className="border border-race-red/60 bg-race-red/10 px-2.5 py-1 text-race-red">
@@ -198,13 +198,12 @@ const Experience = () => (
         className="readable mt-12 border-l-2 border-caution bg-caution/5 py-4 pl-6 pr-4"
       >
         <p className="font-tele text-[10px] uppercase tracking-[0.28em] text-caution">
-          Why this fits Forward Deployed
+          Why Forward Deployed fits
         </p>
         <p className="mt-2 max-w-3xl text-sm leading-6 text-zinc-300">
-          I am strongest when the requirements are incomplete, the problem is already
-          live, and solving it requires both engineering depth and customer context.
-          Field debugging gives me the evidence; software, data, and AI systems turn
-          that evidence into a durable solution.
+          I do my best work when the requirements are incomplete and the problem is
+          already live. Field debugging gives me the evidence. Software, data, and AI
+          systems turn that evidence into something durable.
         </p>
       </motion.div>
     </div>

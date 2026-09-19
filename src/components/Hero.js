@@ -6,7 +6,7 @@ const specs = [
   { label: 'Role', value: 'Forward Deployed Engineer' },
   { label: 'Based in', value: 'Dallas, TX' },
   { label: 'Cloud', value: 'Azure AZ-900' },
-  { label: 'Loop', value: 'Discover · Build · Deploy' },
+  { label: 'Focus', value: 'Discover, build, deploy' },
 ];
 
 const Hero = ({ trackMode = false }) => (
@@ -29,7 +29,7 @@ const Hero = ({ trackMode = false }) => (
         transition={{ delay: 0.1 }}
         className="readable mb-6 font-tele text-[11px] uppercase tracking-[0.28em] text-race-red"
       >
-        {trackMode ? 'Track mode · Car 63' : 'Portfolio · Adam Moffat'}
+        {trackMode ? 'Track mode · Car 63' : 'Adam Moffat'}
       </motion.p>
 
       <motion.h1
@@ -49,9 +49,9 @@ const Hero = ({ trackMode = false }) => (
         transition={{ delay: 0.35 }}
         className="readable mt-6 max-w-xl text-base leading-7 text-zinc-300 md:text-lg"
       >
-        Forward Deployed Engineer turning ambiguous customer problems into deployed
-        software — from discovery and prototyping to production debugging and product
-        feedback.
+        Forward Deployed Engineer. I take messy customer problems, build the software
+        that fixes them, and stay through deployment and debugging until the product
+        actually works in the field.
       </motion.p>
 
       <motion.div

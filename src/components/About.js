@@ -6,22 +6,22 @@ const focusAreas = [
   {
     index: '01',
     title: 'Discover',
-    body: 'Work directly with users, operators, and engineers to turn unclear symptoms into concrete requirements — using logs, workflows, demos, and field evidence to find the real constraint.',
+    body: 'Sit with users, operators, and engineers until the real constraint is obvious. Logs, demos, and field notes usually beat the first story you hear.',
   },
   {
     index: '02',
     title: 'Build',
-    body: 'Ship the missing layer: Azure/KQL pipelines, Python automation, React and TypeScript products, FastAPI services, API integrations, and grounded AI workflows.',
+    body: 'Ship the missing piece. That can be an Azure/KQL pipeline, a React tool, a FastAPI service, an API integration, or a grounded AI workflow.',
   },
   {
     index: '03',
     title: 'Deploy',
-    body: 'Own the last mile through pilot execution, onsite validation, demo readiness, production debugging, documentation, training, and measurable handoff.',
+    body: 'Stay for the last mile: pilots, onsite validation, demos, production debugging, docs, training, and a clean handoff.',
   },
   {
     index: '04',
-    title: 'Close the Loop',
-    body: 'Translate what happens in the field into reproducible evidence for product and R&D — then turn fixes, patterns, and customer feedback into systems that scale.',
+    title: 'Close the loop',
+    body: 'Take what broke in the field and turn it into evidence product and R&D can act on. Then make the next version harder to break.',
   },
 ];
 
@@ -38,11 +38,10 @@ const About = () => (
       <SectorHeader
         label="About"
         title="Who I am"
-        sub="I work where customer context meets engineering execution: discover the real problem, build the missing software, deploy it with users, and carry production evidence back into the product."
+        sub="I work between customers and engineering. Find the real problem, build what is missing, deploy it with users, then feed what we learned back into the product."
       />
 
       <div className="mb-16 grid grid-cols-1 gap-10 lg:grid-cols-12">
-        {/* driver card */}
         <motion.div
           initial={{ opacity: 0, x: -16 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -78,7 +77,6 @@ const About = () => (
           </div>
         </motion.div>
 
-        {/* numbered focus index — no cards, left rules */}
         <div className="readable lg:col-span-8">
           <div className="space-y-0">
             {focusAreas.map((area, i) => (
@@ -107,7 +105,6 @@ const About = () => (
         </div>
       </div>
 
-      {/* current seat + superlicence — borderless, left rule */}
       <div className="readable grid grid-cols-1 gap-10 lg:grid-cols-2">
         <motion.div
           initial={{ opacity: 0, y: 14 }}
@@ -126,15 +123,15 @@ const About = () => (
           </p>
           <div className="mt-4 space-y-3 text-sm leading-7 text-zinc-300 md:text-base">
             <p>
-              My title is Field Application Engineer; the operating model is already
-              forward deployed. I sit between North American operators, enterprise
-              customers, and global R&amp;D, then build the analytics, automation, and
-              integrations needed to move deployments forward.
+              Official title is Field Application Engineer. Day to day, I sit between
+              North American operators, enterprise customers, and global R&amp;D, then
+              build the analytics, automation, and integrations that keep deployments
+              moving.
             </p>
             <p className="text-zinc-400">
-              That means moving from a store-floor symptom or blocked demo to KQL
-              evidence, a reproducible root cause, a working tool, and a clear product
-              handoff. The loop is customer → code → deployment → product.
+              A typical loop starts on the store floor or in a blocked demo, then moves
+              to KQL evidence, a root cause we can reproduce, a working tool, and a clear
+              handoff back to product.
             </p>
           </div>
         </motion.div>
@@ -175,8 +172,9 @@ const About = () => (
                 Microsoft Azure
               </p>
               <p className="mt-1 text-sm text-zinc-300">
-                <span className="text-caution">AZ-900 certified</span> — pursuing AI
-                Engineer (AI-102), Admin (AZ-104), Solutions Architect (AZ-305)
+                <span className="text-caution">AZ-900 certified</span>. Currently working
+                toward AI Engineer (AI-102), Admin (AZ-104), and Solutions Architect
+                (AZ-305).
               </p>
             </div>
           </div>
@@ -190,10 +188,9 @@ const About = () => (
         className="readable mt-12 flex flex-wrap items-center gap-4 border-t border-white/10 pt-8"
       >
         <p className="mr-auto max-w-xl text-sm leading-6 text-zinc-400">
-          The proof spans enterprise retail pilots at VusionGroup, technical ownership
-          for aerospace and defense customers at ASSET, founding product work at
-          Causey, and source-grounded AI systems in HouseFax and my ACL submission.
-          Different domains; the same forward-deployed loop.
+          Same pattern across retail pilots at VusionGroup, defense customers at ASSET,
+          founding work at Causey, and the AI systems in HouseFax and my ACL submission.
+          Different domains. Same job: make the thing work where people actually use it.
         </p>
         <a
           href="/Resume.pdf"

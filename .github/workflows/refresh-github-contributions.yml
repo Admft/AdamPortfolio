@@ -1,0 +1,31 @@
+name: Refresh GitHub contributions
+
+on:
+  schedule:
+    # Every 2 days is plenty. GitHub Actions is free for public repos.
+    - cron: '17 12 */2 * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Fetch GitHub commits and contribution calendar
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node scripts/fetch-github-contributions.js
+
+      - name: Commit if the graph changed
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'chore: refresh GitHub contribution graph'
+          file_pattern: public/github-contributions.json
