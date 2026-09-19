@@ -19,7 +19,9 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Fetch contribution calendar
+      - name: Fetch GitHub commits and contribution calendar
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: node scripts/fetch-github-contributions.js
 
       - name: Commit if the graph changed
