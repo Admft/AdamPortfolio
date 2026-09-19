@@ -28,7 +28,7 @@ export default function GitHubActivity({ compact = false }) {
     // A timeout and bundled fallback keep the portfolio usable if GitHub is down.
     const timeout = window.setTimeout(() => controller.abort(), 5000);
     loadSnapshot(
-      "https://raw.githubusercontent.com/Admft/AdamPortfolio/main/public/github-contributions.json",
+      "https://raw.githubusercontent.com/Admft/AdamPortfolio/master/public/github-contributions.json",
     )
       .catch(() => {
         window.clearTimeout(timeout);

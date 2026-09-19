@@ -88,7 +88,7 @@ Unit tests cover the default recruiting experience, modal case-study lifecycle, 
 
 ## Annual GitHub activity
 
-Causey is the flagship project in the shared project list, so it leads both modes. The annual GitHub section fetches the latest public snapshot from the `main` branch on raw.githubusercontent.com, with a five-second timeout and bundled `/github-contributions.json` fallback; it does not put credentials or GitHub API requests in the browser. The full calendar appears in the default portfolio, with compact annual statistics in car mode.
+Causey is the flagship project in the shared project list, so it leads both modes. The annual GitHub section fetches the latest public snapshot from the `master` branch on raw.githubusercontent.com, with a five-second timeout and bundled `/github-contributions.json` fallback; it does not put credentials or GitHub API requests in the browser. The full calendar appears in the default portfolio, with compact annual statistics in car mode.
 
 Run `npm run fetch-contributions` using an authenticated local `gh` session, or set `GH_TOKEN` / `GITHUB_TOKEN` for automation. The GitHub Actions workflow runs at 12:17 UTC on odd-numbered dates (roughly every two days) and uses the official GraphQL API with its built-in token. It publishes only aggregate counts and dates, never repository names or credentials. Failed/incomplete refreshes keep the prior file intact. The date window is the last 365 UTC calendar dates including today, shown explicitly alongside the snapshot date.
 
