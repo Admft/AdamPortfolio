@@ -167,18 +167,35 @@ function Car({ progress, mobile, reduced }) {
       const heroOffset = mobile
         ? 0
         : 1 - THREE.MathUtils.smoothstep(p, 0.09, 0.3);
+      const blueprintOffset = mobile
+        ? 0
+        : THREE.MathUtils.smoothstep(p, 0.12, 0.27) *
+          (1 - THREE.MathUtils.smoothstep(p, 0.4, 0.53));
       const workOffset = mobile
         ? 0
         : THREE.MathUtils.smoothstep(p, 0.43, 0.62) *
           (1 - THREE.MathUtils.smoothstep(p, 0.73, 0.93));
+      const assemblyOffset = mobile
+        ? 0
+        : THREE.MathUtils.smoothstep(p, 0.73, 0.93);
       group.current.position.set(
-        2.8 * heroOffset + 1.7 * workOffset,
-        -0.25 * workOffset,
-        -2.54 * heroOffset - 1 * workOffset,
+        2.8 * heroOffset +
+          1.7 * blueprintOffset +
+          1.7 * workOffset -
+          2.7 * assemblyOffset,
+        0.65 * blueprintOffset - 0.25 * workOffset,
+        -2.54 * heroOffset -
+          3.7 * blueprintOffset -
+          1 * workOffset +
+          0.7 * assemblyOffset,
       );
-      group.current.rotation.y = reduced
-        ? -0.45
-        : -0.45 + Math.sin(state.clock.elapsedTime * 0.12) * 0.06;
+      group.current.scale.setScalar(
+        1 - 0.28 * blueprintOffset - 0.28 * assemblyOffset,
+      );
+      group.current.rotation.y =
+        -0.45 +
+        2.2 * blueprintOffset +
+        (reduced ? 0 : Math.sin(state.clock.elapsedTime * 0.12) * 0.06);
     }
   });
   return (
@@ -262,7 +279,7 @@ function CameraRig({ progress, telemetry, reduced, brake }) {
     const p = smooth.current;
     const frames = [
       [6.8, 3.1, 7.5],
-      [6, 4.5, 6],
+      [4, 8.5, 5.5],
       [5.8, 2.8, 7.8],
       [0.3, 9, 5],
     ];
