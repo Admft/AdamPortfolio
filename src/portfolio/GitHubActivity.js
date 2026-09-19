@@ -22,13 +22,15 @@ export default function GitHubActivity({ compact = false }) {
         cache: "no-cache",
       });
       if (!response.ok) throw new Error("Unavailable");
-      return response.json();
+      const data = await response.json();
+      if (![data.periodStart, data.periodEnd, data.updatedAt].every((value) => typeof value === "string" && !Number.isNaN(Date.parse(value)))) throw new Error("Outdated snapshot");
+      return data;
     };
     // Published GitHub snapshots update independently of Vercel deployments.
     // A timeout and bundled fallback keep the portfolio usable if GitHub is down.
     const timeout = window.setTimeout(() => controller.abort(), 5000);
     loadSnapshot(
-      "https://raw.githubusercontent.com/Admft/AdamPortfolio/master/public/github-contributions.json",
+      "https://raw.githubusercontent.com/Admft/AdamPortfolio/master/public/github-contributions.json?v=2",
     )
       .catch(() => {
         window.clearTimeout(timeout);
