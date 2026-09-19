@@ -83,3 +83,13 @@ test("GitHub request failure leaves a profile link instead of a fake zero", asyn
     screen.getByRole("link", { name: "View GitHub profile" }),
   ).toHaveAttribute("href", "https://github.com/Admft");
 });
+
+test("legacy cached GitHub data falls back without crashing the portfolio", async () => {
+  global.fetch
+    .mockResolvedValueOnce({ ok: true, json: async () => ({ total: 673, contributions: [{ date: "2025-09-20", count: 1, level: 1 }] }) })
+    .mockResolvedValueOnce({ ok: true, json: async () => ({ login: "Admft", total: 1019, periodStart: "2025-09-20", periodEnd: "2026-09-19", updatedAt: "2026-09-19T20:32:15Z", contributions: [{ date: "2025-09-20", count: 1, level: 1 }] }) });
+  render(<App />);
+  expect(await screen.findByText("1,019")).toBeInTheDocument();
+  expect(screen.getByRole("button", { name: /launch car mode/i })).toBeInTheDocument();
+  expect(global.fetch).toHaveBeenCalledWith("/github-contributions.json");
+});
